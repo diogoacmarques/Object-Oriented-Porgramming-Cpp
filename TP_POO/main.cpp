@@ -1,6 +1,12 @@
+#include "Carro.h"
+#include <iostream>
+
+
+using namespace std;
+
 
 int main() {
-	
-	sdsadasd
+	Carro a("tesla");
+	Carro b("Honda", "Civic");
 	return 0;
 }
