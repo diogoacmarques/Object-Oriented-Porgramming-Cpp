@@ -2,3 +2,4 @@
 - Tipos de pilotos, utilizar um extend ?
 - Tipo crazy driver, os 5% de probabilidade, é por cada segundo ?
 -Tempo vai passando ? Ou só passa quando fazemos o comando "passatempo" ?
+-Como podemos fazer a associação entre autódromos, pista e garagem ? (Classes diferentes, mesma classe ?)
