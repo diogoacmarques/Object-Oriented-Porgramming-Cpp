@@ -1,13 +1,31 @@
 #include "Piloto.h"
 
-
-
-Piloto::Piloto()
+Piloto::Piloto(std::string n):nome(n)
 {
-	//funcao para confirmar que nao existe nenhum igual
+	//funcao para confirmar que nao existe nenhum nome igual
 }
-
 
 Piloto::~Piloto()
 {
 }
+/*
+bool Piloto::checkCar() const
+{
+	if (carro != nullptr)
+		return true;
+	else
+		return false;
+}
+
+bool Piloto::getInCar(Carro * c)
+{
+	carro = c;
+	return true;
+}
+
+bool Piloto::getOutCar()
+{
+	carro = nullptr;
+	return true;
+}
+*/

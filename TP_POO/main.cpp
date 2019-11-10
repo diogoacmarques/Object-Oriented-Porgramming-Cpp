@@ -1,4 +1,4 @@
-#include "Carro.h"
+#include "Interface.h"
 #include <iostream>
 
 
@@ -6,7 +6,7 @@ using namespace std;
 
 
 int main() {
-	Carro a("tesla");
-	Carro b("Honda", "Civic");
+	Interface a("diogo");
+	a.start();
 	return 0;
 }

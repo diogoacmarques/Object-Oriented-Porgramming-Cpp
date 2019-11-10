@@ -24,12 +24,24 @@
     <ClCompile Include="Piloto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DVG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Carro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Piloto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DVG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
