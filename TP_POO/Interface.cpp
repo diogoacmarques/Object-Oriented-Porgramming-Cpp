@@ -1,5 +1,7 @@
 #include "Interface.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 Interface::Interface(string n):nome(n),modo(1)
@@ -29,21 +31,22 @@ bool Interface::getCommand()
 		if (linha != "") {
 			comando = splitLine(linha);
 			linha.erase(0, comando.size() + 1);
-			cout << "Comando:" << comando << endl;
-			cout << "Parametros:'" << linha << "'\n" << endl;
+			//cout << "Comando:" << comando << endl;
+			//cout << "Parametros:'" << linha << "'\n" << endl;
 
 
 			if (modo == 1) {//modo 1
+				//meta 1: Execução de todos os comandos exceto savedgv, loaddgv e deldgv.
 				if (comando == "carregaP")
-					readFile(linha);
+					lerFicheiroPiloto(linha);
 				else if (comando == "carregaC")
-					func();
+					lerFicheiroCarro(linha);
 				else if (comando == "carregaA")
-					func();
+					lerFicheiroAutodromo(linha);
 				else if (comando == "cria")
-					func();
+					cria(linha);
 				else if (comando == "apaga")
-					func();
+					apaga(linha);
 				else if (comando == "entranocarro")
 					func();
 				else if (comando == "saidocarro")
@@ -51,11 +54,11 @@ bool Interface::getCommand()
 				else if (comando == "lista")
 					func();
 				else if (comando == "savedgv")
-					func();
+					func();//meta 2
 				else if (comando == "loaddgv")
-					func();
+					func();//meta 2
 				else if (comando == "deldgv")
-					func();
+					func();//meta 2
 				else if (comando == "campeonato") {
 					func();
 					modo = 2;
@@ -64,6 +67,8 @@ bool Interface::getCommand()
 					cout << "Este comando nao se encontra na lista do modo 1!" << endl;
 			}
 			else {//modo 2
+				//meta 1 : Comando “campeonato <A1>” (só há um autódromo).
+				//meta 1 : Comando “passatempo <N>”
 				if (comando == "listacarros")
 					func();
 				else if (comando == "carregabat")
@@ -113,9 +118,287 @@ std::string Interface::splitLine(std::string str)
 	return str;
 }
 
-bool Interface::readFile(std::string fileName)
+bool Interface::cria(std::string parametros)
 {
-	cout << "Will read file:'" << fileName << "'!" << endl;
+	string tipo;
+	tipo = splitLine(parametros);
+
+	if (tipo == "") {//sem parametros
+		cout << "Tipo de criacao(c,p,a):";
+		getline(cin, tipo);
+		tipo = splitLine(tipo);
+	}
+	else {
+		parametros.erase(0, tipo.size() + 1);//remove o tipo dos parametros
+	}
+
+	if (parametros == "") {
+		if (tipo == "c")
+			cout << "Pametros para a criacao de carro = (capacidadeInicial capacidadeMaxima marca modelo):";
+		else if (tipo == "p")
+			cout << "Pametros para a criacao de piloto = tipo nome):";
+		if (tipo == "a")
+			cout << "Pametros para a criacao de autodromo = (N comprimento nome):";
+
+		getline(cin, parametros);
+	}
+
+	cout << "\tTipo='" << tipo << "'\n\tParametros=" << parametros << endl;
+
+	if (tipo == "c") {
+		//carro
+		string capInicial = "", capMaxima = "", marca = "", modelo = "~";
+
+		capInicial = splitLine(parametros);
+		parametros.erase(0, capInicial.size() + 1);
+
+		capMaxima = splitLine(parametros);
+		parametros.erase(0, capMaxima.size() + 1);
+
+		marca = splitLine(parametros);
+		parametros.erase(0, marca.size() + 1);
+
+		//verificar se tem todos os elementos necessarios
+		if (capInicial == "" || capMaxima == "" || marca == "") {
+			cout << "Nao e possivel criar carro com estes parametros!" << endl;
+			return false;
+		}
+
+		if (parametros != "") {
+			modelo = splitLine(parametros);
+			cout << "Irei construir carro COM modelo!" << endl;
+			//Carro(capacidadeInicial,capacidadeMaxima,marca,modelo)
+			//push_back vectorCarro(DGV)
+		}
+		else {
+			cout << "Irei construir carro SEM modelo!" << endl;
+			//Carro(capacidadeInicial,capacidadeMaxima,marca)
+			//push_back vectorCarro(DGV)
+		}
+
+		cout << "\tCarro:" << marca << "," << modelo << "(" << capInicial << "/" << capMaxima << ")\n" << endl;
+		return true;
+		
+	}	
+	else if (tipo == "p") {
+		//piloto
+		string tipoPiloto = "", nome = "";
+
+		tipoPiloto = splitLine(parametros);
+		parametros.erase(0, tipoPiloto.size() + 1);
+
+		nome = splitLine(parametros);
+	
+		//verificar se tem todos os elementos necessarios
+		if (tipoPiloto == "" || nome == "") {
+			cout << "Nao e possivel criar piloto com estes parametros!" << endl;
+			return false;
+		}
+
+		cout << "\tPiloto:(" << tipoPiloto << "," << nome << ")\n" << endl;
+		//Piloto(tipo, nome);
+		return true;
+	}
+	else if (tipo == "a") {
+		//autodromo
+		string nome = "", tmp = "";
+		int n = 0, comprimento = 0;
+
+		tmp = splitLine(parametros);
+		parametros.erase(0, tmp.size() + 1);
+		n = stoi(tmp);
+
+		tmp = splitLine(parametros);
+		parametros.erase(0, tmp.size() + 1);
+		comprimento = stoi(tmp);
+
+		nome = splitLine(parametros);
+
+		if (nome == "") {
+			cout << "Nao e possivel criar autodromo com estes parametros!" << endl;
+			return false;
+		}
+
+		cout << "\tAutodromo[" << n << "]:" << nome << "(" << comprimento << " metros)\n" << endl;
+		//Autodromo(N,comprimento,nome);
+	}
+	else {
+		cout << "Nao existe nenhum objeto do tipo '" << tipo << "'" << endl;
+	}
+	return false;
+}
+
+bool Interface::apaga(std::string parametros)
+{
+	string tipo;
+	tipo = splitLine(parametros);
+
+	if (tipo == "") {//sem parametros
+		cout << "Tipo de objeto para apgar(c,p,a):";
+		getline(cin, tipo);
+		tipo = splitLine(tipo);
+	}
+	else {
+		parametros.erase(0, tipo.size() + 1);//remove o tipo dos parametros
+	}
+
+	if (parametros == "") {
+		if (tipo == "c")
+			cout << "Identificador do carro(letra):";
+		else if (tipo == "p")
+			cout << "Identificador do piloto(nome):";
+		if (tipo == "a")
+			cout << "Identificador do autodromo(nome):";
+		getline(cin, parametros);
+	}
+
+	parametros = splitLine(parametros);
+
+	cout << "\tTipo='" << tipo << "'\n\tParametros=" << parametros << endl;
+	if (tipo == "c") {
+		//elimina carro
+		return true;
+	}
+	else if (tipo == "p") {
+		//elimina piloto
+		return true;
+	}
+	if (tipo == "a") {
+		//elimina autodromo
+		return true;
+	}
+	return false;
+}
+
+std::string Interface::precisaNomeFicheiro()
+{
+	string returnString;
+	cout << "Nome ficheiro + extensao:";
+	getline(cin, returnString);
+	returnString = splitLine(returnString);
+	//cout << "Final:'" << returnString << "'!" << endl;
+	return returnString;
+}
+
+bool Interface::lerFicheiroPiloto(string fileName)
+{
+	fileName = splitLine(fileName);//mantem apenas o primeiro parametr
+	if (fileName == "")
+		fileName = precisaNomeFicheiro();
+
+	// << "A abrir o ficheio:'" << fileName << "'" << endl;
+	int i = 0;
+	string line, tipo, nome;
+	ifstream myfile(fileName);
+	if (myfile.is_open())
+	{
+		while (getline(myfile, line))
+		{
+			tipo = "", nome = "";//reset
+			cout << "Linha[" << i++ << "]:" << line << endl;
+
+			tipo = splitLine(line);
+			line.erase(0, tipo.size() + 1);
+
+			nome = splitLine(line);
+
+			cout << "\tPiloto:(" << tipo << "," << nome << ")\n" << endl;
+			//Piloto(tipo, nome);
+		}
+		myfile.close();
+		return true;
+	}
+	else cout << "Erro na leitura do fichero:'" << fileName << "'" << endl;
+
+	return false;
+}
+
+bool Interface::lerFicheiroCarro(std::string fileName)
+{
+	fileName = splitLine(fileName);//mantem apenas o primeiro parametr
+	if (fileName == "")
+		fileName = precisaNomeFicheiro();
+
+	// << "A abrir o ficheio:'" << fileName << "'" << endl;
+	int i = 0;
+	string line, capInicial,capMaxima,marca,modelo;
+	ifstream myfile(fileName);
+	if (myfile.is_open())
+	{
+		while (getline(myfile, line))
+		{
+			capInicial = "", capMaxima = "", marca = "", modelo = "";//reset
+			cout << "Linha[" << i++ << "]:" << line << endl;
+
+			capInicial = splitLine(line);
+			line.erase(0, capInicial.size() + 1);
+
+			capMaxima = splitLine(line);
+			line.erase(0, capMaxima.size() + 1);
+
+			marca = splitLine(line);
+			line.erase(0, marca.size() + 1);
+
+			if (line != "") {
+				modelo = splitLine(line);
+				cout << "Irei construir carro COM modelo!" << endl;
+				//Carro(capacidadeInicial,capacidadeMaxima,marca,modelo)
+			}
+			else {
+				cout << "Irei construir carro SEM modelo!" << endl;
+				//Carro(capacidadeInicial,capacidadeMaxima,marca)
+			}
+			
+			
+			cout << "\tCarro:" << marca << "," << modelo << "(" << capInicial << "/" << capMaxima << ")\n" << endl;
+	
+		}
+		myfile.close();
+		return true;
+	}
+	else cout << "Erro na leitura do fichero:'" << fileName << "'" << endl;
+
+	return false;
+}
+
+bool Interface::lerFicheiroAutodromo(std::string fileName)
+{
+	fileName = splitLine(fileName);//mantem apenas o primeiro parametr
+	if (fileName == "")
+		fileName = precisaNomeFicheiro();
+
+	// << "A abrir o ficheio:'" << fileName << "'" << endl;
+	int i = 0;
+	string line, nome,tmp;
+	int n, comprimento;
+	ifstream myfile(fileName);
+	if (myfile.is_open())
+	{
+		while (getline(myfile, line))
+		{
+			nome = "", tmp = "";
+			n = 0, comprimento = 0;//reset
+
+			cout << "Linha[" << i++ << "]:" << line << endl;
+
+			tmp = splitLine(line);
+			line.erase(0, tmp.size() + 1);
+			n = stoi(tmp);
+
+			tmp = splitLine(line);
+			line.erase(0, tmp.size() + 1);
+			comprimento = stoi(tmp);
+
+			nome = line;
+
+			cout << "\tAutodromo[" << n << "]:" << nome << "(" << comprimento << " metros)\n" << endl;
+			//Autodromo(N,comprimento,nome);
+		}
+		myfile.close();
+		return true;
+	}
+	else cout << "Erro na leitura do fichero:'" << fileName << "'" << endl;
+
 	return false;
 }
 

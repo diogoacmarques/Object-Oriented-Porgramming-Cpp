@@ -6,7 +6,7 @@ using namespace std;
 
 
 int main() {
-	Interface a("diogo");
+	Interface a("alpha");
 	a.start();
 	return 0;
 }

@@ -5,12 +5,11 @@
 class Carro
 {
 	std::string marca, modelo;
-	static char idStatic;
-	const char id;	
+	static char idStatic;//id (partilhado) que vaio sendo alterado conforme o numero de carros
+	const char id;//id do carro	
 	//bateria
 	int mAh;
-	static const int capMax = 100;//igual para todos e nao e possivel alterar
-	static const int bateriaInicial = 20;////igual para todos e nao e possivel alterar
+	const int capcidadeMaxima;
 	//moviemento
 	bool movimento = false;
 	int kmH = 0;
@@ -21,8 +20,8 @@ class Carro
 	//Piloto
 	Piloto * p = nullptr;
 public:
-	Carro(std::string marca, int kmHMax);
-	Carro(std::string marca,std::string modelo, int kmHMax);
+	//capacidadeInicial capacidadeMaxima marca modelo (modelo pode não ser inserido)
+	Carro(int capInicial,int capMax,std::string marca,std::string modelo = "modelo_base");
 	~Carro();
 
 	//funcionalidades
