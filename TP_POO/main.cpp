@@ -7,6 +7,6 @@ using namespace std;
 
 int main() {
 	Interface a("alpha");
-	a.start();
+	a.inciar();
 	return 0;
 }

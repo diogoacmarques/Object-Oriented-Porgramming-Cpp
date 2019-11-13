@@ -3,3 +3,6 @@
 - Tipo crazy driver, os 5% de probabilidade, é por cada segundo ? sim
 -Tempo vai passando ? Ou só passa quando fazemos o comando "passatempo" ? comando passatempo
 -Como podemos fazer a associação entre autódromos, pista e garagem ? (Classes diferentes, mesma classe ?)
+
+-Como é que a classe piloto consegue ver se existem nomes iguais, visto os dados se encontrarem na classe DVG?
+delete [] todosCarros;

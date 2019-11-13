@@ -5,22 +5,29 @@
 #include "Piloto.h"
 class DVG
 {
-	std::string nome;
 	std::vector<Piloto*> todosPilotos;
 	std::vector<Carro*> todosCarros;
 public:
-	DVG(std::string n);
+	DVG();
 	~DVG();
 
 	//Piloto
 	Piloto * obtemPiloto(std::string nome);//devia ser privado?
 	bool criaPiloto(std::string tipo,std::string nome);
 	bool apagaPiloto(std::string nome);
+	int obtemPosVectorPiloto(std::string nome) const;
 
 	//Carro
-	bool criaCarro(int capInicial, int capMax, std::string, std::string modelo);
+	Carro * obtemCarro(char letra);
+	bool criaCarro(int capInicial, int capMax, std::string marca, std::string modelo = "");
 	bool apagaCarro(char letra);
+	int obtemPosVectorCarro(char letra) const;
 
 
+
+
+	//toString
+	std::string obtemTodosCarros();
+	std::string obtemTodosPilotos();
 
 };

@@ -5,6 +5,7 @@
 class Piloto
 {
 	const std::string nome;
+	const std::string tipo;
 public:
 	Piloto(std::string n);
 	~Piloto();
@@ -16,4 +17,7 @@ public:
 	bool verificaCarro() const;//verifica se esta dentro de algum carro
 	bool entraNoCarro();
 	bool saiDoCarro();
+
+	//toString
+	std::string pilotoToString();
 };

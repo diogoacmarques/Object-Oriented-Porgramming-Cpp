@@ -27,5 +27,8 @@ public:
 	int carregaBateria(int n);
 	char obtemId() const;
 	std::string obtemCarro() const;
+
+	//toString
+	std::string carroToString();
 };
 

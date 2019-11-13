@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
 using namespace std;
 
 Interface::Interface(string n):nome(n),modo(1)
@@ -12,15 +13,10 @@ Interface::~Interface()
 {
 }
 
-bool Interface::start()
+bool Interface::inciar()
 {
-	cout << "Starting Game!" << endl;
-	getCommand();
-	return true;
-}
+	cout << "Starting interface!" << endl;
 
-bool Interface::getCommand()
-{
 	string linha;//getline
 	string comando;//comando(primeira palavra da linha)
 	do {
@@ -34,21 +30,24 @@ bool Interface::getCommand()
 			//cout << "Comando:" << comando << endl;
 			//cout << "Parametros:'" << linha << "'\n" << endl;
 
+			if (comando == "fim")
+				break;
 
 			if (modo == 1) {//modo 1
 				//meta 1: Execução de todos os comandos exceto savedgv, loaddgv e deldgv.
 				if (comando == "carregaP")
-					lerFicheiroPiloto(linha);
+					jogo.lerFicheiroPiloto(linha);
+				//lerFicheiroPiloto(linha);
 				else if (comando == "carregaC")
-					lerFicheiroCarro(linha);
+					jogo.lerFicheiroCarro(linha);
 				else if (comando == "carregaA")
-					lerFicheiroAutodromo(linha);
+					jogo.lerFicheiroAutodromo(linha);
 				else if (comando == "cria")
 					cria(linha);
 				else if (comando == "apaga")
 					apaga(linha);
 				else if (comando == "entranocarro")
-					entraCarro(linha);
+					func();
 				else if (comando == "saidocarro")
 					func();
 				else if (comando == "lista")
@@ -91,7 +90,7 @@ bool Interface::getCommand()
 					cout << "Este comando nao se encontra na lista do modo 2!" << endl;
 			}
 		}
-			
+
 
 	} while (linha != "fim");
 
@@ -147,7 +146,7 @@ bool Interface::cria(std::string parametros)
 
 	if (tipo == "c") {
 		//carro
-		string capInicial = "", capMaxima = "", marca = "", modelo = "~";
+		string capInicial = "", capMaxima = "", marca = "", modelo = "";
 
 		capInicial = splitLine(parametros);
 		parametros.erase(0, capInicial.size() + 1);
@@ -168,15 +167,14 @@ bool Interface::cria(std::string parametros)
 			modelo = splitLine(parametros);
 			cout << "Irei construir carro COM modelo!" << endl;
 			//Carro(capacidadeInicial,capacidadeMaxima,marca,modelo)
-			//push_back vectorCarro(DGV)
 		}
 		else {
 			cout << "Irei construir carro SEM modelo!" << endl;
 			//Carro(capacidadeInicial,capacidadeMaxima,marca)
-			//push_back vectorCarro(DGV)
 		}
 
-		cout << "\tCarro:" << marca << "," << modelo << "(" << capInicial << "/" << capMaxima << ")\n" << endl;
+		//cout << "\tCarro:" << marca << "," << modelo << "(" << capInicial << "/" << capMaxima << ")\n" << endl;
+		jogo.criaCarro(stoi(capInicial), stoi(capMaxima), marca, modelo);
 		return true;
 		
 	}	
@@ -195,8 +193,8 @@ bool Interface::cria(std::string parametros)
 			return false;
 		}
 
-		cout << "\tPiloto:(" << tipoPiloto << "," << nome << ")\n" << endl;
-		//Piloto(tipo, nome);
+		//cout << "\tPiloto:(" << tipoPiloto << "," << nome << ")\n" << endl;
+		jogo.criaPiloto(tipo, nome);
 		return true;
 	}
 	else if (tipo == "a") {
@@ -219,8 +217,9 @@ bool Interface::cria(std::string parametros)
 			return false;
 		}
 
-		cout << "\tAutodromo[" << n << "]:" << nome << "(" << comprimento << " metros)\n" << endl;
-		//Autodromo(N,comprimento,nome);
+		//cout << "\tAutodromo[" << n << "]:" << nome << "(" << comprimento << " metros)\n" << endl;
+		jogo.criaAutodromo(n, comprimento, nome);
+		return true;
 	}
 	else {
 		cout << "Nao existe nenhum objeto do tipo '" << tipo << "'" << endl;
@@ -256,61 +255,20 @@ bool Interface::apaga(std::string parametros)
 
 	cout << "\tTipo='" << tipo << "'\n\tParametros=" << parametros << endl;
 	if (tipo == "c") {
-		//elimina carro
-		return true;
+		return jogo.apagaCarro(parametros[0]);
 	}
 	else if (tipo == "p") {
-		//elimina piloto
-		return true;
+		return jogo.apagaPiloto(parametros);
 	}
 	if (tipo == "a") {
-		//elimina autodromo
-		return true;
+		return jogo.apagaAutodromo(parametros);
 	}
 	return false;
 }
 
-bool Interface::entraCarro(std::string parametros)
-{
-	string carro,nome;
-	if (parametros == "") {
-		cout << "letra_carro nome_piloto:";
-		getline(cin, parametros);
-	}
-
-	carro = splitLine(parametros);
-	parametros.erase(0, carro.size() + 1);
-
-	nome = splitLine(parametros);
-	
-	if (carro < "a" || carro > "b") {
-		cout << "Parametro de carro invalido" << endl;
-		return false;
-	}
-
-	//entraCarro
-
-	return true;
-}
-
 std::string Interface::listaTudo()
 {
-	ostringstream os;
-	//vector<Carro*>::iterator it = todosCarros.begin();
-
-	os << "Carros:" << endl;
-	Carro * tmp;
-
-	for (unsigned int i = 0; i < todosCarros.size(); i++) {
-		tmp = todosCarros.at(i);
-		os << "\t" << tmp->obtemCarro() << endl;
-	}
-
-	/*while (it != todosCarros.end()) {
-		os << "\t" << *it->getId() << endl;
-		it++;
-	}*/
-	return os.str();
+	return jogo.lista();
 }
 
 std::string Interface::precisaNomeFicheiro()
@@ -321,135 +279,6 @@ std::string Interface::precisaNomeFicheiro()
 	returnString = splitLine(returnString);
 	//cout << "Final:'" << returnString << "'!" << endl;
 	return returnString;
-}
-
-bool Interface::lerFicheiroPiloto(string fileName)
-{
-	fileName = splitLine(fileName);//mantem apenas o primeiro parametr
-	if (fileName == "")
-		fileName = precisaNomeFicheiro();
-
-	// << "A abrir o ficheio:'" << fileName << "'" << endl;
-	int i = 0;
-	string line, tipo, nome;
-	ifstream myfile(fileName);
-	if (myfile.is_open())
-	{
-		while (getline(myfile, line))
-		{
-			tipo = "", nome = "";//reset
-			cout << "Linha[" << i++ << "]:" << line << endl;
-
-			tipo = splitLine(line);
-			line.erase(0, tipo.size() + 1);
-
-			nome = splitLine(line);
-
-			cout << "\tPiloto:(" << tipo << "," << nome << ")\n" << endl;
-			//Piloto(tipo, nome);
-		}
-		myfile.close();
-		return true;
-	}
-	else cout << "Erro na leitura do fichero:'" << fileName << "'" << endl;
-
-	return false;
-}
-
-bool Interface::lerFicheiroCarro(std::string fileName)
-{
-	fileName = splitLine(fileName);//mantem apenas o primeiro parametr
-	if (fileName == "")
-		fileName = precisaNomeFicheiro();
-
-	// << "A abrir o ficheio:'" << fileName << "'" << endl;
-	int i = 0;
-	string line, capInicial,capMaxima,marca,modelo;
-	int capI, capM;
-	ifstream myfile(fileName);
-	Carro * car;
-	if (myfile.is_open())
-	{
-		while (getline(myfile, line))
-		{
-			capInicial = "", capMaxima = "", marca = "", modelo = "";//reset
-			capI = -1,capM = -1;
-			cout << "Linha[" << i++ << "]:" << line << endl;
-
-			capInicial = splitLine(line);
-			line.erase(0, capInicial.size() + 1);
-			capI = stoi(capInicial);
-
-			capMaxima = splitLine(line);
-			line.erase(0, capMaxima.size() + 1);
-			capM = stoi(capMaxima);
-
-			marca = splitLine(line);
-			line.erase(0, marca.size() + 1);
-
-			if (line != "") {
-				//Carro(capacidadeInicial,capacidadeMaxima,marca)
-				modelo = splitLine(line);
-				cout << "Irei construir carro COM modelo!" << endl;
-				car = new Carro(capI, capM, marca, modelo);
-				//Carro(capacidadeInicial,capacidadeMaxima,marca,modelo)
-			}
-			else {
-				cout << "Irei construir carro SEM modelo!" << endl;
-				car = new Carro(capI, capM, marca, modelo);
-			}
-			
-			todosCarros.push_back(car);
-			cout << "\tCarro:" << marca << "," << modelo << "(" << capInicial << "/" << capMaxima << ")\n" << endl;
-	
-		}
-		myfile.close();
-		return true;
-	}
-	else cout << "Erro na leitura do fichero:'" << fileName << "'" << endl;
-
-	return false;
-}
-
-bool Interface::lerFicheiroAutodromo(std::string fileName)
-{
-	fileName = splitLine(fileName);//mantem apenas o primeiro parametr
-	if (fileName == "")
-		fileName = precisaNomeFicheiro();
-
-	// << "A abrir o ficheio:'" << fileName << "'" << endl;
-	int i = 0;
-	string line, nome,tmp;
-	int n, comprimento;
-	ifstream myfile(fileName);
-	if (myfile.is_open())
-	{
-		while (getline(myfile, line))
-		{
-			nome = "", tmp = "";
-			n = 0, comprimento = 0;//reset
-
-			cout << "Linha[" << i++ << "]:" << line << endl;
-
-			tmp = splitLine(line);
-			line.erase(0, tmp.size() + 1);
-			n = stoi(tmp);
-
-			tmp = splitLine(line);
-			line.erase(0, tmp.size() + 1);
-			comprimento = stoi(tmp);
-
-			nome = line;
-
-			cout << "\tAutodromo[" << n << "]:" << nome << "(" << comprimento << " metros)\n" << endl;
-			//Autodromo(N,comprimento,nome);
-		}
-		myfile.close();
-		return true;
-	}
-	else cout << "Erro na leitura do fichero:'" << fileName << "'" << endl;
-
-	return false;
 }
 
 bool Interface::func()

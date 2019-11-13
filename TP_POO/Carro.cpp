@@ -10,7 +10,7 @@ Carro::Carro(int capInicial, int capMax, string marca, string modelo):mAh(capIni
 {
 	if (idStatic < 'a' || idStatic > 'z')
 		idStatic = '?';
-	cout << "Construtor[Carro]:" << marca << "," << modelo << " (" << mAh << "/" << capcidadeMaxima << ")" << endl;
+	cout << "\tConstrutor_Carro:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")\n" << endl;
 }
 
 Carro::~Carro()
@@ -41,6 +41,13 @@ char Carro::obtemId() const
 }
 
 std::string Carro::obtemCarro() const
+{
+	ostringstream os;
+	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")";
+	return os.str();
+}
+
+std::string Carro::carroToString()
 {
 	ostringstream os;
 	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")";

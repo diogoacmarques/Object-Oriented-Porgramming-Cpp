@@ -1,35 +1,26 @@
 #include "Piloto.h"
+#include <iostream>
+#include <sstream>
 
-Piloto::Piloto(std::string n):nome(n)
+using namespace std;
+
+Piloto::Piloto(std::string n):nome(n),tipo("normal")
 {
-	//funcao para confirmar que nao existe nenhum nome igual
+	cout << "\tConstrutor_Piloto:(" << tipo << "," << nome << ")\n" << endl;
 }
 
 Piloto::~Piloto()
 {
+	cout << "Destrutor do piloto..." << endl;
 }
 std::string Piloto::obtemNome() const
 {
 	return nome;
 }
-/*
-bool Piloto::checkCar() const
-{
-	if (carro != nullptr)
-		return true;
-	else
-		return false;
-}
 
-bool Piloto::getInCar(Carro * c)
+std::string Piloto::pilotoToString()
 {
-	carro = c;
-	return true;
+	ostringstream os;
+	os << "Piloto:(" << tipo << "," << nome << ")";
+	return os.str();
 }
-
-bool Piloto::getOutCar()
-{
-	carro = nullptr;
-	return true;
-}
-*/
