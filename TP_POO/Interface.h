@@ -1,8 +1,10 @@
 #pragma once
-#include "Carro.h"
+#include "Jogo.h"
 #include <string>
 class Interface
 {
+	Jogo p;
+
 	std::string nome;
 	int modo;
 
@@ -14,6 +16,11 @@ class Interface
 
 	bool cria(std::string parametros);
 	bool apaga(std::string parametros);
+
+	bool entraCarro(std::string parametros);
+
+	std::string listaTudo();
+
 public:
 	Interface(std::string n = "default");
 	~Interface();

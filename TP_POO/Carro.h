@@ -1,11 +1,10 @@
 #pragma once
 #include <string>
-#include "Piloto.h"
 
 class Carro
 {
 	std::string marca, modelo;
-	static char idStatic;//id (partilhado) que vaio sendo alterado conforme o numero de carros
+	static char idStatic;//id (partilhado) que vai sendo alterado conforme o numero de carros
 	const char id;//id do carro	
 	//bateria
 	int mAh;
@@ -18,7 +17,7 @@ class Carro
 	bool danoIrreparavel = false;
 	bool sinalEmergencia = false;
 	//Piloto
-	Piloto * p = nullptr;
+	//Piloto * p = nullptr;
 public:
 	//capacidadeInicial capacidadeMaxima marca modelo (modelo pode não ser inserido)
 	Carro(int capInicial,int capMax,std::string marca,std::string modelo = "modelo_base");
@@ -26,5 +25,7 @@ public:
 
 	//funcionalidades
 	int carregaBateria(int n);
+	char obtemId() const;
+	std::string obtemCarro() const;
 };
 

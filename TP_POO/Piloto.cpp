@@ -8,6 +8,10 @@ Piloto::Piloto(std::string n):nome(n)
 Piloto::~Piloto()
 {
 }
+std::string Piloto::obtemNome() const
+{
+	return nome;
+}
 /*
 bool Piloto::checkCar() const
 {

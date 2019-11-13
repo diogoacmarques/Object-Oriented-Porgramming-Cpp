@@ -1,11 +1,12 @@
 #include "Carro.h"
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
 char Carro::idStatic = 'a';//inicializar o 'cont'
 
-Carro::Carro(int capInicial, int capMax, std::string marca, std::string modelo):mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++)
+Carro::Carro(int capInicial, int capMax, string marca, string modelo):mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++)
 {
 	if (idStatic < 'a' || idStatic > 'z')
 		idStatic = '?';
@@ -32,4 +33,16 @@ int Carro::carregaBateria(int n)
 	}
 
 	return 0;
+}
+
+char Carro::obtemId() const
+{
+	return id;
+}
+
+std::string Carro::obtemCarro() const
+{
+	ostringstream os;
+	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")";
+	return os.str();
 }

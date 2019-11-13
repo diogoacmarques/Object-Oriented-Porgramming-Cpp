@@ -4,15 +4,16 @@
 #include <vector>
 class Piloto
 {
-	//const std::string nome;
-	std::string nome;
+	const std::string nome;
 public:
 	Piloto(std::string n);
 	~Piloto();
 
 	//funcionalidades
+	std::string obtemNome() const;
+	   
 		//carro
-	bool checkCar() const;
-	//bool getInCar(Carro * c);
-	bool getOutCar();
+	bool verificaCarro() const;//verifica se esta dentro de algum carro
+	bool entraNoCarro();
+	bool saiDoCarro();
 };

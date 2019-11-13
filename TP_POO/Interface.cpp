@@ -48,11 +48,11 @@ bool Interface::getCommand()
 				else if (comando == "apaga")
 					apaga(linha);
 				else if (comando == "entranocarro")
-					func();
+					entraCarro(linha);
 				else if (comando == "saidocarro")
 					func();
 				else if (comando == "lista")
-					func();
+					cout << listaTudo();
 				else if (comando == "savedgv")
 					func();//meta 2
 				else if (comando == "loaddgv")
@@ -270,6 +270,49 @@ bool Interface::apaga(std::string parametros)
 	return false;
 }
 
+bool Interface::entraCarro(std::string parametros)
+{
+	string carro,nome;
+	if (parametros == "") {
+		cout << "letra_carro nome_piloto:";
+		getline(cin, parametros);
+	}
+
+	carro = splitLine(parametros);
+	parametros.erase(0, carro.size() + 1);
+
+	nome = splitLine(parametros);
+	
+	if (carro < "a" || carro > "b") {
+		cout << "Parametro de carro invalido" << endl;
+		return false;
+	}
+
+	//entraCarro
+
+	return true;
+}
+
+std::string Interface::listaTudo()
+{
+	ostringstream os;
+	//vector<Carro*>::iterator it = todosCarros.begin();
+
+	os << "Carros:" << endl;
+	Carro * tmp;
+
+	for (unsigned int i = 0; i < todosCarros.size(); i++) {
+		tmp = todosCarros.at(i);
+		os << "\t" << tmp->obtemCarro() << endl;
+	}
+
+	/*while (it != todosCarros.end()) {
+		os << "\t" << *it->getId() << endl;
+		it++;
+	}*/
+	return os.str();
+}
+
 std::string Interface::precisaNomeFicheiro()
 {
 	string returnString;
@@ -322,34 +365,41 @@ bool Interface::lerFicheiroCarro(std::string fileName)
 	// << "A abrir o ficheio:'" << fileName << "'" << endl;
 	int i = 0;
 	string line, capInicial,capMaxima,marca,modelo;
+	int capI, capM;
 	ifstream myfile(fileName);
+	Carro * car;
 	if (myfile.is_open())
 	{
 		while (getline(myfile, line))
 		{
 			capInicial = "", capMaxima = "", marca = "", modelo = "";//reset
+			capI = -1,capM = -1;
 			cout << "Linha[" << i++ << "]:" << line << endl;
 
 			capInicial = splitLine(line);
 			line.erase(0, capInicial.size() + 1);
+			capI = stoi(capInicial);
 
 			capMaxima = splitLine(line);
 			line.erase(0, capMaxima.size() + 1);
+			capM = stoi(capMaxima);
 
 			marca = splitLine(line);
 			line.erase(0, marca.size() + 1);
 
 			if (line != "") {
+				//Carro(capacidadeInicial,capacidadeMaxima,marca)
 				modelo = splitLine(line);
 				cout << "Irei construir carro COM modelo!" << endl;
+				car = new Carro(capI, capM, marca, modelo);
 				//Carro(capacidadeInicial,capacidadeMaxima,marca,modelo)
 			}
 			else {
 				cout << "Irei construir carro SEM modelo!" << endl;
-				//Carro(capacidadeInicial,capacidadeMaxima,marca)
+				car = new Carro(capI, capM, marca, modelo);
 			}
 			
-			
+			todosCarros.push_back(car);
 			cout << "\tCarro:" << marca << "," << modelo << "(" << capInicial << "/" << capMaxima << ")\n" << endl;
 	
 		}
