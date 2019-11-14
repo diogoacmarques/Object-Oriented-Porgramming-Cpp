@@ -11,7 +11,7 @@ Autodromo::Autodromo(int n_Max, int comprimento, std::string n):pista(n_Max,comp
 
 Autodromo::~Autodromo()
 {
-	cout << "Destrutor autodromo '" << nome << "'" << endl;
+	cout << "Destrutor_autodromo:'" << nome << "'" << endl;
 }
 
 std::string Autodromo::obtemNome() const

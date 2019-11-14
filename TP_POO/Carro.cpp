@@ -15,6 +15,7 @@ Carro::Carro(int capInicial, int capMax, string marca, string modelo):mAh(capIni
 
 Carro::~Carro()
 {
+	cout << "Destrutor_Carro(" << marca << "/" << modelo << ")" << endl;
 }
 
 int Carro::carregaBateria(int n)
@@ -47,9 +48,42 @@ std::string Carro::obtemCarro() const
 	return os.str();
 }
 
+bool Carro::temPiloto()
+{
+	if (nomePiloto.empty())
+		return false;
+	else
+		return true;
+}
+
+bool Carro::entraPiloto(std::string nPiloto)
+{
+	if (!temPiloto()) {
+		nomePiloto = nPiloto;
+		return true;
+	}
+	else
+		return false;
+}
+
+bool Carro::removePiloto()
+{
+	nomePiloto.clear();
+	return true;
+}
+
+std::string Carro::obtemNomePiloto() const
+{
+	return nomePiloto;
+}
+
 std::string Carro::carroToString()
 {
 	ostringstream os;
-	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")";
+	os << marca << "(" << modelo << "):" << endl;
+	os << "\t\tId:" << id;
+	os << "\n\t\tBateria:(" << mAh << "/" << capcidadeMaxima << ")";
+	if(temPiloto())
+	os << "\n\t\tPiloto:" << nomePiloto;
 	return os.str();
 }

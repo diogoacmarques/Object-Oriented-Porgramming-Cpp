@@ -11,8 +11,11 @@ Jogo::Jogo()
 
 Jogo::~Jogo()
 {
+	cout << "Destrutor_Jogo" << endl;
 	//delete [] todosAutodromos;
-	cout << "Destrutor Autodromo a não apagar carros e pilotos..." << endl;
+	for (int i = 0; i < todosAutodromos.size(); i++)
+		delete todosAutodromos.at(i);
+	todosAutodromos.clear();
 }
 
 bool Jogo::lerFicheiroPiloto(std::string fileName)
@@ -191,6 +194,16 @@ bool Jogo::apagaAutodromo(std::string nome)
 		it++;
 	}
 	return false;
+}
+
+bool Jogo::entraNoCarro(char idCarro, std::string nomePiloto)
+{
+	return dvg.associaCarroPiloto(idCarro,nomePiloto);
+}
+
+bool Jogo::saiDoCarro(char idCarro)
+{
+	return dvg.removePilotoCarro(idCarro);
 }
 
 std::string Jogo::lista()

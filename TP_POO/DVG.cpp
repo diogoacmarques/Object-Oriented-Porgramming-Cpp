@@ -10,11 +10,15 @@ DVG::DVG()
 
 DVG::~DVG()
 {
+	cout << "Destrutor DVG... (confirmar)" << endl;
 	//delete [] todosCarros;
-	//delete [] todosPilotos;
+	for (int i = 0; i < todosCarros.size(); i++)
+		delete todosCarros.at(i);
 	todosCarros.clear();
+	//delete [] todosPilotos;
+	for (int i = 0; i < todosPilotos.size(); i++)
+		delete todosPilotos.at(i);
 	todosPilotos.clear();
-	cout << "Destrutor DVG a não apagar carros e pilotos..." << endl;
 }
 
 Piloto * DVG::obtemPiloto(std::string nome)
@@ -118,6 +122,68 @@ int DVG::obtemPosVectorCarro(char letra) const
 			return i;
 
 	return -1;
+}
+
+bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)
+{
+	Carro * carroP = obtemCarro(idCarro);
+	Piloto * pilotoP = obtemPiloto(nomePiloto);
+
+	if (carroP != nullptr && pilotoP != nullptr) {//se existe
+		//cout << "Encontrei o carro e o piloto!" << endl;
+		if (!carroP->temPiloto() && !pilotoP->temCarro()) {//se nao tem piloto/carro
+			//cout << "Estao ambos livres" << endl;
+			if (carroP->entraPiloto(nomePiloto) && pilotoP->entraNoCarro(idCarro)) {
+				cout << "Sucesso a associar carro/piloto" << endl;
+				return true;
+			}
+			else {
+				cout << "Erro a associar carro/piloto!" << endl;
+				return false;
+			}
+				
+		}
+		else {
+			//cout << "Carro ou piloto esta ocupado!" << endl;
+			return false;
+		}
+		
+	}
+	else {
+		//cout << "Não encontrei piloto  ou carro!" << endl;
+		return false;
+	}
+}
+
+bool DVG::removePilotoCarro(char idCarro)
+{
+	Carro * carroP = obtemCarro(idCarro);
+	Piloto * pilotoP = obtemPiloto(carroP->obtemNomePiloto());
+
+	if (carroP != nullptr && pilotoP != nullptr) {//se existe
+		cout << "Encontrei o carro e o piloto!" << endl;
+		if (carroP->temPiloto() && pilotoP->temCarro()) {//se nao tem piloto/carro
+			cout << "Ambos estao ocupados" << endl;
+			if (carroP->removePiloto() && pilotoP->removeCarro()) {
+				cout << "Sucesso a remover carro/piloto" << endl;
+				return true;
+			}
+			else {
+				cout << "Erro a associar carro/piloto!" << endl;
+				return false;
+			}
+
+		}
+		else {
+			//cout << "Carro ou piloto esta ocupado!" << endl;
+			return false;
+		}
+
+	}
+	else {
+		//cout << "Não encontrei piloto  ou carro!" << endl;
+		return false;
+	}
 }
 
 std::string DVG::obtemTodosCarros()

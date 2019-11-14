@@ -1,11 +1,11 @@
 #pragma once
-//#include "Carro.h"
 #include <string>
 #include <vector>
 class Piloto
 {
 	const std::string nome;
 	const std::string tipo;
+	char idCarro;
 public:
 	Piloto(std::string n);
 	~Piloto();
@@ -14,9 +14,10 @@ public:
 	std::string obtemNome() const;
 	   
 		//carro
-	bool verificaCarro() const;//verifica se esta dentro de algum carro
-	bool entraNoCarro();
-	bool saiDoCarro();
+	bool temCarro() const;//verifica se esta dentro de algum carro
+	bool entraNoCarro(char id);//insere piloto
+	bool removeCarro();
+	char obtemIdCarro() const;
 
 	//toString
 	std::string pilotoToString();

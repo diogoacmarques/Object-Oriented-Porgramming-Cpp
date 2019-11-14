@@ -30,8 +30,14 @@ bool Interface::inciar()
 			//cout << "Comando:" << comando << endl;
 			//cout << "Parametros:'" << linha << "'\n" << endl;
 
+			//geral
 			if (comando == "fim")
 				break;
+			else if (comando == "clear") {
+				system("cls");
+				continue;
+			}
+				
 
 			if (modo == 1) {//modo 1
 				//meta 1: Execução de todos os comandos exceto savedgv, loaddgv e deldgv.
@@ -47,9 +53,9 @@ bool Interface::inciar()
 				else if (comando == "apaga")
 					apaga(linha);
 				else if (comando == "entranocarro")
-					func();
+					entraNoCarro(linha);
 				else if (comando == "saidocarro")
-					func();
+					saiDoCarro(linha);
 				else if (comando == "lista")
 					cout << listaTudo();
 				else if (comando == "savedgv")
@@ -263,6 +269,78 @@ bool Interface::apaga(std::string parametros)
 	if (tipo == "a") {
 		return jogo.apagaAutodromo(parametros);
 	}
+	return false;
+}
+
+bool Interface::entraNoCarro(std::string parametros)
+{
+	string nomePiloto;
+	string tmp;
+	char idCarro;
+	if (parametros.empty()) {
+		cout << "Insira os seguintes parametros:(<letraCarro> <nomePiloto>):";
+		getline(cin, parametros);
+	}
+
+	tmp = splitLine(parametros);
+	if (!tmp.empty()) {
+		idCarro = tmp[0];
+	}
+	else {
+		cout << "Erro nos parametros(letraCarro)" << endl;
+		return false;
+	}
+	parametros.erase(0,tmp.size() + 1);
+			nomePiloto = splitLine(parametros);
+	if (nomePiloto.empty()) {
+		cout << "Erro nos parametros(nomePiloto)" << endl;
+		return false;
+	}
+	
+	cout << "Funcao Entra no carro parametros:" << endl;
+	cout << "\tPiloto:'" << nomePiloto << "'" << endl;
+	cout << "\tidCarro:'" << idCarro << "'" << endl;
+
+
+	if (jogo.entraNoCarro(idCarro, nomePiloto)) {
+		cout << "Sucesso!" << endl;
+		return true;
+	}
+	
+	cout << "Erro ao associar carro/piloto" << endl;
+	return false;
+
+}
+
+bool Interface::saiDoCarro(std::string parametros)
+{
+	string tmp;
+	char idCarro;
+	if (parametros.empty()) {
+		cout << "Insira os seguintes parametros:(<letraCarro>):";
+		getline(cin, parametros);
+	}
+
+	tmp = splitLine(parametros);
+
+	if (!tmp.empty()) {
+		idCarro = tmp[0];
+	}
+	else {
+		cout << "Erro nos parametros(letraCarro)" << endl;
+		return false;
+	}
+
+	cout << "Funcao sai do carro parametros:" << endl;
+	cout << "\tidCarro:'" << idCarro << "'" << endl;
+
+
+	if (jogo.saiDoCarro(idCarro)) {
+		cout << "Sucesso!" << endl;
+		return true;
+	}
+
+	cout << "Erro a remover piloto do carro" << endl;
 	return false;
 }
 

@@ -23,7 +23,9 @@ public:
 	bool apagaCarro(char letra);
 	int obtemPosVectorCarro(char letra) const;
 
-
+	//Carro/Piloto
+	bool associaCarroPiloto(char idCarro, std::string nomePiloto);
+	bool removePilotoCarro(char idCarro);
 
 
 	//toString

@@ -17,7 +17,7 @@ class Carro
 	bool danoIrreparavel = false;
 	bool sinalEmergencia = false;
 	//Piloto
-	//Piloto * p = nullptr;
+	std::string nomePiloto;
 public:
 	//capacidadeInicial capacidadeMaxima marca modelo (modelo pode não ser inserido)
 	Carro(int capInicial,int capMax,std::string marca,std::string modelo = "modelo_base");
@@ -27,6 +27,12 @@ public:
 	int carregaBateria(int n);
 	char obtemId() const;
 	std::string obtemCarro() const;
+
+		//Piloto
+	bool temPiloto();//verifica se o carro tem algum piloto
+	bool entraPiloto(std::string nPiloto);
+	bool removePiloto();
+	std::string obtemNomePiloto() const;
 
 	//toString
 	std::string carroToString();
