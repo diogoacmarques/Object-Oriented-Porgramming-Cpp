@@ -3,7 +3,8 @@
 #include <vector>
 class Piloto
 {
-	const std::string nome;
+	static std::vector<std::string> todosNomesPilotos;
+	std::string nome;
 	const std::string tipo;
 	char idCarro;
 public:

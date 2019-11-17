@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -65,7 +66,7 @@ bool Interface::inciar()
 				else if (comando == "deldgv")
 					func();//meta 2
 				else if (comando == "campeonato") {
-					func();
+					campeonato(linha);
 					modo = 2;
 				}
 				else
@@ -347,6 +348,34 @@ bool Interface::saiDoCarro(std::string parametros)
 std::string Interface::listaTudo()
 {
 	return jogo.lista();
+}
+
+bool Interface::campeonato(std::string parametros)
+{
+	vector<string> autodromosCampeonato;
+	string nomeAutodromo;
+	if (parametros.empty()) {
+		cout << "Insira os seguintes parametros:(<A1> <A2> ... <An>):";
+		getline(cin, parametros);
+		if (parametros.empty()) {
+			cout << "Parametros invalidos" << endl;
+			return false;
+		}
+	}
+
+	while (!parametros.empty()) {
+
+		nomeAutodromo = splitLine(parametros);
+		parametros.erase(0, nomeAutodromo.size() + 1);
+
+		autodromosCampeonato.push_back(nomeAutodromo);	
+	}
+	
+	if (!autodromosCampeonato.empty()) {
+		jogo.campeonato(autodromosCampeonato);
+	}
+		
+		return false;
 }
 
 std::string Interface::precisaNomeFicheiro()

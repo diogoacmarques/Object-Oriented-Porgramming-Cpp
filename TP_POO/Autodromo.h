@@ -1,17 +1,26 @@
 #pragma once
 #include "Pista.h"
 #include "Garagem.h"
+#include "Carro.h"
+#include "Piloto.h"
 #include <string>
+#include <vector>
 class Autodromo
 {
-	const std::string nome;
+	static std::vector<std::string> todosNomesAutodromos;
+	std::string nome;
 	Pista pista;
 	Garagem garagem;
 public:
 	Autodromo(int n_Max, int comprimento, std::string n);
 	~Autodromo();
-
 	std::string obtemNome() const;
 	std::string autodromoToString() const;
+
+
+	//garagem
+	bool carregaCarros(std::vector<Carro*> vectorCarros);
+	std::string obtemCarrosGaragem() const;
+
 };
 

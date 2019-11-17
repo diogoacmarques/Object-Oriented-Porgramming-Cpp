@@ -8,7 +8,7 @@ class Jogo
 	std::vector <Autodromo*> todosAutodromos;
 
 	//separaPalavra
-
+	Autodromo * obtemAutodromo(std::string nomeA) const;
 public:
 	Jogo();
 	~Jogo();
@@ -46,6 +46,11 @@ public:
 
 	//deldgv
 	bool delDGV(std::string nome);
+
+	//modo 2
+	//campeonato (recebe um array/vector com o nome dos autodromos)
+	bool verificaAutodromo(std::string n) const;
+	bool campeonato(std::vector<std::string> nomesAutodromoIn);
 
 
 };

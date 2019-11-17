@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Autodromo.cpp" />
+    <ClCompile Include="Campeonato.cpp" />
     <ClCompile Include="Carro.cpp" />
     <ClCompile Include="DVG.cpp" />
     <ClCompile Include="Garagem.cpp" />
@@ -133,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Autodromo.h" />
+    <ClInclude Include="Campeonato.h" />
     <ClInclude Include="Carro.h" />
     <ClInclude Include="DVG.h" />
     <ClInclude Include="Garagem.h" />

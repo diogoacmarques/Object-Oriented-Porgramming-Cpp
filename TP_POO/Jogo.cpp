@@ -5,6 +5,18 @@
 
 using namespace std;
 
+Autodromo * Jogo::obtemAutodromo(std::string nomeA) const
+{
+	vector<Autodromo*>::const_iterator it = todosAutodromos.begin();
+	while (it != todosAutodromos.end()) {
+		if (nomeA == (*it)->obtemNome()) {
+			return (*it);
+		}
+		it++;
+	}
+	return nullptr;
+}
+
 Jogo::Jogo()
 {
 }
@@ -217,4 +229,48 @@ std::string Jogo::lista()
 	os << autodromoToString() << endl;
 
 	return os.str();
+}
+
+bool Jogo::verificaAutodromo(std::string nomeA) const
+{
+	Autodromo * tmp = obtemAutodromo(nomeA);
+	if (tmp != nullptr)
+		return true;
+	else
+		return false;
+}
+
+bool Jogo::campeonato(vector<string> nomesAutodromoIn)
+{
+	for (int i = 0; i < nomesAutodromoIn.size(); i++) {
+		//cout << "A verificar o nome:" << nomesAutodromoIn.at(i) << endl;
+		if (!verificaAutodromo(nomesAutodromoIn.at(i))) {
+			nomesAutodromoIn.erase(nomesAutodromoIn.begin() + i);
+			i--;
+			continue;
+		}
+	}
+
+	if (nomesAutodromoIn.empty())
+		return false;
+	//final:
+	cout << "\n\nFinal:" << endl;
+	for (int i = 0; i < nomesAutodromoIn.size(); i++)
+		cout << "\tNome:" << nomesAutodromoIn.at(i) << endl;
+
+	//começa o campeonato (modificar isto)
+	Autodromo * AutodromoCamponato;
+	for (int i = 0; i < nomesAutodromoIn.size(); i++) {	
+		AutodromoCamponato = obtemAutodromo(nomesAutodromoIn.at(i));
+		cout << "Autodromo:" << AutodromoCamponato->obtemNome() << endl;
+
+		//carregaCarros
+		AutodromoCamponato->carregaCarros(dvg.obtemVectorCarros());
+		cout << AutodromoCamponato->obtemCarrosGaragem();
+
+	}
+	
+
+
+	return false;
 }

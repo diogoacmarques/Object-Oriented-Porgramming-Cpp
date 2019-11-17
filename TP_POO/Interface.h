@@ -22,6 +22,8 @@ class Interface
 
 	std::string listaTudo();
 
+	bool campeonato(std::string parametros);
+
 public:
 	Interface(std::string n = "default");
 	~Interface();

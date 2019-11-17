@@ -33,20 +33,26 @@ Piloto * DVG::obtemPiloto(std::string nome)
 	return nullptr;
 }
 
+std::vector<Piloto*> DVG::obtemVectorPilotos() const
+{
+	return todosPilotos;
+}
+
 bool DVG::criaPiloto(string tipo, string nome)
 {
 	Piloto * tmp;
-	do {
-		tmp = obtemPiloto(nome);
-		if (tmp != nullptr) {//existe este nome
-			nome = nome + "x";
-		}
-		else {//nao existe nenhum com este nome
-			tmp = new Piloto(nome);
+	//do {
+		//tmp = obtemPiloto(nome);
+		//if (tmp != nullptr) {//existe este nome
+			//nome = nome + "x";
+		///}
+		//else {//nao existe nenhum com este nome
+			tmp = new Piloto(nome);		
 			todosPilotos.push_back(tmp);
 			return true;
-		}
-	} while (1);
+			//return true;
+		//}
+	//} while (1);
 
 	return false;
 }
@@ -85,6 +91,11 @@ Carro * DVG::obtemCarro(char letra)
 		it++;
 	}
 	return nullptr;
+}
+
+vector<Carro*> DVG::obtemVectorCarros() const
+{
+	return todosCarros;
 }
 
 bool DVG::criaCarro(int capInicial, int capMax, std::string marca, std::string modelo)
