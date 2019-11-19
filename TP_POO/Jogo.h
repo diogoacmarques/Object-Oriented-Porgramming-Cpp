@@ -1,13 +1,14 @@
 #pragma once
 #include "DVG.h"
 #include "Autodromo.h"
+#include "Campeonato.h"
 #include <vector>
 class Jogo
 {
 	DVG dvg;
+	Campeonato * camp;
 	std::vector <Autodromo*> todosAutodromos;
 
-	//separaPalavra
 	Autodromo * obtemAutodromo(std::string nomeA) const;
 public:
 	Jogo();
@@ -48,10 +49,34 @@ public:
 	bool delDGV(std::string nome);
 
 	//modo 2
-	//campeonato (recebe um array/vector com o nome dos autodromos)
+	//campeonato
 	bool verificaAutodromo(std::string n) const;
 	bool campeonato(std::vector<std::string> nomesAutodromoIn);
 
+	//lista carros
+	std::string listaCarros() const;
+
+	//carregabat
+
+	//carregatudo
+	bool carregaTudo();
+
+	//corrida
+	bool corrida();
+
+	//acidente
+
+	//stop
+
+	//destroi
+
+	//passatempo
+	bool passatempo(int segundos);
+
+	//log
+	
+
+	
 
 };
 

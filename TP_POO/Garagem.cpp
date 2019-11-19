@@ -25,11 +25,27 @@ bool Garagem::recebeCarros(std::vector<Carro*> tmp)
 		return false;
 }
 
+Carro * Garagem::saiParaPista()
+{
+	Carro * tmp;
+
+	if (!carrosNaGaragem.empty()) {
+
+		for (int i = 0; i < carrosNaGaragem.size(); i++) {
+			tmp = carrosNaGaragem.at(i);
+			if (tmp->temPiloto())
+				return tmp;
+		}
+	}
+	
+	return nullptr;
+}
+
 std::string Garagem::obtemCarros() const
 {
 	ostringstream os;
 	if (!carrosNaGaragem.empty()) {
-		cout << "Carreguei os seguintes carros:" << endl;
+		//cout << "Autodromo(garagem) carregou os carros:" << endl;
 		for (int i = 0; i < carrosNaGaragem.size(); i++)
 			os << carrosNaGaragem.at(i)->carroToString() << endl;
 	}

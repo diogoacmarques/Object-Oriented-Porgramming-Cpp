@@ -144,7 +144,7 @@ bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)
 		//cout << "Encontrei o carro e o piloto!" << endl;
 		if (!carroP->temPiloto() && !pilotoP->temCarro()) {//se nao tem piloto/carro
 			//cout << "Estao ambos livres" << endl;
-			if (carroP->entraPiloto(nomePiloto) && pilotoP->entraNoCarro(idCarro)) {
+			if (carroP->entraPiloto(nomePiloto) && pilotoP->entraNoCarro(carroP)) {
 				cout << "Sucesso a associar carro/piloto" << endl;
 				return true;
 			}
@@ -197,10 +197,18 @@ bool DVG::removePilotoCarro(char idCarro)
 	}
 }
 
-std::string DVG::obtemTodosCarros()
+bool DVG::carregaTodosCarros()
+{
+	for (int i = 0; i < todosCarros.size(); i++)
+		if (!todosCarros.at(i)->carregamentoTotal())
+			return false;
+	return true;
+}
+
+std::string DVG::obtemTodosCarros() const
 {
 	ostringstream os;
-	vector<Carro*>::iterator it = todosCarros.begin();
+	vector<Carro*>::const_iterator it = todosCarros.begin();
 
 	while (it != todosCarros.end()) {
 		os << "\t" << (*it)->carroToString() << endl;

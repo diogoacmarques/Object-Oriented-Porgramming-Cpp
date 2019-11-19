@@ -242,35 +242,74 @@ bool Jogo::verificaAutodromo(std::string nomeA) const
 
 bool Jogo::campeonato(vector<string> nomesAutodromoIn)
 {
-	for (int i = 0; i < nomesAutodromoIn.size(); i++) {
-		//cout << "A verificar o nome:" << nomesAutodromoIn.at(i) << endl;
-		if (!verificaAutodromo(nomesAutodromoIn.at(i))) {
-			nomesAutodromoIn.erase(nomesAutodromoIn.begin() + i);
-			i--;
-			continue;
+	if (camp == nullptr) {
+		cout << "A criar um campeonato!" << endl;
+		for (int i = 0; i < nomesAutodromoIn.size(); i++) {
+			//cout << "A verificar o nome:" << nomesAutodromoIn.at(i) << endl;
+			if (!verificaAutodromo(nomesAutodromoIn.at(i))) {
+				nomesAutodromoIn.erase(nomesAutodromoIn.begin() + i);
+				i--;
+				continue;
+			}
 		}
-	}
 
-	if (nomesAutodromoIn.empty())
-		return false;
-	//final:
-	cout << "\n\nFinal:" << endl;
-	for (int i = 0; i < nomesAutodromoIn.size(); i++)
-		cout << "\tNome:" << nomesAutodromoIn.at(i) << endl;
+		if (nomesAutodromoIn.empty()) {
+			cout << "Nao tenho nenhum autodromo legitimo para criar um campeonato!" << endl;
+			return false;
+		}
+			
+		//final:
+		cout << "\n\nFinal:" << endl;
+		for (int i = 0; i < nomesAutodromoIn.size(); i++)
+			cout << "\tNome:" << nomesAutodromoIn.at(i) << endl;
 
-	//começa o campeonato (modificar isto)
-	Autodromo * AutodromoCamponato;
-	for (int i = 0; i < nomesAutodromoIn.size(); i++) {	
-		AutodromoCamponato = obtemAutodromo(nomesAutodromoIn.at(i));
-		cout << "Autodromo:" << AutodromoCamponato->obtemNome() << endl;
+		//carrega os carros no primeiro autodromo
+		Autodromo * AutodromoCamponato;
+		AutodromoCamponato = obtemAutodromo(nomesAutodromoIn.at(0));
 
-		//carregaCarros
 		AutodromoCamponato->carregaCarros(dvg.obtemVectorCarros());
 		cout << AutodromoCamponato->obtemCarrosGaragem();
 
+		//incia o campeonato com o vecto de todos os autdromos neste campeonato
+		vector<Autodromo*> autodromosCampeonato;
+		for (int i = 0; i < nomesAutodromoIn.size(); i++) {
+			autodromosCampeonato.push_back(obtemAutodromo(nomesAutodromoIn.at(i)));
+		}
+
+		if (autodromosCampeonato.size() == nomesAutodromoIn.size())
+			cout << "Tenho o vetor de ponteiros com os " << autodromosCampeonato.size() << " autodromos" << endl;
+
+		cout << "Devia ter os pilots/carros associados a este ponto?(acho que sim)" << endl;
+
+		camp = new Campeonato("local");
+		camp->carregaAutodromos(autodromosCampeonato);
+
+		return true;
+	}
+	else {
+		cout << "Ja existe um campeonato a decorrer!" << endl;
+		return false;
 	}
 	
+}
 
+std::string Jogo::listaCarros() const
+{
+	return dvg.obtemTodosCarros();
+}
 
-	return false;
+bool Jogo::carregaTudo()
+{
+	return dvg.carregaTodosCarros();
+}
+
+bool Jogo::corrida()
+{
+	camp->proximaCorrida();
+	return true;
+}
+
+bool Jogo::passatempo(int segundos)
+{
+	return camp->passaTempo(segundos);
 }

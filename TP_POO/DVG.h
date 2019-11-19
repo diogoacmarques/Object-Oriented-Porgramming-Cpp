@@ -26,13 +26,14 @@ public:
 	bool apagaCarro(char letra);
 	int obtemPosVectorCarro(char letra) const;
 
+
 	//Carro/Piloto
 	bool associaCarroPiloto(char idCarro, std::string nomePiloto);
 	bool removePilotoCarro(char idCarro);
-
+	bool carregaTodosCarros();
 
 	//toString
-	std::string obtemTodosCarros();
+	std::string obtemTodosCarros() const;
 	std::string obtemTodosPilotos();
 
 };

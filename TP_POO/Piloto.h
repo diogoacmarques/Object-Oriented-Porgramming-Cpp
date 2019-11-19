@@ -1,4 +1,5 @@
 #pragma once
+#include "Carro.h"
 #include <string>
 #include <vector>
 class Piloto
@@ -6,7 +7,7 @@ class Piloto
 	static std::vector<std::string> todosNomesPilotos;
 	std::string nome;
 	const std::string tipo;
-	char idCarro;
+	Carro * carro;
 public:
 	Piloto(std::string n);
 	~Piloto();
@@ -16,7 +17,7 @@ public:
 	   
 		//carro
 	bool temCarro() const;//verifica se esta dentro de algum carro
-	bool entraNoCarro(char id);//insere piloto
+	bool entraNoCarro(Carro * carro);//insere piloto
 	bool removeCarro();
 	char obtemIdCarro() const;
 

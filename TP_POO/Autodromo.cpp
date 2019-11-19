@@ -45,10 +45,34 @@ std::string Autodromo::autodromoToString() const
 
 bool Autodromo::carregaCarros(std::vector<Carro*> vectorCarros)
 {
+	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar os carros" << endl;
 	return garagem.recebeCarros(vectorCarros);
 }
 
 std::string Autodromo::obtemCarrosGaragem() const
 {
-	return garagem.obtemCarros();
+	ostringstream os;
+	os << "O Autodromo '" << obtemNome() << "' tem os seguintes carros:" << endl;
+	os << garagem.obtemCarros();
+	return os.str();
+}
+
+bool Autodromo::insereCarrosPista()
+{
+	Carro * tmp;
+	bool temCarros = false;
+	for (int i = 0; i < pista.obtemNMax(); i++) {
+		tmp = garagem.saiParaPista();
+		if (tmp != nullptr)
+			temCarros = pista.insereCarro(tmp);
+	}
+
+	return temCarros;
+}
+
+bool Autodromo::passaTempo(int segundos)
+{
+	for (int i = 0; i < segundos; i++)
+		pista.passaSegundo();
+	return true;
 }

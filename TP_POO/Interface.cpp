@@ -76,13 +76,13 @@ bool Interface::inciar()
 				//meta 1 : Comando “campeonato <A1>” (só há um autódromo).
 				//meta 1 : Comando “passatempo <N>”
 				if (comando == "listacarros")
-					func();
+					cout << jogo.listaCarros();
 				else if (comando == "carregabat")
 					func();
 				else if (comando == "carregatudo")
-					func();
+					jogo.carregaTudo();
 				else if (comando == "corrida")
-					func();
+					jogo.corrida();
 				else if (comando == "acidente")
 					func();
 				else if (comando == "stop")
@@ -90,7 +90,7 @@ bool Interface::inciar()
 				else if (comando == "destroi")
 					func();
 				else if (comando == "passatempo")
-					func();
+					passaTempo(linha);
 				else if (comando == "log")
 					func();
 				else
@@ -376,6 +376,29 @@ bool Interface::campeonato(std::string parametros)
 	}
 		
 		return false;
+}
+
+bool Interface::passaTempo(std::string parametros)
+{
+	int segundos;
+	if (parametros.empty()) {
+		cout << "Insira os seguintes parametros:(<N>):";
+		getline(cin, parametros);
+	}
+
+	segundos = stoi(parametros);
+
+	if (parametros.empty() || segundos <= 0){
+		cout << "Parametros de tempo invalido" << endl;
+		return false;
+	}
+	
+
+	//cout << "Corrida avanca em " << segundos << " segundos." << endl;
+
+	jogo.passatempo(segundos);
+
+	return true;
 }
 
 std::string Interface::precisaNomeFicheiro()

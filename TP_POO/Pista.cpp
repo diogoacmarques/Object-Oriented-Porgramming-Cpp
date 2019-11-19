@@ -12,6 +12,12 @@ Pista::~Pista()
 {
 }
 
+bool Pista::insereCarro(Carro * c)
+{
+	carrosEmCompeticao.push_back(c);
+	return true;
+}
+
 int Pista::obtemComprimento() const
 {
 	return comprimento;
@@ -22,9 +28,18 @@ int Pista::obtemNMax() const
 	return nMax;
 }
 
+bool Pista::passaSegundo()
+{
+	for (int i = 0; i < carrosEmCompeticao.size(); i++)
+		if (carrosEmCompeticao.at(i)->acelera(1))//meta 1
+			cout << "Carro " << carrosEmCompeticao.at(i)->obtemId() << " acelarou" << endl;
+	return true;
+}
+
 bool Pista::terminarCorrida()
 {
-	//Permite terminar a corrida.Os carros são removidos da pista e vão para a garagem, e os pilotosaem dos veículos.	
+	//Permite terminar a corrida.Os carros são removidos da pista e vão para a garagem, e os pilotosaem dos veículos.
+	
 	return false;
 }
 

@@ -36,6 +36,12 @@ int Carro::carregaBateria(int n)
 	return 0;
 }
 
+bool Carro::carregamentoTotal()
+{
+	mAh = capcidadeMaxima;
+	return true;
+}
+
 char Carro::obtemId() const
 {
 	return id;
@@ -77,6 +83,36 @@ std::string Carro::obtemNomePiloto() const
 	return nomePiloto;
 }
 
+int Carro::obtemVelocidade() const
+{
+	return kmH;
+}
+
+bool Carro::acelera(int quantidade)
+{
+
+	if (danoIrreparavel && sinalEmergencia)
+		return false;
+
+	//if (kmH + quantidade < kmHMax)
+		//kmH += quantidade;
+	//else
+		//kmH = kmHMax;
+	kmH = 1;//meta 1
+	return true;
+}
+
+bool Carro::passaSegundo()
+{
+	if (mAh > 0) {
+		movimento = true;
+		acelera(1);//temporaria meta 1
+	}
+	
+	kmH++;
+	return false;
+}
+
 std::string Carro::carroToString()
 {
 	ostringstream os;
@@ -85,5 +121,7 @@ std::string Carro::carroToString()
 	os << "\n\t\tBateria:(" << mAh << "/" << capcidadeMaxima << ")";
 	if(temPiloto())
 	os << "\n\t\tPiloto:" << nomePiloto;
+	//if (movimento)
+		os << "\n\t\tKMH:" << kmH;
 	return os.str();
 }

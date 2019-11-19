@@ -10,6 +10,7 @@ public:
 
 	//funcionalidade
 	bool recebeCarros(std::vector<Carro*> tmp);
+	Carro * saiParaPista();
 	std::string obtemCarros() const;
 };
 

@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-
 class Carro
 {
 	std::string marca, modelo;
@@ -25,6 +24,7 @@ public:
 
 	//funcionalidades
 	int carregaBateria(int n);
+	bool carregamentoTotal();
 	char obtemId() const;
 	std::string obtemCarro() const;
 
@@ -33,6 +33,11 @@ public:
 	bool entraPiloto(std::string nPiloto);
 	bool removePiloto();
 	std::string obtemNomePiloto() const;
+
+	//movimento
+	int obtemVelocidade() const;
+	bool acelera(int quantidade);
+	bool passaSegundo();
 
 	//toString
 	std::string carroToString();

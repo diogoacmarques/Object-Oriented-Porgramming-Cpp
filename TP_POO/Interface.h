@@ -24,6 +24,8 @@ class Interface
 
 	bool campeonato(std::string parametros);
 
+	bool passaTempo(std::string parametros);
+
 public:
 	Interface(std::string n = "default");
 	~Interface();

@@ -6,7 +6,7 @@ using namespace std;
 
 std::vector<std::string> Piloto::todosNomesPilotos;
 
-Piloto::Piloto(std::string n):tipo("normal"), idCarro('-')
+Piloto::Piloto(std::string n) :tipo("normal")
 {
 
 	for (int i = 0; i < todosNomesPilotos.size(); i++) {
@@ -38,16 +38,17 @@ std::string Piloto::obtemNome() const
 
 bool Piloto::temCarro() const
 {
-	if (idCarro == '-')
+	if (carro ==  nullptr)
 		return false;
 	else
 		return true;
 }
 
-bool Piloto::entraNoCarro(char id)
+bool Piloto::entraNoCarro(Carro * c)
 {
+
 	if (!temCarro()) {
-		idCarro = id;
+		carro = c;
 		return true;
 	}else
 		return false;
@@ -55,13 +56,16 @@ bool Piloto::entraNoCarro(char id)
 
 bool Piloto::removeCarro()
 {
-	idCarro = '-';
+	carro =  nullptr;
 	return true;
 }
 
 char Piloto::obtemIdCarro() const
 {
-	return idCarro;
+	if (carro != nullptr)
+		return carro->obtemId();
+	else
+		return '-';
 }
 
 std::string Piloto::pilotoToString()
@@ -70,6 +74,6 @@ std::string Piloto::pilotoToString()
 	os << nome << ":" << endl;
 	os << "\t\t-Tipo:" << tipo;
 	if(temCarro())
-		os << "\n\t\tCarro:" << idCarro;
+		os << "\n\t\tCarro:" << carro->obtemId();
 	return os.str();
 }
