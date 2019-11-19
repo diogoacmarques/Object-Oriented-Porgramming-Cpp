@@ -12,9 +12,9 @@ Pista::~Pista()
 {
 }
 
-bool Pista::insereCarro(Carro * c)
+bool Pista::inserePiloto(Piloto * p)
 {
-	carrosEmCompeticao.push_back(c);
+	pilotosEmCompeticao.push_back(p);
 	return true;
 }
 
@@ -30,9 +30,10 @@ int Pista::obtemNMax() const
 
 bool Pista::passaSegundo()
 {
-	for (int i = 0; i < carrosEmCompeticao.size(); i++)
-		if (carrosEmCompeticao.at(i)->acelera(1))//meta 1
-			cout << "Carro " << carrosEmCompeticao.at(i)->obtemId() << " acelarou" << endl;
+	//verificar o piloto e conforme o seu tipo, atua
+
+	//e possivel obter a localização do carro através do piloto
+
 	return true;
 }
 

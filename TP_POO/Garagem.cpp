@@ -25,17 +25,17 @@ bool Garagem::recebeCarros(std::vector<Carro*> tmp)
 		return false;
 }
 
-Carro * Garagem::saiParaPista()
+Piloto * Garagem::saiParaPista()
 {
-	Carro * tmp;
+	Piloto * tmp;
 
-	if (!carrosNaGaragem.empty()) {
+	if (!pilotosNaGaragem.empty()) {
 
-		for (int i = 0; i < carrosNaGaragem.size(); i++) {
+		/*for (int i = 0; i < carrosNaGaragem.size(); i++) {
 			tmp = carrosNaGaragem.at(i);
 			if (tmp->temPiloto())
 				return tmp;
-		}
+		}*/
 	}
 	
 	return nullptr;
