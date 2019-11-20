@@ -11,6 +11,7 @@ class Autodromo
 	std::string nome;
 	Pista pista;
 	Garagem garagem;
+
 public:
 	Autodromo(int n_Max, int comprimento, std::string n);
 	~Autodromo();
@@ -25,6 +26,8 @@ public:
 
 	//pista
 	bool inserePilotosPista();
+	void iniciaPista();
+	void terminarCorrida();
 	bool passaTempo(int segundos);
 
 };

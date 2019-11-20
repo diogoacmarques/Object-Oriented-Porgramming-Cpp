@@ -68,6 +68,43 @@ char Piloto::obtemIdCarro() const
 		return '-';
 }
 
+bool Piloto::passaSegundo()
+{
+	if (carro->obtemVelocidade() == 0) {
+		carro->acelera(1);
+		cout << "Piloto '" << nome << "' arrancou da linha com o carro (" << carro->obtemId() << ")" << endl;
+	}
+	else {
+		carro->passaSegundo();
+		cout << "Piloto '" << nome << "' passaSegundo com o carro (" << carro->obtemId() << ") a " << carro->obtemVelocidade() << " metros por segundo" << endl;
+	}
+	return true;
+}
+
+int Piloto::obtemDistanciaPercorrida() const
+{
+	if (temCarro())
+		return carro->obtemDistanciaPercorrida();
+	else
+		return -1;
+}
+
+int Piloto::obtemVelocidade() const
+{
+	if (temCarro())
+		return carro->obtemVelocidade();
+	else
+		return -1;
+}
+
+std::string Piloto::obtemCarro() const
+{
+	if (temCarro())
+		return carro->carroToString();
+	else
+		return "Piloto sem carro";
+}
+
 bool Piloto::temPista() const
 { 
 	cout << "Piloto " << nome << " a verificar se tem pista" << endl;
@@ -83,14 +120,16 @@ void Piloto::entraPista()
 void Piloto::saiPista()
 {
 	naPista = false;
+	carro->para();
 }
 
 std::string Piloto::pilotoToString()
 {
 	ostringstream os;
-	os << nome << ":" << endl;
-	os << "\t\t-Tipo:" << tipo;
-	if(temCarro())
-		os << "\n\t\tCarro:" << carro->obtemId();
+	os << "Piloto:" << nome << "(" << tipo << ")";
+	if (temCarro())
+		os << ", tem carro '" << carro->obtemId();
+	if (temPista())
+		os << "' e encontra - se na pista";
 	return os.str();
 }

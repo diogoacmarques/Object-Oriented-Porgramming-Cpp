@@ -307,7 +307,14 @@ bool Jogo::corrida()
 	autoCompeticao->carregaCarros(dvg.obtemVectorCarros());
 	autoCompeticao->carregaPilotos(dvg.obtemVectorPilotos());
 
-	autoCompeticao->inserePilotosPista();
+	if (!autoCompeticao->inserePilotosPista()) {
+		cout << "Nao existem pilotos/carros disponiveis para correr, logo vou acabar o campeonato" << endl;
+		delete camp;
+		camp = nullptr;
+		return false;
+	}
+
+	autoCompeticao->iniciaPista();
 	
 	return true;
 }

@@ -81,8 +81,12 @@ bool Interface::inciar()
 					func();
 				else if (comando == "carregatudo")
 					jogo.carregaTudo();
-				else if (comando == "corrida")
-					jogo.corrida();
+				else if (comando == "corrida") {
+					if (jogo.corrida())
+						modo = 2;
+					else
+						modo = 1;
+				}
 				else if (comando == "acidente")
 					func();
 				else if (comando == "stop")
@@ -388,7 +392,7 @@ bool Interface::passaTempo(std::string parametros)
 
 	segundos = stoi(parametros);
 
-	if (parametros.empty() || segundos <= 0){
+	if (parametros.empty() || segundos < 0){
 		cout << "Parametros de tempo invalido" << endl;
 		return false;
 	}

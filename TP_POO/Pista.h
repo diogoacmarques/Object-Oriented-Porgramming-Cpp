@@ -7,6 +7,7 @@ class Pista
 	const int comprimento;
 	int nMax;
 	std::vector<Piloto*> pilotosEmCompeticao;
+	bool emCompeticao;
 public:
 	Pista(int nM, int comp);
 	~Pista();
@@ -17,12 +18,14 @@ public:
 	int obtemComprimento() const;
 	int obtemNMax() const;
 
-	bool passaSegundo();
+	bool passaTempo(int segundos);
 
+	bool iniciaCorrida();
 	bool terminarCorrida();
+	bool obtemEstado() const;
 
 	//toString
-	std::string obtemCorrida();
+	std::string obtemPista();
 
 };
 

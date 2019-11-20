@@ -10,7 +10,8 @@ class Carro
 	const int capcidadeMaxima;
 	//moviemento
 	bool movimento = false;
-	int kmH = 0;
+	int metroSegundo = 0;
+	int mPercorrido = 0;
 	static const int kmHMax = 120;
 	//estado
 	bool danoIrreparavel = false;
@@ -37,7 +38,9 @@ public:
 	//movimento
 	int obtemVelocidade() const;
 	bool acelera(int quantidade);
-	bool passaSegundo();
+	bool para();
+	int obtemDistanciaPercorrida() const;
+	void passaSegundo();
 
 	//toString
 	std::string carroToString();

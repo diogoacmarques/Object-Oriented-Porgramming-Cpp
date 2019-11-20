@@ -26,13 +26,20 @@ bool Campeonato::proximoAutodromo()
 	}
 	else {
 		autodromoEmCompeticao++;
-
-	
 		cout << "[Campeonato]Autdromo em comepeticao = " << autodromoEmCompeticao + 1 << endl;
 		return true;
 	}
 
 	return false;
+}
+
+bool Campeonato::termina()
+{
+	autodromoEmCompeticao = -1;
+
+
+
+	return true;
 }
 
 Autodromo * Campeonato::obtemAutodromoCompeticao()
@@ -54,7 +61,7 @@ bool Campeonato::verificaraExistenciaCorrida()
 bool Campeonato::passaTempo(int segundos)
 {
 	if (verificaraExistenciaCorrida()) {
-		cout << "Campeonato:irei passsar " << segundos << " segundos no campeonato" << endl;
+		//cout << "Campeonato:irei passsar " << segundos << " segundos no campeonato" << endl;
 		Autodromo * a = autodromosCampeonato.at(autodromoEmCompeticao);
 		a->passaTempo(segundos);
 		return true;

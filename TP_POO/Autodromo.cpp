@@ -81,13 +81,23 @@ bool Autodromo::inserePilotosPista()
 		pilotosInseridos++;
 		cout << "Autodromo:Done" << endl;
 	}
+
+
 	cout << "Final:Inseri " << pilotosInseridos << " pilotos na pista" << endl;
 	return pilotosInseridos;
 }
 
+void Autodromo::iniciaPista()
+{
+	pista.iniciaCorrida();
+}
+
+void Autodromo::terminarCorrida()
+{
+	pista.terminarCorrida();
+}
+
 bool Autodromo::passaTempo(int segundos)
 {
-	for (int i = 0; i < segundos; i++)
-		pista.passaSegundo();
-	return true;
+	return pista.passaTempo(segundos);
 }

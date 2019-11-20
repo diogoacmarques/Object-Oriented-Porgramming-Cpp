@@ -85,7 +85,7 @@ std::string Carro::obtemNomePiloto() const
 
 int Carro::obtemVelocidade() const
 {
-	return kmH;
+	return metroSegundo;
 }
 
 bool Carro::acelera(int quantidade)
@@ -94,34 +94,51 @@ bool Carro::acelera(int quantidade)
 	if (danoIrreparavel && sinalEmergencia)
 		return false;
 
-	//if (kmH + quantidade < kmHMax)
-		//kmH += quantidade;
-	//else
-		//kmH = kmHMax;
-	kmH = 1;//meta 1
+	if (mAh > 0) {
+		metroSegundo += quantidade;
+		movimento = true;
+		passaSegundo();
+		return true;
+	}
+	else {
+		cout << "Carro " << id << " ficou sem bateria" << endl;
+		para();
+		return false;
+	}
+}
+
+bool Carro::para()
+{
+	metroSegundo = 0;
+	movimento = false;
 	return true;
 }
 
-bool Carro::passaSegundo()
+
+int Carro::obtemDistanciaPercorrida() const
 {
-	if (mAh > 0) {
-		movimento = true;
-		acelera(1);//temporaria meta 1
+	return mPercorrido;
+}
+
+void Carro::passaSegundo()
+{
+	if (mAh - metroSegundo >= 0) {//se tem bateria para a distancia
+		mAh -= metroSegundo;
+		mPercorrido += metroSegundo;
 	}
-	
-	kmH++;
-	return false;
+	else
+		para();
 }
 
 std::string Carro::carroToString()
 {
 	ostringstream os;
-	os << marca << "(" << modelo << "):" << endl;
-	os << "\t\tId:" << id;
-	os << "\n\t\tBateria:(" << mAh << "/" << capcidadeMaxima << ")";
-	if(temPiloto())
-	os << "\n\t\tPiloto:" << nomePiloto;
-	//if (movimento)
-		os << "\n\t\tKMH:" << kmH;
+	os << "Carro[" << id << "]:" << marca << "(" << modelo << ") com " << mAh << "/" << capcidadeMaxima;
+	if (temPiloto())
+		os << " tem piloto " << nomePiloto; 
+
+	if (movimento)
+		os << " a andar " << metroSegundo << " mts/seg (" << mPercorrido << "metros total)";
+
 	return os.str();
 }
