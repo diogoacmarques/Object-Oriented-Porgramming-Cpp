@@ -263,13 +263,6 @@ bool Jogo::campeonato(vector<string> nomesAutodromoIn)
 		for (int i = 0; i < nomesAutodromoIn.size(); i++)
 			cout << "\tNome:" << nomesAutodromoIn.at(i) << endl;
 
-		//carrega os carros no primeiro autodromo
-		Autodromo * AutodromoCamponato;
-		AutodromoCamponato = obtemAutodromo(nomesAutodromoIn.at(0));
-
-		AutodromoCamponato->carregaCarros(dvg.obtemVectorCarros());
-		cout << AutodromoCamponato->obtemCarrosGaragem();
-
 		//incia o campeonato com o vecto de todos os autdromos neste campeonato
 		vector<Autodromo*> autodromosCampeonato;
 		for (int i = 0; i < nomesAutodromoIn.size(); i++) {
@@ -279,7 +272,7 @@ bool Jogo::campeonato(vector<string> nomesAutodromoIn)
 		if (autodromosCampeonato.size() == nomesAutodromoIn.size())
 			cout << "Tenho o vetor de ponteiros com os " << autodromosCampeonato.size() << " autodromos" << endl;
 
-		cout << "Devia ter os pilots/carros associados a este ponto?(acho que sim)" << endl;
+		cout << "Devia ter os pilotos/carros associados a este ponto?(acho que sim)" << endl;
 
 		camp = new Campeonato("local");
 		camp->carregaAutodromos(autodromosCampeonato);
@@ -305,7 +298,17 @@ bool Jogo::carregaTudo()
 
 bool Jogo::corrida()
 {
-	camp->proximaCorrida();
+	Autodromo * autoCompeticao;
+	//insere os carros e pilotos no autodromo onde vai decorrer a proxima corrida
+	camp->proximoAutodromo();
+
+	autoCompeticao = camp->obtemAutodromoCompeticao();
+
+	autoCompeticao->carregaCarros(dvg.obtemVectorCarros());
+	autoCompeticao->carregaPilotos(dvg.obtemVectorPilotos());
+
+	autoCompeticao->inserePilotosPista();
+	
 	return true;
 }
 

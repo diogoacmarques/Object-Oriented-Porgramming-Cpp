@@ -21,10 +21,10 @@ public:
 	//garagem
 	bool carregaCarros(std::vector<Carro*> vectorCarros);
 	std::string obtemCarrosGaragem() const;
-	bool carregaPilotos(std::vector<Piloto*> vectorPilotos);//to do
+	bool carregaPilotos(std::vector<Piloto*> vectorPilotos);
 
 	//pista
-	bool insereCarrosPista();
+	bool inserePilotosPista();
 	bool passaTempo(int segundos);
 
 };

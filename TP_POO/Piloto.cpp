@@ -6,7 +6,7 @@ using namespace std;
 
 std::vector<std::string> Piloto::todosNomesPilotos;
 
-Piloto::Piloto(std::string n) :tipo("normal")
+Piloto::Piloto(std::string n) :tipo("normal"), naPista(false)
 {
 
 	for (int i = 0; i < todosNomesPilotos.size(); i++) {
@@ -66,6 +66,23 @@ char Piloto::obtemIdCarro() const
 		return carro->obtemId();
 	else
 		return '-';
+}
+
+bool Piloto::temPista() const
+{ 
+	cout << "Piloto " << nome << " a verificar se tem pista" << endl;
+	 return naPista;
+}
+
+void Piloto::entraPista()
+{ 
+	cout << "Piloto " << nome << " a entrar na pista" << endl;
+	naPista = true;
+}
+
+void Piloto::saiPista()
+{
+	naPista = false;
 }
 
 std::string Piloto::pilotoToString()

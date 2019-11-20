@@ -45,7 +45,7 @@ std::string Autodromo::autodromoToString() const
 
 bool Autodromo::carregaCarros(std::vector<Carro*> vectorCarros)
 {
-	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar os carros" << endl;
+	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar os carros para a garagem" << endl;
 	return garagem.recebeCarros(vectorCarros);
 }
 
@@ -57,17 +57,32 @@ std::string Autodromo::obtemCarrosGaragem() const
 	return os.str();
 }
 
-bool Autodromo::insereCarrosPista()
+bool Autodromo::carregaPilotos(std::vector<Piloto*> vectorPilotos)
 {
-	Carro * tmp;
-	bool temCarros = false;
-	for (int i = 0; i < pista.obtemNMax(); i++) {
-		tmp = garagem.saiParaPista();
-		if (tmp != nullptr)
-			temCarros = pista.insereCarro(tmp);
-	}
+	garagem.recebePilotos(vectorPilotos);
+	return false;
+}
 
-	return temCarros;
+bool Autodromo::inserePilotosPista()
+{
+	Piloto * tmp;
+	bool levaMais = true;//pista
+	int pilotosInseridos = 0;
+	while (levaMais) {//se houver espaço na pista
+		tmp = garagem.retira();
+		if (tmp == nullptr) {//se ja nao ha piloto
+			//cout << "a garagem ja nao encontra mais pilotos disponiveis" << endl;
+			break;
+		}
+		
+		levaMais = pista.insere(tmp);
+		tmp->entraPista();
+		//cout << "inseri piloto e a pista =" << levaMais << endl;
+		pilotosInseridos++;
+		cout << "Autodromo:Done" << endl;
+	}
+	cout << "Final:Inseri " << pilotosInseridos << " pilotos na pista" << endl;
+	return pilotosInseridos;
 }
 
 bool Autodromo::passaTempo(int segundos)

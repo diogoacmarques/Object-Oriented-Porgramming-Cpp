@@ -12,7 +12,7 @@ public:
 	~Pista();
 
 	//poem o piloto na pista com o seu carro
-	bool inserePiloto(Piloto * p);
+	bool insere(Piloto * p);
 
 	int obtemComprimento() const;
 	int obtemNMax() const;

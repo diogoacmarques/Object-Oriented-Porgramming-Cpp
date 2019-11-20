@@ -8,6 +8,7 @@ class Piloto
 	std::string nome;
 	const std::string tipo;
 	Carro * carro;
+	bool naPista;
 public:
 	Piloto(std::string n);
 	~Piloto();
@@ -20,6 +21,11 @@ public:
 	bool entraNoCarro(Carro * carro);//insere piloto
 	bool removeCarro();
 	char obtemIdCarro() const;
+
+	//pista
+	bool temPista() const;
+	void entraPista();
+	void saiPista();
 
 	//toString
 	std::string pilotoToString();

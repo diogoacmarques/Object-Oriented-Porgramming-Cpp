@@ -10,12 +10,23 @@ Pista::Pista(int nM, int comp):comprimento(comp),nMax(nM)
 
 Pista::~Pista()
 {
+	cout << "Destrutor da pista" << endl;
 }
 
-bool Pista::inserePiloto(Piloto * p)
+bool Pista::insere(Piloto * p)
 {
-	pilotosEmCompeticao.push_back(p);
-	return true;
+	if (pilotosEmCompeticao.size() + 1 >= nMax) {
+		pilotosEmCompeticao.push_back(p);
+		cout << "A pista(" << nMax << ") ja nao aguenta com mais pilotos(" << pilotosEmCompeticao.size() << ")" << endl;	
+		return false;
+	}
+		
+	else {
+		pilotosEmCompeticao.push_back(p);
+		cout << "A Pista inseriu o piloto " << p->obtemNome() << endl;
+		return true;
+	}
+		
 }
 
 int Pista::obtemComprimento() const

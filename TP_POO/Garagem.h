@@ -12,7 +12,9 @@ public:
 
 	//funcionalidade
 	bool recebeCarros(std::vector<Carro*> tmp);
-	Piloto* saiParaPista();//envia o piloto para a pista
+	bool recebePilotos(std::vector<Piloto*> tmp);
+
+	Piloto* retira();//envia o piloto para a pista
 
 	std::string obtemCarros() const;
 	std::string obtemPilotos() const;

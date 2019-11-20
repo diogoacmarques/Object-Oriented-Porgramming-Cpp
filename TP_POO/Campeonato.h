@@ -17,7 +17,9 @@ public:
 
 	//funcionalidades
 	bool carregaAutodromos(std::vector<Autodromo*> a);
-	bool proximaCorrida();
+	bool proximoAutodromo();
+
+	Autodromo * obtemAutodromoCompeticao();
 
 	bool verificaraExistenciaCorrida();
 	bool passaTempo(int segundos);
