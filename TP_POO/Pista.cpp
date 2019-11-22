@@ -41,6 +41,7 @@ int Pista::obtemNMax() const
 
 bool Pista::passaTempo(int segundos)
 {
+	string lixo;
 	bool check = true;
 	if (pilotosEmCompeticao.size() == 0) {
 		cout << "nao existem pilotos em competicao" << endl;
@@ -50,6 +51,11 @@ bool Pista::passaTempo(int segundos)
 	//verificar o piloto e conforme o seu tipo, atua
 
 	//e possivel obter a localização do carro através do piloto
+
+	if (segundos == 0) {
+		cout << obtemPista();
+		return true;
+	}
 
 	for (int i = 0; i < segundos; i++) {
 		for (int i = 0; i < pilotosEmCompeticao.size(); i++) {
@@ -73,11 +79,13 @@ bool Pista::passaTempo(int segundos)
 			}	
 				
 		}
-
+		cout << "Prima a tecla 'enter'..." << endl;
+		getchar();
+		cout << obtemPista();
 	}
 	
 
-	cout << obtemPista();
+	
 	//for (int i = 0; i < pilotosEmCompeticao.size(); i++)
 		//cout << "Piloto '" << pilotosEmCompeticao.at(i)->obtemNome() << "' com carro '" <<
 		//pilotosEmCompeticao.at(i)->obtemIdCarro() << "' percorreu " << pilotosEmCompeticao.at(i)->obtemDistanciaPercorrida() << " metros" << endl;
