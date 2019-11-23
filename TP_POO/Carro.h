@@ -12,27 +12,34 @@ class Carro
 	bool movimento = false;
 	int metroSegundo = 0;
 	int mPercorrido = 0;
-	static const int kmHMax = 120;
+	const int velcidadeMaxima;
 	//estado
 	bool danoIrreparavel = false;
 	bool sinalEmergencia = false;
-	//Piloto
-	std::string nomePiloto;
+	//Equipa
+	int idEquipa;
+
 public:
 	//capacidadeInicial capacidadeMaxima marca modelo (modelo pode não ser inserido)
-	Carro(int capInicial,int capMax,std::string marca,std::string modelo = "modelo_base");
+	Carro(int velMax,int capInicial,int capMax,std::string marca,std::string modelo = "modelo_base");
 	~Carro();
 
 	//funcionalidades
+	int obtemBateriaMax() const;
+	int obtemBateriaAtual() const;
 	int carregaBateria(int n);
 	bool carregamentoTotal();
 	char obtemId() const;
 	std::string obtemCarro() const;
 
-		//Piloto
-	bool temPiloto();//verifica se o carro tem algum piloto
-	bool entraPiloto(std::string nPiloto);
-	bool removePiloto();
+		//Equipa
+	bool temEquipa() const;//verifica se o carro tem algum piloto
+	bool adicionaEquipa(int id);
+	bool removeEquipa();
+
+
+
+
 	std::string obtemNomePiloto() const;
 
 	//movimento
@@ -44,5 +51,6 @@ public:
 
 	//toString
 	std::string carroToString();
+
 };
 

@@ -43,48 +43,48 @@ std::string Autodromo::autodromoToString() const
 	return os.str();
 }
 
-bool Autodromo::carregaCarros(std::vector<Carro*> vectorCarros)
+bool Autodromo::carregaEquipasGaragem(vector<Equipa*> e)
 {
-	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar os carros para a garagem" << endl;
-	return garagem.recebeCarros(vectorCarros);
-}
-
-std::string Autodromo::obtemCarrosGaragem() const
-{
-	ostringstream os;
-	os << "O Autodromo '" << obtemNome() << "' tem os seguintes carros:" << endl;
-	os << garagem.obtemCarros();
-	return os.str();
-}
-
-bool Autodromo::carregaPilotos(std::vector<Piloto*> vectorPilotos)
-{
-	garagem.recebePilotos(vectorPilotos);
+	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar a equipa para a garagem" << endl;
+	return garagem.recebeEquipa(e);
 	return false;
 }
 
-bool Autodromo::inserePilotosPista()
+bool Autodromo::carregaBaterias()
 {
-	Piloto * tmp;
+	return garagem.carregaTodasBaterias();
+}
+
+bool Autodromo::insereEquipaPista()
+{
+	Equipa * equipaDisponivel;
 	bool levaMais = true;//pista
 	int pilotosInseridos = 0;
+
 	while (levaMais) {//se houver espaço na pista
-		tmp = garagem.retira();
-		if (tmp == nullptr) {//se ja nao ha piloto
+		equipaDisponivel = garagem.obtemEquipaDisponivel();
+		if (equipaDisponivel == nullptr) {//se ja nao ha piloto
 			//cout << "a garagem ja nao encontra mais pilotos disponiveis" << endl;
 			break;
 		}
 		
-		levaMais = pista.insere(tmp);
-		tmp->entraPista();
+		levaMais = pista.insereEquipa(equipaDisponivel);
 		//cout << "inseri piloto e a pista =" << levaMais << endl;
 		pilotosInseridos++;
 		cout << "Autodromo:Done" << endl;
 	}
 
 
-	cout << "Final:Inseri " << pilotosInseridos << " pilotos na pista" << endl;
+	cout << "Final:Inseri " << pilotosInseridos << " equipas na pista" << endl;
 	return pilotosInseridos;
+}
+
+std::string Autodromo::listaCarrosGaragem() const
+{
+	ostringstream os;
+	os << "O Autodromo '" << obtemNome() << "' tem os seguintes carros na garagem:" << endl;
+	os << garagem.listaCarros();
+	return os.str();
 }
 
 void Autodromo::iniciaPista()

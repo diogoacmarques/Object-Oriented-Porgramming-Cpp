@@ -6,7 +6,7 @@ using namespace std;
 
 char Carro::idStatic = 'a';//inicializar o 'cont'
 
-Carro::Carro(int capInicial, int capMax, string marca, string modelo):mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++)
+Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), idEquipa(-1)
 {
 	if (idStatic < 'a' || idStatic > 'z')
 		idStatic = '?';
@@ -16,6 +16,11 @@ Carro::Carro(int capInicial, int capMax, string marca, string modelo):mAh(capIni
 Carro::~Carro()
 {
 	cout << "Destrutor_Carro(" << marca << "/" << modelo << ")" << endl;
+}
+
+int Carro::obtemBateriaMax() const
+{
+	return capcidadeMaxima;
 }
 
 int Carro::carregaBateria(int n)
@@ -54,34 +59,34 @@ std::string Carro::obtemCarro() const
 	return os.str();
 }
 
-bool Carro::temPiloto()
+bool Carro::temEquipa() const
 {
-	if (nomePiloto.empty())
+	if (idEquipa == -1)
 		return false;
 	else
 		return true;
 }
 
-bool Carro::entraPiloto(std::string nPiloto)
+bool Carro::adicionaEquipa(int id)
 {
-	if (!temPiloto()) {
-		nomePiloto = nPiloto;
+	if (!temEquipa()) {
+		idEquipa = id;
 		return true;
 	}
 	else
 		return false;
 }
 
-bool Carro::removePiloto()
+bool Carro::removeEquipa()
 {
-	nomePiloto.clear();
+	idEquipa = -1;
 	return true;
 }
-
-std::string Carro::obtemNomePiloto() const
-{
-	return nomePiloto;
-}
+//
+//std::string Carro::obtemNomePiloto() const
+//{
+//	return nomePiloto;
+//}
 
 int Carro::obtemVelocidade() const
 {
@@ -133,12 +138,18 @@ void Carro::passaSegundo()
 std::string Carro::carroToString()
 {
 	ostringstream os;
-	os << "Carro[" << id << "]:" << marca << "(" << modelo << ") com " << mAh << "/" << capcidadeMaxima;
-	if (temPiloto())
-		os << " tem piloto " << nomePiloto; 
+	os << "carro[" << id << "]:" << marca << "(" << modelo << ") com bateria " << mAh << "/" << capcidadeMaxima << " e velocidade maxima de " << velcidadeMaxima;
+	/*if (tempiloto())
+		os << " tem piloto " << nomepiloto;*/
 
-	if (movimento)
-		os << " a andar " << metroSegundo << " mts/seg (" << mPercorrido << "metros total)";
-
+	/*if (movimento)
+		os << " a andar " << metrosegundo << " mts/seg (" << mpercorrido << "metros total)";
+*/
 	return os.str();
 }
+
+int Carro::obtemBateriaAtual() const
+{
+	return mAh;
+}
+

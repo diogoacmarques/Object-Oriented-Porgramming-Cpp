@@ -125,6 +125,7 @@
     <ClCompile Include="Campeonato.cpp" />
     <ClCompile Include="Carro.cpp" />
     <ClCompile Include="DVG.cpp" />
+    <ClCompile Include="Equipa.cpp" />
     <ClCompile Include="Garagem.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Jogo.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="Campeonato.h" />
     <ClInclude Include="Carro.h" />
     <ClInclude Include="DVG.h" />
+    <ClInclude Include="Equipa.h" />
     <ClInclude Include="Garagem.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Jogo.h" />

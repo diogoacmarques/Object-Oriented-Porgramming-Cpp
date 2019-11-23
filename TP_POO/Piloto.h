@@ -7,24 +7,23 @@ class Piloto
 	static std::vector<std::string> todosNomesPilotos;
 	std::string nome;
 	const std::string tipo;
-	Carro * carro;
 	bool naPista;
+	int idEquipa;
 public:
 	Piloto(std::string n);
 	~Piloto();
 
 	//funcionalidades
 	std::string obtemNome() const;
-	   
-		//carro
-	bool temCarro() const;//verifica se esta dentro de algum carro
-	bool entraNoCarro(Carro * carro);//insere piloto
-	bool removeCarro();
-	char obtemIdCarro() const;
+	std::string obtemTipo() const;
+
+	//Equipa
+	bool temEquipa() const;//verifica se o piloto tem equipa(carro)
+	bool adicionaEquipa(int id);
+	bool removeEquipa();
+
+
 	bool passaSegundo();//meta 1
-	int obtemDistanciaPercorrida() const;
-	int obtemVelocidade() const;
-	std::string obtemCarro() const;
 
 	//pista
 	bool temPista() const;

@@ -66,8 +66,8 @@ bool Interface::inciar()
 				else if (comando == "deldgv")
 					func();//meta 2
 				else if (comando == "campeonato") {
-					campeonato(linha);
-					modo = 2;
+					if (campeonato(linha))
+						modo = 2;
 				}
 				else
 					cout << "Este comando nao se encontra na lista do modo 1!" << endl;
@@ -77,6 +77,10 @@ bool Interface::inciar()
 				//meta 1 : Comando “passatempo <N>”
 				if (comando == "listacarros")
 					cout << jogo.listaCarros();
+				else if (comando == "preparaAutodromo") {
+					if (!jogo.insereEquipaAutodromo())
+						modo = 1;
+				}
 				else if (comando == "carregabat")
 					func();
 				else if (comando == "carregatudo")
@@ -144,7 +148,7 @@ bool Interface::cria(std::string parametros)
 
 	if (parametros == "") {
 		if (tipo == "c")
-			cout << "Pametros para a criacao de carro = (capacidadeInicial capacidadeMaxima marca modelo):";
+			cout << "Pametros para a criacao de carro = (velocidadeMaxima capacidadeInicial capacidadeMaxima marca modelo):";
 		else if (tipo == "p")
 			cout << "Pametros para a criacao de piloto = tipo nome):";
 		if (tipo == "a")
@@ -157,7 +161,10 @@ bool Interface::cria(std::string parametros)
 
 	if (tipo == "c") {
 		//carro
-		string capInicial = "", capMaxima = "", marca = "", modelo = "";
+		string capInicial = "", capMaxima = "", marca = "", modelo = "", velMax = "";
+
+		velMax = splitLine(parametros);
+		parametros.erase(0, velMax.size() + 1);
 
 		capInicial = splitLine(parametros);
 		parametros.erase(0, capInicial.size() + 1);
@@ -169,7 +176,7 @@ bool Interface::cria(std::string parametros)
 		parametros.erase(0, marca.size() + 1);
 
 		//verificar se tem todos os elementos necessarios
-		if (capInicial == "" || capMaxima == "" || marca == "") {
+		if (capInicial == "" || capMaxima == "" || marca == "" || velMax == "") {
 			cout << "Nao e possivel criar carro com estes parametros!" << endl;
 			return false;
 		}
@@ -184,8 +191,8 @@ bool Interface::cria(std::string parametros)
 			//Carro(capacidadeInicial,capacidadeMaxima,marca)
 		}
 
-		//cout << "\tCarro:" << marca << "," << modelo << "(" << capInicial << "/" << capMaxima << ")\n" << endl;
-		jogo.criaCarro(stoi(capInicial), stoi(capMaxima), marca, modelo);
+		cout << "\tCarro:" << marca << "," << modelo << "(" << capInicial << "/" << capMaxima << ") e velocidae" << velMax << "\n" << endl;
+		jogo.criaCarro(stoi(velMax),stoi(capInicial), stoi(capMaxima), marca, modelo);
 		return true;
 		
 	}	
@@ -295,8 +302,10 @@ bool Interface::entraNoCarro(std::string parametros)
 		cout << "Erro nos parametros(letraCarro)" << endl;
 		return false;
 	}
+
 	parametros.erase(0,tmp.size() + 1);
-			nomePiloto = splitLine(parametros);
+	nomePiloto = splitLine(parametros);
+
 	if (nomePiloto.empty()) {
 		cout << "Erro nos parametros(nomePiloto)" << endl;
 		return false;
@@ -376,7 +385,7 @@ bool Interface::campeonato(std::string parametros)
 	}
 	
 	if (!autodromosCampeonato.empty()) {
-		jogo.campeonato(autodromosCampeonato);
+		return jogo.campeonato(autodromosCampeonato);//A1 A2 A3 A4
 	}
 		
 		return false;

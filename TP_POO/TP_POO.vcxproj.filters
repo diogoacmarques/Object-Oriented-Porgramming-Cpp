@@ -45,6 +45,9 @@
     <ClCompile Include="Campeonato.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Equipa.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Carro.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Campeonato.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Equipa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

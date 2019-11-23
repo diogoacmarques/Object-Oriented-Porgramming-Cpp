@@ -1,19 +1,19 @@
 #pragma once
-#include "Piloto.h"
+#include "Equipa.h"
 #include <string>
 #include <vector>
 class Pista
 {
 	const int comprimento;
 	int nMax;
-	std::vector<Piloto*> pilotosEmCompeticao;
+	std::vector<Equipa*> equipasNaPista;
 	bool emCompeticao;
 public:
 	Pista(int nM, int comp);
 	~Pista();
 
-	//poem o piloto na pista com o seu carro
-	bool insere(Piloto * p);
+	//poem equipa na pista
+	bool insereEquipa(Equipa * e);
 
 	int obtemComprimento() const;
 	int obtemNMax() const;

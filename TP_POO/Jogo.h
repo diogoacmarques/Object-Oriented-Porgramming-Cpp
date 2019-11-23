@@ -20,7 +20,7 @@ public:
 	bool lerFicheiroAutodromo(std::string fileName);
 
 	//cria
-	bool criaCarro(int capMaxima, int capInicial, std::string marca, std::string modelo = "");
+	bool criaCarro(int velMax,int capMaxima, int capInicial, std::string marca, std::string modelo = "");
 	bool criaPiloto(std::string tipo, std::string nome);
 	bool criaAutodromo(int nMax, int comprimento,std::string nome);
 	std::string autodromoToString();
@@ -62,6 +62,7 @@ public:
 	bool carregaTudo();
 
 	//corrida
+	bool insereEquipaAutodromo();
 	bool corrida();
 
 	//acidente

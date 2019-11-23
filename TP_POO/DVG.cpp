@@ -60,6 +60,12 @@ bool DVG::criaPiloto(string tipo, string nome)
 bool DVG::apagaPiloto(std::string nome)
 {
 	int pos = obtemPosVectorPiloto(nome);
+
+	if (todosPilotos.at(pos)->temEquipa()) {
+		cout << "Este piloto tem equipa (sair do carro)" << endl;
+		return false;
+	}
+
 	if (pos != -1) {
 		delete todosPilotos.at(pos);//apaga memoria alocada
 		todosPilotos.erase(todosPilotos.begin() + pos);//apaga pos do vector
@@ -98,14 +104,14 @@ vector<Carro*> DVG::obtemVectorCarros() const
 	return todosCarros;
 }
 
-bool DVG::criaCarro(int capInicial, int capMax, std::string marca, std::string modelo)
+bool DVG::criaCarro(int velMax,int capInicial, int capMax, std::string marca, std::string modelo)
 {
 	Carro * tmp;
 	if (modelo.empty()) {
-		tmp = new Carro(capInicial, capMax,marca);
+		tmp = new Carro(velMax, capInicial, capMax,marca);
 	}
 	else {
-		tmp = new Carro(capInicial, capMax, marca, modelo);
+		tmp = new Carro(velMax,capInicial, capMax, marca, modelo);
 	}
 	
 	todosCarros.push_back(tmp);
@@ -115,6 +121,12 @@ bool DVG::criaCarro(int capInicial, int capMax, std::string marca, std::string m
 bool DVG::apagaCarro(char letra)
 {
 	int pos = obtemPosVectorCarro(letra);
+
+	if (todosCarros.at(pos)->temEquipa()) {
+		cout << "Este carro tem equipa (sair do carro)" << endl;
+		return false;
+	}
+
 	if (pos != -1) {
 		delete todosCarros.at(pos);//apaga memoria alocada
 		todosCarros.erase(todosCarros.begin() + pos);//apaga pos do vector
@@ -139,12 +151,17 @@ bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)
 {
 	Carro * carroP = obtemCarro(idCarro);
 	Piloto * pilotoP = obtemPiloto(nomePiloto);
+	Equipa * equipa;
+	int id;
 
 	if (carroP != nullptr && pilotoP != nullptr) {//se existe
 		//cout << "Encontrei o carro e o piloto!" << endl;
-		if (!carroP->temPiloto() && !pilotoP->temCarro()) {//se nao tem piloto/carro
+		if (!carroP->temEquipa() && !pilotoP->temEquipa()) {//se nao tem piloto/carro
 			//cout << "Estao ambos livres" << endl;
-			if (carroP->entraPiloto(nomePiloto) && pilotoP->entraNoCarro(carroP)) {
+			equipa = new Equipa(carroP, pilotoP);
+			todasEquipas.push_back(equipa);
+			id = equipa->obtemId();
+			if (carroP->adicionaEquipa(id) && pilotoP->adicionaEquipa(id)) {
 				cout << "Sucesso a associar carro/piloto" << endl;
 				return true;
 			}
@@ -168,41 +185,36 @@ bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)
 
 bool DVG::removePilotoCarro(char idCarro)
 {
-	Carro * carroP = obtemCarro(idCarro);
-	Piloto * pilotoP = obtemPiloto(carroP->obtemNomePiloto());
+	int posNoVector = obtemPosVectorEquipa(idCarro);
 
-	if (carroP != nullptr && pilotoP != nullptr) {//se existe
-		cout << "Encontrei o carro e o piloto!" << endl;
-		if (carroP->temPiloto() && pilotoP->temCarro()) {//se nao tem piloto/carro
-			cout << "Ambos estao ocupados" << endl;
-			if (carroP->removePiloto() && pilotoP->removeCarro()) {
-				cout << "Sucesso a remover carro/piloto" << endl;
-				return true;
-			}
-			else {
-				cout << "Erro a associar carro/piloto!" << endl;
-				return false;
-			}
-
-		}
-		else {
-			//cout << "Carro ou piloto esta ocupado!" << endl;
-			return false;
-		}
-
+	if (posNoVector != -1) {
+		delete todasEquipas.at(posNoVector);//apaga o conteudo
+		todasEquipas.erase(todasEquipas.begin() + posNoVector);//apaga pos no vector
+		return true;
 	}
-	else {
-		//cout << "Não encontrei piloto  ou carro!" << endl;
+	else
 		return false;
-	}
 }
 
-bool DVG::carregaTodosCarros()
+std::vector<Equipa*> DVG::carregaEquipas() const
 {
-	for (int i = 0; i < todosCarros.size(); i++)
-		if (!todosCarros.at(i)->carregamentoTotal())
-			return false;
-	return true;
+	return todasEquipas;
+}
+
+
+int DVG::obtemPosVectorEquipa(char idCarro) const
+{
+	vector<Equipa*>::const_iterator it = todasEquipas.begin();
+	int i = 0;
+
+	while (it != todasEquipas.end()) {
+		if ((*it)->obtemIdCarro() == idCarro)
+			return i;
+
+		it++;
+		i++;
+	}
+	return -1;
 }
 
 std::string DVG::obtemTodosCarros() const
@@ -217,13 +229,25 @@ std::string DVG::obtemTodosCarros() const
 	return os.str();
 }
 
-std::string DVG::obtemTodosPilotos()
+std::string DVG::obtemTodosPilotos() const
 {
 	ostringstream os;
-	vector<Piloto*>::iterator it = todosPilotos.begin();
+	vector<Piloto*>::const_iterator it = todosPilotos.begin();
 
 	while (it != todosPilotos.end()) {
 		os << "\t" << (*it)->pilotoToString() << endl;
+		it++;
+	}
+	return os.str();
+}
+
+std::string DVG::obtemTodasEquipas() const
+{
+	ostringstream os;
+	vector<Equipa*>::const_iterator it = todasEquipas.begin();
+
+	while (it != todasEquipas.end()) {
+		os << "\t" << (*it)->toStringEquipa() << endl;
 		it++;
 	}
 	return os.str();

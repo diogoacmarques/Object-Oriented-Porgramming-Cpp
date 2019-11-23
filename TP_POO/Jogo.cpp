@@ -67,7 +67,7 @@ bool Jogo::lerFicheiroPiloto(std::string fileName)
 bool Jogo::lerFicheiroCarro(std::string fileName)
 {
 	string line, marca, modelo;
-	int capI, capM;
+	int capI, capM, velMax;
 
 	size_t pos;
 
@@ -78,10 +78,16 @@ bool Jogo::lerFicheiroCarro(std::string fileName)
 		{
 			//marca = "", modelo = "";//reset
 			marca.erase(), modelo.erase();//reset
-			capI = -1, capM = -1, pos = 0;
+			capI = -1, capM = -1, pos = 0, velMax = -1;
 
 			cout << "Linha:" << line << endl;
 
+			//Velocidade Maxima
+			pos = line.find_first_of(" ");
+			velMax = stoi(line.substr(0, pos));
+			line.erase(0, pos + 1);
+			
+			
 			//Capacidade Inicial
 			pos = line.find_first_of(" ");
 			capI = stoi(line.substr(0, pos));
@@ -103,7 +109,7 @@ bool Jogo::lerFicheiroCarro(std::string fileName)
 			}
 			
 			//cout << "\tCarro:" << marca << "," << modelo << "(" << capI << "/" << capM << ")\n" << endl;
-			criaCarro(capI, capM,marca,modelo);
+			criaCarro(velMax,capI, capM,marca,modelo);
 		}
 		myfile.close();
 		return true;
@@ -153,9 +159,9 @@ bool Jogo::lerFicheiroAutodromo(std::string fileName)
 	return false;
 }
 
-bool Jogo::criaCarro(int capMaxima, int capInicial, std::string marca, std::string modelo)
+bool Jogo::criaCarro(int velMax, int capMaxima, int capInicial, std::string marca, std::string modelo)
 {
-	return dvg.criaCarro(capMaxima, capInicial, marca, modelo);
+	return dvg.criaCarro(velMax,capMaxima, capInicial, marca, modelo);
 }
 
 bool Jogo::criaPiloto(std::string tipo, std::string nome)
@@ -225,6 +231,8 @@ std::string Jogo::lista()
 	os << dvg.obtemTodosCarros() << endl;
 	os << "Pilotos:" << endl;
 	os << dvg.obtemTodosPilotos() << endl;
+	os << "Equipas:" << endl;
+	os << dvg.obtemTodasEquipas() << endl;
 	os << "Autodromos:" << endl;
 	os << autodromoToString() << endl;
 
@@ -263,7 +271,7 @@ bool Jogo::campeonato(vector<string> nomesAutodromoIn)
 		for (int i = 0; i < nomesAutodromoIn.size(); i++)
 			cout << "\tNome:" << nomesAutodromoIn.at(i) << endl;
 
-		//incia o campeonato com o vecto de todos os autdromos neste campeonato
+		//incia o campeonato com o vector de todos os autdromos validos neste campeonato
 		vector<Autodromo*> autodromosCampeonato;
 		for (int i = 0; i < nomesAutodromoIn.size(); i++) {
 			autodromosCampeonato.push_back(obtemAutodromo(nomesAutodromoIn.at(i)));
@@ -271,8 +279,6 @@ bool Jogo::campeonato(vector<string> nomesAutodromoIn)
 
 		if (autodromosCampeonato.size() == nomesAutodromoIn.size())
 			cout << "Tenho o vetor de ponteiros com os " << autodromosCampeonato.size() << " autodromos" << endl;
-
-		cout << "Devia ter os pilotos/carros associados a este ponto?(acho que sim)" << endl;
 
 		camp = new Campeonato("local");
 		camp->carregaAutodromos(autodromosCampeonato);
@@ -288,30 +294,40 @@ bool Jogo::campeonato(vector<string> nomesAutodromoIn)
 
 std::string Jogo::listaCarros() const
 {
-	return dvg.obtemTodosCarros();
+	Autodromo * autodromoEmCompeticao = camp->obtemAutodromoCompeticao();
+	return autodromoEmCompeticao->listaCarrosGaragem();
 }
 
 bool Jogo::carregaTudo()
 {
-	return dvg.carregaTodosCarros();
+	Autodromo * autodromoEmCompeticao = camp->obtemAutodromoCompeticao();
+	return autodromoEmCompeticao->carregaBaterias();
+}
+
+bool Jogo::insereEquipaAutodromo()
+{
+	Autodromo * autodromoEmCompeticao = camp->obtemAutodromoCompeticao();
+	//insere os carros e pilotos no autodromo onde vai decorrer a proxima corrida
+	if (!autodromoEmCompeticao->carregaEquipasGaragem(dvg.carregaEquipas())) {//carro e piloto:
+		cout << "Nao existem equipas disponiveis para criar um campeonato, a eliminar" << endl;
+		delete camp;
+		camp = nullptr;
+		return false;
+	}
+	carregaTudo();
+	cout << "A inserir as equipa na garagem" << endl;
+	return true;
 }
 
 bool Jogo::corrida()
 {
 	Autodromo * autoCompeticao;
-	//insere os carros e pilotos no autodromo onde vai decorrer a proxima corrida
-	camp->proximoAutodromo();
 
 	autoCompeticao = camp->obtemAutodromoCompeticao();
 
-	autoCompeticao->carregaCarros(dvg.obtemVectorCarros());
-	autoCompeticao->carregaPilotos(dvg.obtemVectorPilotos());
-
-	if (!autoCompeticao->inserePilotosPista()) {
-		cout << "Nao existem pilotos/carros disponiveis para correr, logo vou acabar o campeonato" << endl;
-		delete camp;
-		camp = nullptr;
-		return false;
+	if (!autoCompeticao->insereEquipaPista()) {
+		cout << "Nao existem pilotos/carros disponiveis para correr, experimente (preparaAutodromo)" << endl;
+		return true;
 	}
 
 	autoCompeticao->iniciaPista();
@@ -321,5 +337,7 @@ bool Jogo::corrida()
 
 bool Jogo::passatempo(int segundos)
 {
-	return camp->passaTempo(segundos);
+	if (!camp->passaTempo(segundos))//se a corrida acabar
+		camp->proximoAutodromo();
+	return true;
 }

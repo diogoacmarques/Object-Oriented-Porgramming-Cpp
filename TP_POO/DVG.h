@@ -3,10 +3,12 @@
 #include <vector>
 #include "Carro.h"
 #include "Piloto.h"
+#include "Equipa.h"
 class DVG
 {
 	std::vector<Piloto*> todosPilotos;
 	std::vector<Carro*> todosCarros;
+	std::vector<Equipa*> todasEquipas;
 public:
 	DVG();
 	~DVG();
@@ -22,7 +24,7 @@ public:
 	//Carro
 	Carro * obtemCarro(char letra);
 	std::vector<Carro*> obtemVectorCarros() const;
-	bool criaCarro(int capInicial, int capMax, std::string marca, std::string modelo = "");
+	bool criaCarro(int velMax,int capInicial, int capMax, std::string marca, std::string modelo = "");
 	bool apagaCarro(char letra);
 	int obtemPosVectorCarro(char letra) const;
 
@@ -30,10 +32,12 @@ public:
 	//Carro/Piloto
 	bool associaCarroPiloto(char idCarro, std::string nomePiloto);
 	bool removePilotoCarro(char idCarro);
-	bool carregaTodosCarros();
+	std::vector<Equipa*> carregaEquipas() const;//move as equipas para autodromo
+	int obtemPosVectorEquipa(char idCarro) const;//privada
 
 	//toString
 	std::string obtemTodosCarros() const;
-	std::string obtemTodosPilotos();
+	std::string obtemTodosPilotos() const;
+	std::string obtemTodasEquipas() const;
 
 };

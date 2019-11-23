@@ -6,9 +6,9 @@
 
 class Campeonato
 {
-	std::string nome;
 	//conjunto de corridas, cada corrida decorre num autodromo diferente, uma de cada vez numa certa ordem
-	std::vector<Autodromo*> autodromosCampeonato;
+	std::string nome;	
+	std::vector<Autodromo*> autodromosCampeonato;//vector com o pointeiro para todos os campeoantos
 	int autodromoEmCompeticao;//inteiro para o numero do autodromo que esta a ser corrido no vetor
 	
 public:

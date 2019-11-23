@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-Campeonato::Campeonato(std::string n):nome(n), autodromoEmCompeticao(-1)
+Campeonato::Campeonato(std::string n):nome(n), autodromoEmCompeticao(0)
 {
 	cout << "Construtor Campeonato '" << nome << "'" << endl;
 }

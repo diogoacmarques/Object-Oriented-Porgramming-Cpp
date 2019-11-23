@@ -1,23 +1,18 @@
 #pragma once
-#include "Carro.h"
-#include "Piloto.h"
+#include "Equipa.h"
 #include <vector>
 class Garagem
 {
-	std::vector<Carro*> carrosNaGaragem;
-	std::vector<Piloto*> pilotosNaGaragem;
+	std::vector<Equipa*> equipas;
 public:
 	Garagem();
 	~Garagem();
 
 	//funcionalidade
-	bool recebeCarros(std::vector<Carro*> tmp);
-	bool recebePilotos(std::vector<Piloto*> tmp);
+	bool recebeEquipa(std::vector<Equipa*> e);
+	Equipa * obtemEquipaDisponivel();
+	bool carregaTodasBaterias();
 
-	Piloto* retira();//envia o piloto para a pista
-
-	std::string obtemCarros() const;
-	std::string obtemPilotos() const;
-
+	std::string listaCarros() const;
 };
 
