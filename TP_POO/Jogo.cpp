@@ -17,6 +17,14 @@ Autodromo * Jogo::obtemAutodromo(std::string nomeA) const
 	return nullptr;
 }
 
+bool Jogo::verificaDigitos(std::string parametros)
+{
+	for (int i = 0; i < parametros.size(); i++)
+		if (!isdigit(parametros[i]))
+			return false;
+	return true;
+}
+
 Jogo::Jogo()
 {
 }
@@ -54,7 +62,12 @@ bool Jogo::lerFicheiroPiloto(std::string fileName)
 			nome = line;
 
 			//cout << "\tPiloto:(" << tipo << "," << nome << ")\n" << endl;
-			criaPiloto(tipo, nome);
+			if (!nome.empty() && !tipo.empty()) {
+				criaPiloto(tipo, nome);
+			}
+			else
+				cout << "Valores de ficheiro invalidos" << endl;
+
 		}
 		myfile.close();
 		return true;
@@ -84,18 +97,30 @@ bool Jogo::lerFicheiroCarro(std::string fileName)
 
 			//Velocidade Maxima
 			pos = line.find_first_of(" ");
+			if (!verificaDigitos(line.substr(0, pos))) {
+				cout << "Linha com parametros invalidos (ignorada)" << endl;
+				continue;
+			}
 			velMax = stoi(line.substr(0, pos));
 			line.erase(0, pos + 1);
 			
 			
 			//Capacidade Inicial
 			pos = line.find_first_of(" ");
+			if (!verificaDigitos(line.substr(0, pos))) {
+				cout << "Linha com parametros invalidos (ignorada)" << endl;
+				continue;
+			}
 			capI = stoi(line.substr(0, pos));
 			line.erase(0, pos + 1);
 		
 
 			//Capacidade Maxima
 			pos = line.find_first_of(" ");
+			if (!verificaDigitos(line.substr(0, pos))) {
+				cout << "Linha com parametros invalidos (ignorada)" << endl;
+				continue;
+			}
 			capM = stoi(line.substr(0, pos));
 			line.erase(0, pos + 1);
 
@@ -108,8 +133,11 @@ bool Jogo::lerFicheiroCarro(std::string fileName)
 				modelo = line;	
 			}
 			
-			//cout << "\tCarro:" << marca << "," << modelo << "(" << capI << "/" << capM << ")\n" << endl;
-			criaCarro(velMax,capI, capM,marca,modelo);
+			if (velMax != -1 && capI != -1 && capM != -1 && !marca.empty()) {
+				//cout << "\tCarro:" << marca << "," << modelo << "(" << capI << "/" << capM << ")\n" << endl;
+				criaCarro(velMax, capI, capM, marca, modelo);
+			}
+			
 		}
 		myfile.close();
 		return true;
@@ -137,19 +165,31 @@ bool Jogo::lerFicheiroAutodromo(std::string fileName)
 
 			cout << "Linha:" << line << endl;
 
-			//Numero máximo de carros
+			//Numero máximo de carrosc
 			pos = line.find_first_of(" ");
+			if (!verificaDigitos(line.substr(0, pos))) {
+				cout << "Linha com parametros invalidos (ignorada)" << endl;
+				continue;
+			}
 			n = stoi(line.substr(0, pos));
 			line.erase(0, pos + 1);
 
 			pos = line.find_first_of(" ");
+			if (!verificaDigitos(line.substr(0, pos))) {
+				cout << "Linha com parametros invalidos (ignorada)" << endl;
+				continue;
+			}
 			comprimento = stoi(line.substr(0, pos));
 			line.erase(0, pos + 1);
 			
 			nome = line;
 
-			cout << "\tAutodromo[" << n << "]:" << nome << "(" << comprimento << " metros)\n" << endl;
-			criaAutodromo(n, comprimento, nome);
+			if (n != -1 && comprimento != -1 && !nome.empty()) {
+				//cout << "\tAutodromo[" << n << "]:" << nome << "(" << comprimento << " metros)\n" << endl;
+				criaAutodromo(n, comprimento, nome);		
+			}
+				
+			
 		}
 		myfile.close();
 		return true;
@@ -277,8 +317,8 @@ bool Jogo::campeonato(vector<string> nomesAutodromoIn)
 			autodromosCampeonato.push_back(obtemAutodromo(nomesAutodromoIn.at(i)));
 		}
 
-		if (autodromosCampeonato.size() == nomesAutodromoIn.size())
-			cout << "Tenho o vetor de ponteiros com os " << autodromosCampeonato.size() << " autodromos" << endl;
+		//if (autodromosCampeonato.size() == nomesAutodromoIn.size())
+			//cout << "Tenho o vetor de ponteiros com os " << autodromosCampeonato.size() << " autodromos" << endl;
 
 		camp = new Campeonato("local");
 		camp->carregaAutodromos(autodromosCampeonato);
@@ -300,6 +340,7 @@ std::string Jogo::listaCarros() const
 
 bool Jogo::carregaTudo()
 {
+	//carrega as baterias todas
 	Autodromo * autodromoEmCompeticao = camp->obtemAutodromoCompeticao();
 	return autodromoEmCompeticao->carregaBaterias();
 }
@@ -308,14 +349,15 @@ bool Jogo::insereEquipaAutodromo()
 {
 	Autodromo * autodromoEmCompeticao = camp->obtemAutodromoCompeticao();
 	//insere os carros e pilotos no autodromo onde vai decorrer a proxima corrida
+	//cout << "A inserir as equipa na garagem" << endl;
 	if (!autodromoEmCompeticao->carregaEquipasGaragem(dvg.carregaEquipas())) {//carro e piloto:
 		cout << "Nao existem equipas disponiveis para criar um campeonato, a eliminar" << endl;
 		delete camp;
 		camp = nullptr;
 		return false;
 	}
-	carregaTudo();
-	cout << "A inserir as equipa na garagem" << endl;
+	carregaTudo();//carrega as baterias todas
+	
 	return true;
 }
 

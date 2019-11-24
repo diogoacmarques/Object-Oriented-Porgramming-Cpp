@@ -30,6 +30,7 @@ public:
 	int carregaBateria(int n);
 	bool carregamentoTotal();
 	char obtemId() const;
+	int obtemVelMax() const;
 	std::string obtemCarro() const;
 
 		//Equipa
@@ -37,17 +38,13 @@ public:
 	bool adicionaEquipa(int id);
 	bool removeEquipa();
 
-
-
-
-	std::string obtemNomePiloto() const;
-
 	//movimento
 	int obtemVelocidade() const;
 	bool acelera(int quantidade);
 	bool para();
 	int obtemDistanciaPercorrida() const;
-	void passaSegundo();
+	bool passaSegundo();
+	bool resetDistancia();
 
 	//toString
 	std::string carroToString();

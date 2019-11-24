@@ -14,6 +14,7 @@ public:
 
 	//poem equipa na pista
 	bool insereEquipa(Equipa * e);
+	std::vector<Equipa*> removeEquipas();
 
 	int obtemComprimento() const;
 	int obtemNMax() const;

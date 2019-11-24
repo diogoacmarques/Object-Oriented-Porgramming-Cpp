@@ -26,6 +26,8 @@ class Interface
 
 	bool passaTempo(std::string parametros);
 
+	bool verificaDigitos(std::string parametros);
+
 public:
 	Interface(std::string n = "default");
 	~Interface();

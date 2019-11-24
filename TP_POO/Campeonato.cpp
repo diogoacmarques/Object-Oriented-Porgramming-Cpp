@@ -62,9 +62,8 @@ bool Campeonato::passaTempo(int segundos)
 {
 	if (verificaraExistenciaCorrida()) {
 		//cout << "Campeonato:irei passsar " << segundos << " segundos no campeonato" << endl;
-		Autodromo * a = autodromosCampeonato.at(autodromoEmCompeticao);
-		a->passaTempo(segundos);
-		return true;
+		Autodromo * a = autodromosCampeonato.at(autodromoEmCompeticao);	
+		return a->passaTempo(segundos);
 	}
 	else {
 		cout << "Nao existe corrida em curso..." << endl;

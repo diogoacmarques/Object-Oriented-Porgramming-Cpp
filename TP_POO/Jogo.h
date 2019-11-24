@@ -10,6 +10,8 @@ class Jogo
 	std::vector <Autodromo*> todosAutodromos;
 
 	Autodromo * obtemAutodromo(std::string nomeA) const;
+	
+	bool verificaDigitos(std::string parametros);
 public:
 	Jogo();
 	~Jogo();

@@ -17,6 +17,9 @@ Garagem::~Garagem()
 bool Garagem::recebeEquipa(std::vector<Equipa*> tmp)
 {
 	equipas = tmp;
+	for (int i = 0; i < equipas.size(); i++)
+		equipas.at(i)->entraGaragem();
+
 	if (!equipas.empty()) {
 		cout << "A garagem carregou com sucesso " << equipas.size() << " equipas." << endl;
 		return true;
@@ -30,13 +33,15 @@ bool Garagem::recebeEquipa(std::vector<Equipa*> tmp)
 
 Equipa * Garagem::obtemEquipaDisponivel()
 {
-	
+	Equipa * temporaria;
 	for (int i = 0; i < equipas.size(); i++) {
 		if (!equipas.at(i)->verificaPista()) {
 			equipas.at(i)->entraNaPista();
-			return equipas.at(i);
-		}	
-	}		
+			temporaria = equipas.at(i);
+			equipas.erase(equipas.begin() + i);
+			return temporaria;
+		}
+	}
 
 	cout << "Garagem nao tem mais equipas disponiveis" << endl;	
 	return nullptr;
@@ -47,7 +52,7 @@ bool Garagem::carregaTodasBaterias()
 	for (int i = 0; i < equipas.size(); i++) {
 		equipas.at(i)->carregaBateriaTotal();		
 	}
-	cout << "Carreguei a bateria de todos os carros ao maximo" << endl;
+	//cout << "Carreguei a bateria de todos os carros ao maximo" << endl;
 	return true;
 }
 
@@ -55,7 +60,7 @@ std::string Garagem::listaCarros() const
 {
 	ostringstream os;
 	for (int i = 0; i < equipas.size(); i++)
-		os << equipas.at(i)->obtemId() << endl;
+		os << equipas.at(i)->listaCarros() << endl;
 	return os.str();
 }
 

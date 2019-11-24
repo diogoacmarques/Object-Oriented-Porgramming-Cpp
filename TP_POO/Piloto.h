@@ -7,8 +7,8 @@ class Piloto
 	static std::vector<std::string> todosNomesPilotos;
 	std::string nome;
 	const std::string tipo;
-	bool naPista;
 	int idEquipa;
+	Carro * carro;
 public:
 	Piloto(std::string n);
 	~Piloto();
@@ -19,16 +19,12 @@ public:
 
 	//Equipa
 	bool temEquipa() const;//verifica se o piloto tem equipa(carro)
-	bool adicionaEquipa(int id);
+	bool adicionaEquipa(int id,Carro * c);
 	bool removeEquipa();
 
 
 	bool passaSegundo();//meta 1
-
-	//pista
-	bool temPista() const;
-	void entraPista();
-	void saiPista();
+	bool paraMovimento();
 
 	//toString
 	std::string pilotoToString();

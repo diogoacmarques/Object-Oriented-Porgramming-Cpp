@@ -29,6 +29,13 @@ bool Pista::insereEquipa(Equipa * e)
 		
 }
 
+std::vector<Equipa*> Pista::removeEquipas()
+{
+	vector<Equipa*> tmp = equipasNaPista;
+	equipasNaPista.clear();
+	return tmp;
+}
+
 int Pista::obtemComprimento() const
 {
 	return comprimento;
@@ -45,8 +52,7 @@ bool Pista::passaTempo(int segundos)
 	bool check = true;
 	if (equipasNaPista.size() == 0) {
 		cout << "nao existem equipas em competicao" << endl;
-		terminarCorrida();
-		return false;
+		return true;
 	}
 	//verificar o piloto e conforme o seu tipo, atua
 
@@ -56,34 +62,49 @@ bool Pista::passaTempo(int segundos)
 		cout << obtemPista();
 		return true;
 	}
+	bool verifcaCorrida = false;
 
 	for (int i = 0; i < segundos; i++) {
-		for (int i = 0; i < equipasNaPista.size(); i++) {
-			check = equipasNaPista.at(i)->passaSegundo();
+		verifcaCorrida = false;
+		for (int j = 0; j < equipasNaPista.size(); j++) {
+			
+			if (equipasNaPista.at(j)->verificaPista()) {
+				verifcaCorrida = true;
+				check = equipasNaPista.at(j)->passaSegundo();
 
-			//verifica se ganhou
-			if (equipasNaPista.at(i)->obtemDistanciaTotal() >= comprimento) {
-				cout << "A equipa " << equipasNaPista.at(i)->obtemId() << " acabou a corrida" << endl;
-				equipasNaPista.at(i)->saiDaPista();
-				equipasNaPista.erase(equipasNaPista.begin() + i);
-				i--;
-				continue;
+				//verifica se ganhou
+				if (equipasNaPista.at(j)->obtemDistanciaTotal() >= comprimento) {
+					cout << "A equipa " << equipasNaPista.at(j)->obtemId() << " acabou a corrida" << endl;
+					equipasNaPista.at(j)->saiDaPista();
+					//equipasNaPista.erase(equipasNaPista.begin() + j);
+					continue;
+				}
+
+				if (!check) {//se nao consegue andar mais(falta bateria /acidente/...)
+					cout << "O piloto " << equipasNaPista.at(j)->obtemId() << " nao pode andar mais" << endl;
+					equipasNaPista.at(j)->saiDaPista();
+					//equipasNaPista.erase(equipasNaPista.begin() + j);
+					check = true;
+					continue;
+				}
+
 			}
-
-			if (!check) {//se nao consegue andar mais(falta bateria /acidente/...)
-				cout << "O piloto " << equipasNaPista.at(i)->obtemId() << " nao pode andar mais" << endl;
-				equipasNaPista.erase(equipasNaPista.begin() + i);
-				i--;
-				check = true;
-				continue;
-			}	
 				
 		}
-		cout << "Prima a tecla 'enter'..." << endl;
-		getchar();
-		cout << obtemPista();
-	}
 
+		if (verifcaCorrida) {
+			cout << obtemPista();
+			cout << "Prima a tecla 'enter'..." << endl;
+			getchar();
+			
+		}
+		else {
+			cout << "Ja nao existe equipas a competir(final da corrida)" << endl;
+			return false;
+		}
+			
+		
+	}
 
 	return true;
 }

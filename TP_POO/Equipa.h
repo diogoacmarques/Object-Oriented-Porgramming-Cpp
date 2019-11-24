@@ -10,12 +10,14 @@ class Equipa
 	Carro * carro;
 	Piloto * piloto;
 	bool naPista;
+	int posicao, segundosCorrida;
 public:
 	Equipa(Carro * c, Piloto * p);
 	~Equipa();
 
 	//self
 	int obtemId() const;
+	bool entraGaragem();
 
 	//Carro
 	int obtemIdCarro() const;
@@ -31,5 +33,6 @@ public:
 	bool passaSegundo();
 
 	std::string toStringEquipa();
+	std::string listaCarros();
 };
 

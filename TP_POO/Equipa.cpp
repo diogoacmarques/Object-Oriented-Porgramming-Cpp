@@ -23,6 +23,13 @@ int Equipa::obtemId() const
 	return id;
 }
 
+bool Equipa::entraGaragem()
+{
+	piloto->paraMovimento();
+	carro->resetDistancia();
+	return true;
+}
+
 int Equipa::obtemIdCarro() const
 {
 	return carro->obtemId();
@@ -59,7 +66,19 @@ bool Equipa::carregaBateriaTotal()
 
 bool Equipa::passaSegundo()
 {
-	return false;
+	//meta 1
+	/*o Nesta meta os carros movem - se sempre uma posição(metro / s) para a frente
+		independentemente do piloto que o conduz.Não são carregados nem gastam
+		energia*/
+	bool verifica = true;
+	if (carro->obtemVelocidade() == 0) {//meta 1
+		piloto->passaSegundo();//verifica a posição e age conforme o tipo de piloto
+	}
+	else {
+		return carro->passaSegundo();//mantem velocidade e aumenta a distancia percorrida
+	}
+
+	return true;
 }
 
 std::string Equipa::toStringEquipa()
@@ -69,5 +88,13 @@ std::string Equipa::toStringEquipa()
 	os << carro->obtemId() << " " << piloto->obtemNome() << "(" << piloto->obtemTipo() << ") - " << carro->obtemBateriaAtual() << "mAh, " << carro->obtemBateriaMax() << "mAh - " <<
 		carro->obtemDistanciaPercorrida() << "m - " << carro->obtemVelocidade() << "m/s";
 
+	return os.str();
+}
+
+std::string Equipa::listaCarros()
+{
+	ostringstream os;
+	os << carro->obtemId() << " " << piloto->obtemNome() << "(" << piloto->obtemTipo() << ") - " << carro->obtemBateriaAtual() << "mAh, " << carro->obtemBateriaMax() << "mAh - VelocidadeMax:" <<
+		carro->obtemVelMax() << "m/s";
 	return os.str();
 }

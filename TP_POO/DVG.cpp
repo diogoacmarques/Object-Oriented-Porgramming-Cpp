@@ -161,7 +161,7 @@ bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)
 			equipa = new Equipa(carroP, pilotoP);
 			todasEquipas.push_back(equipa);
 			id = equipa->obtemId();
-			if (carroP->adicionaEquipa(id) && pilotoP->adicionaEquipa(id)) {
+			if (carroP->adicionaEquipa(id) && pilotoP->adicionaEquipa(id,carroP)) {
 				cout << "Sucesso a associar carro/piloto" << endl;
 				return true;
 			}

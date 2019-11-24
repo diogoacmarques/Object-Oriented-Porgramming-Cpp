@@ -57,6 +57,7 @@ bool Autodromo::carregaBaterias()
 
 bool Autodromo::insereEquipaPista()
 {
+	
 	Equipa * equipaDisponivel;
 	bool levaMais = true;//pista
 	int pilotosInseridos = 0;
@@ -71,11 +72,10 @@ bool Autodromo::insereEquipaPista()
 		levaMais = pista.insereEquipa(equipaDisponivel);
 		//cout << "inseri piloto e a pista =" << levaMais << endl;
 		pilotosInseridos++;
-		cout << "Autodromo:Done" << endl;
 	}
 
 
-	cout << "Final:Inseri " << pilotosInseridos << " equipas na pista" << endl;
+	cout << "Autodromo[" << nome << "] inseriu " << pilotosInseridos << " equipas na sua pista" << endl;
 	return pilotosInseridos;
 }
 
@@ -99,5 +99,10 @@ void Autodromo::terminarCorrida()
 
 bool Autodromo::passaTempo(int segundos)
 {
-	return pista.passaTempo(segundos);
+	if (!pista.passaTempo(segundos)) {//falso se nao ha mais equipas a correr
+		cout << "A meter os carros de volta na garagem" << endl;
+		garagem.recebeEquipa(pista.removeEquipas());
+		return false;
+	}
+	return true;
 }

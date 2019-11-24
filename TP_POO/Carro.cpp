@@ -30,12 +30,13 @@ int Carro::carregaBateria(int n)
 			mAh += n;
 		}
 		else {
-			cout << "A bateria esta no maximo, so pode carregar mais: " << capcidadeMaxima - mAh << endl;
+			mAh = capcidadeMaxima;
+			cout << "O carro " << id << " foi carregado completamente " << mAh << "mAh/" << capcidadeMaxima << endl;
 		}
 			
 	}
 	else {
-		cout << "O carro esta em movimento ou n e negativo" << endl;
+		cout << "O carro esta em movimento ou nao e negativo" << endl;
 	}
 
 	return 0;
@@ -50,6 +51,11 @@ bool Carro::carregamentoTotal()
 char Carro::obtemId() const
 {
 	return id;
+}
+
+int Carro::obtemVelMax() const
+{
+	return velcidadeMaxima;
 }
 
 std::string Carro::obtemCarro() const
@@ -125,14 +131,22 @@ int Carro::obtemDistanciaPercorrida() const
 	return mPercorrido;
 }
 
-void Carro::passaSegundo()
+bool Carro::passaSegundo()
 {
 	if (mAh - metroSegundo >= 0) {//se tem bateria para a distancia
 		mAh -= metroSegundo;
 		mPercorrido += metroSegundo;
+		return true;
 	}
 	else
 		para();
+	return false;
+}
+
+bool Carro::resetDistancia()
+{
+	mPercorrido = 0;
+	return true;
 }
 
 std::string Carro::carroToString()
