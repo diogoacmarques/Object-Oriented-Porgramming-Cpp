@@ -10,15 +10,13 @@ DVG::DVG()
 
 DVG::~DVG()
 {
-	cout << "Destrutor DVG... (confirmar)" << endl;
-	//delete [] todosCarros;
+	cout << "Destrutor DVG" << endl;
 	for (int i = 0; i < todosCarros.size(); i++)
 		delete todosCarros.at(i);
-	todosCarros.clear();
-	//delete [] todosPilotos;
 	for (int i = 0; i < todosPilotos.size(); i++)
 		delete todosPilotos.at(i);
-	todosPilotos.clear();
+	for (int i = 0; i < todasEquipas.size(); i--)
+		delete todasEquipas.at(i);
 }
 
 Piloto * DVG::obtemPiloto(std::string nome)
