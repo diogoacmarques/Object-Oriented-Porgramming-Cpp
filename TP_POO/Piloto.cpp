@@ -39,38 +39,6 @@ std::string Piloto::obtemTipo() const
 {
 	return tipo;
 }
-//
-//bool Piloto::temCarro() const
-//{
-//	if (carro ==  nullptr)
-//		return false;
-//	else
-//		return true;
-//}
-//
-//bool Piloto::entraNoCarro(Carro * c)
-//{
-//
-//	if (!temCarro()) {
-//		carro = c;
-//		return true;
-//	}else
-//		return false;
-//}
-//
-//bool Piloto::removeCarro()
-//{
-//	carro =  nullptr;
-//	return true;
-//}
-//
-//char Piloto::obtemIdCarro() const
-//{
-//	if (carro != nullptr)
-//		return carro->obtemId();
-//	else
-//		return '-';
-//}
 
 bool Piloto::temEquipa() const
 {
