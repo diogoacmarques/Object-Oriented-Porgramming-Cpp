@@ -20,9 +20,9 @@ public:
 	bool proximoAutodromo();
 	bool termina();
 
-	Autodromo * obtemAutodromoCompeticao();
+	Autodromo * obtemAutodromoCompeticao() const;
 
-	bool verificaraExistenciaCorrida();
+	bool verificaraExistenciaCorrida() const;
 	bool passaTempo(int segundos);
 };
 

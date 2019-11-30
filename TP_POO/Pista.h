@@ -26,7 +26,7 @@ public:
 	bool obtemEstado() const;
 
 	//toString
-	std::string obtemPista();
+	std::string obtemPista() const;
 
 };
 

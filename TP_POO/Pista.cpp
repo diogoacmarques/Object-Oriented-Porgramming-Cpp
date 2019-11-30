@@ -129,7 +129,7 @@ bool Pista::obtemEstado() const
 	return emCompeticao;
 }
 
-std::string Pista::obtemPista()
+std::string Pista::obtemPista() const
 {
 	ostringstream os;
 	if (obtemEstado()) {//se tem corrida

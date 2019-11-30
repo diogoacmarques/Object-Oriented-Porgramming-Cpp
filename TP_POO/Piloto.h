@@ -27,5 +27,5 @@ public:
 	bool paraMovimento();
 
 	//toString
-	std::string pilotoToString();
+	std::string pilotoToString() const;
 };

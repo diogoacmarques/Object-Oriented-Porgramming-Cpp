@@ -219,10 +219,10 @@ bool Jogo::criaAutodromo(int nMax, int comprimento, std::string nome)
 	return true;
 }
 
-std::string Jogo::autodromoToString()
+std::string Jogo::autodromoToString() const
 {
 	ostringstream os;
-	vector<Autodromo*>::iterator it = todosAutodromos.begin();
+	vector<Autodromo*>::const_iterator it = todosAutodromos.begin();
 
 	while (it != todosAutodromos.end()) {
 		os << "\t" << (*it)->autodromoToString() << endl;
@@ -264,7 +264,7 @@ bool Jogo::saiDoCarro(char idCarro)
 	return dvg.removePilotoCarro(idCarro);
 }
 
-std::string Jogo::lista()
+std::string Jogo::lista() const
 {
 	ostringstream os;
 	os << "Carros:" << endl;

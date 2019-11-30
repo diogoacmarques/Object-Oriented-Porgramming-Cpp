@@ -47,7 +47,7 @@ public:
 	bool resetDistancia();
 
 	//toString
-	std::string carroToString();
+	std::string carroToString() const;
 
 };
 

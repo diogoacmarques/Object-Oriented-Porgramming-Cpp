@@ -81,7 +81,7 @@ bool Equipa::passaSegundo()
 	return true;
 }
 
-std::string Equipa::toStringEquipa()
+std::string Equipa::toStringEquipa() const
 {
 	//1. B Ferrari / Vettel(rápido) - 5mAh, 290mAh - 2410m – 55m / s
 	ostringstream os;
@@ -91,7 +91,7 @@ std::string Equipa::toStringEquipa()
 	return os.str();
 }
 
-std::string Equipa::listaCarros()
+std::string Equipa::listaCarros() const
 {
 	ostringstream os;
 	os << carro->obtemId() << " " << piloto->obtemNome() << "(" << piloto->obtemTipo() << ") - " << carro->obtemBateriaAtual() << "mAh, " << carro->obtemBateriaMax() << "mAh - VelocidadeMax:" <<

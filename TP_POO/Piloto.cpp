@@ -79,7 +79,7 @@ bool Piloto::paraMovimento()
 	return false;
 }
 
-std::string Piloto::pilotoToString()
+std::string Piloto::pilotoToString() const
 {
 	ostringstream os;
 	os << "Piloto:" << nome << "(" << tipo << ")";

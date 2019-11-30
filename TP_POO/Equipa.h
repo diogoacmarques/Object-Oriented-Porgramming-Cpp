@@ -32,7 +32,7 @@ public:
 
 	bool passaSegundo();
 
-	std::string toStringEquipa();
-	std::string listaCarros();
+	std::string toStringEquipa() const;
+	std::string listaCarros() const;
 };
 

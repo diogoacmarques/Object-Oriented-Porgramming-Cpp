@@ -19,9 +19,9 @@ DVG::~DVG()
 		delete todasEquipas.at(i);
 }
 
-Piloto * DVG::obtemPiloto(std::string nome)
+Piloto * DVG::obtemPiloto(std::string nome) const
 {
-	vector<Piloto*>::iterator it = todosPilotos.begin();
+	vector<Piloto*>::const_iterator it = todosPilotos.begin();
 
 	while (it != todosPilotos.end()) {
 		if((*it)->obtemNome() == nome)
@@ -85,9 +85,9 @@ int DVG::obtemPosVectorPiloto(std::string nome) const
 	return -1;
 }
 
-Carro * DVG::obtemCarro(char letra)
+Carro * DVG::obtemCarro(char letra) const
 {
-	vector<Carro*>::iterator it = todosCarros.begin();
+	vector<Carro*>::const_iterator it = todosCarros.begin();
 
 	while (it != todosCarros.end()) {
 		if ((*it)->obtemId() == letra)

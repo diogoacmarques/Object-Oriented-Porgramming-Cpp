@@ -149,7 +149,7 @@ bool Carro::resetDistancia()
 	return true;
 }
 
-std::string Carro::carroToString()
+std::string Carro::carroToString() const
 {
 	ostringstream os;
 	os << "carro[" << id << "]:" << marca << "(" << modelo << ") com bateria " << mAh << "/" << capcidadeMaxima << " e velocidade maxima de " << velcidadeMaxima;

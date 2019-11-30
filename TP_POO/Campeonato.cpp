@@ -42,7 +42,7 @@ bool Campeonato::termina()
 	return true;
 }
 
-Autodromo * Campeonato::obtemAutodromoCompeticao()
+Autodromo * Campeonato::obtemAutodromoCompeticao() const
 {
 	if (autodromoEmCompeticao != -1)
 		return autodromosCampeonato.at(autodromoEmCompeticao);
@@ -50,7 +50,7 @@ Autodromo * Campeonato::obtemAutodromoCompeticao()
 		return nullptr;
 }
 
-bool Campeonato::verificaraExistenciaCorrida()
+bool Campeonato::verificaraExistenciaCorrida() const
 {
 	if (autodromoEmCompeticao == -1)
 		return false;

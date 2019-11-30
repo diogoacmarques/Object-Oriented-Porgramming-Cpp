@@ -14,7 +14,7 @@ public:
 	~DVG();
 
 	//Piloto
-	Piloto * obtemPiloto(std::string nome);//devia ser privado?
+	Piloto * obtemPiloto(std::string nome) const;//devia ser privado?
 	std::vector<Piloto*> obtemVectorPilotos() const;
 	bool criaPiloto(std::string tipo,std::string nome);
 	bool apagaPiloto(std::string nome);
@@ -22,7 +22,7 @@ public:
 
 
 	//Carro
-	Carro * obtemCarro(char letra);
+	Carro * obtemCarro(char letra) const;
 	std::vector<Carro*> obtemVectorCarros() const;
 	bool criaCarro(int velMax,int capInicial, int capMax, std::string marca, std::string modelo = "");
 	bool apagaCarro(char letra);
