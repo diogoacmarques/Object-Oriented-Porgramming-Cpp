@@ -1,14 +1,16 @@
 #pragma once
-#include "Carro.h"
 #include <string>
 #include <vector>
+
+class Carro;
+
 class Piloto
 {
 	static std::vector<std::string> todosNomesPilotos;
 	std::string nome;
 	const std::string tipo;
-	int idEquipa;
-	Carro * carro;
+	char idCarro;
+	
 public:
 	Piloto(std::string n);
 	~Piloto();
@@ -18,13 +20,17 @@ public:
 	std::string obtemTipo() const;
 
 	//Equipa
-	bool temEquipa() const;//verifica se o piloto tem equipa(carro)
-	bool adicionaEquipa(int id,Carro * c);
-	bool removeEquipa();
+	//bool temEquipa() const;//verifica se o piloto tem equipa(carro)
+	//bool adicionaEquipa(int id,Carro * c);
+	//bool removeEquipa();
+
+	//Carro
+	bool temCarro() const;
+	bool adicionaCarro(char id);
+	bool removeCarro();
 
 
-	bool passaSegundo();//meta 1
-	bool paraMovimento();
+	bool tomaDecisao(Carro * c);//meta 1
 
 	//toString
 	std::string pilotoToString() const;

@@ -15,8 +15,6 @@ DVG::~DVG()
 		delete todosCarros.at(i);
 	for (int i = 0; i < todosPilotos.size(); i++)
 		delete todosPilotos.at(i);
-	for (int i = 0; i < todasEquipas.size(); i--)
-		delete todasEquipas.at(i);
 }
 
 Piloto * DVG::obtemPiloto(std::string nome) const
@@ -59,8 +57,8 @@ bool DVG::apagaPiloto(std::string nome)
 {
 	int pos = obtemPosVectorPiloto(nome);
 
-	if (todosPilotos.at(pos)->temEquipa()) {
-		cout << "Este piloto tem equipa (sair do carro)" << endl;
+	if (todosPilotos.at(pos)->temCarro()) {
+		cout << "Este piloto tem carro (sair do carro)" << endl;
 		return false;
 	}
 
@@ -120,8 +118,8 @@ bool DVG::apagaCarro(char letra)
 {
 	int pos = obtemPosVectorCarro(letra);
 
-	if (todosCarros.at(pos)->temEquipa()) {
-		cout << "Este carro tem equipa (sair do carro)" << endl;
+	if (todosCarros.at(pos)->temPiloto()) {
+		cout << "Este carro tem piloto (sair do carro)" << endl;
 		return false;
 	}
 
@@ -149,17 +147,12 @@ bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)
 {
 	Carro * carroP = obtemCarro(idCarro);
 	Piloto * pilotoP = obtemPiloto(nomePiloto);
-	Equipa * equipa;
-	int id;
 
 	if (carroP != nullptr && pilotoP != nullptr) {//se existe
 		//cout << "Encontrei o carro e o piloto!" << endl;
-		if (!carroP->temEquipa() && !pilotoP->temEquipa()) {//se nao tem piloto/carro
+		if (!carroP->temPiloto() && !pilotoP->temCarro()) {//se nao tem piloto/carro
 			//cout << "Estao ambos livres" << endl;
-			equipa = new Equipa(carroP, pilotoP);
-			todasEquipas.push_back(equipa);
-			id = equipa->obtemId();
-			if (carroP->adicionaEquipa(id) && pilotoP->adicionaEquipa(id,carroP)) {
+			if (carroP->adicionaPiloto(pilotoP) && pilotoP->adicionaCarro(idCarro)) {
 				cout << "Sucesso a associar carro/piloto" << endl;
 				return true;
 			}
@@ -183,36 +176,30 @@ bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)
 
 bool DVG::removePilotoCarro(char idCarro)
 {
-	int posNoVector = obtemPosVectorEquipa(idCarro);
+	Carro * carroP = obtemCarro(idCarro);
+	Piloto * pilotoP = obtemPiloto(carroP->obtemNomePiloto());
 
-	if (posNoVector != -1) {
-		delete todasEquipas.at(posNoVector);//apaga o conteudo
-		todasEquipas.erase(todasEquipas.begin() + posNoVector);//apaga pos no vector
-		return true;
-	}
-	else
+	if (carroP != nullptr && pilotoP != nullptr) {//se existe
+		//cout << "Encontrei o carro e o piloto!" << endl;
+		if (carroP->temPiloto() && pilotoP->temCarro()) {//se nao tem piloto/carro
+			//cout << "Ambos estao ocupados" << endl;
+			if (carroP->removePiloto() && pilotoP->removeCarro()) {
+				cout << "Sucesso a remover carro/piloto" << endl;
+				return true;
+			}
+			else {
+				cout << "Erro a associar carro/piloto!" << endl;
+				return false;
+			}
+		}
+		else {
+			//cout << "Carro ou piloto esta ocupado!" << endl;
+			return false;
+		}
+
 		return false;
-}
-
-std::vector<Equipa*> DVG::carregaEquipas() const
-{
-	return todasEquipas;
-}
-
-
-int DVG::obtemPosVectorEquipa(char idCarro) const
-{
-	vector<Equipa*>::const_iterator it = todasEquipas.begin();
-	int i = 0;
-
-	while (it != todasEquipas.end()) {
-		if ((*it)->obtemIdCarro() == idCarro)
-			return i;
-
-		it++;
-		i++;
 	}
-	return -1;
+	return false;
 }
 
 std::string DVG::obtemTodosCarros() const
@@ -234,18 +221,6 @@ std::string DVG::obtemTodosPilotos() const
 
 	while (it != todosPilotos.end()) {
 		os << "\t" << (*it)->pilotoToString() << endl;
-		it++;
-	}
-	return os.str();
-}
-
-std::string DVG::obtemTodasEquipas() const
-{
-	ostringstream os;
-	vector<Equipa*>::const_iterator it = todasEquipas.begin();
-
-	while (it != todasEquipas.end()) {
-		os << "\t" << (*it)->toStringEquipa() << endl;
 		it++;
 	}
 	return os.str();

@@ -6,7 +6,7 @@ using namespace std;
 
 std::vector<std::string> Piloto::todosNomesPilotos;
 
-Piloto::Piloto(std::string n) :tipo("normal"),idEquipa(-1)
+Piloto::Piloto(std::string n) :tipo("normal"), idCarro('-')
 {
 
 	for (int i = 0; i < todosNomesPilotos.size(); i++) {
@@ -40,42 +40,55 @@ std::string Piloto::obtemTipo() const
 	return tipo;
 }
 
-bool Piloto::temEquipa() const
+//bool Piloto::temEquipa() const
+//{
+//	if (idEquipa == -1 && carro == nullptr)
+//		return false;
+//	else
+//		return true;
+//}
+//
+//bool Piloto::adicionaEquipa(int id, Carro * c)
+//{
+//	carro = c;
+//	idEquipa = id;
+//	return true;
+//}
+//
+//bool Piloto::removeEquipa()
+//{
+//	idEquipa = -1;
+//	carro = nullptr;
+//	return true;
+//}
+
+bool Piloto::temCarro() const
 {
-	if (idEquipa == -1 && carro == nullptr)
+	if (idCarro == '-')
 		return false;
 	else
 		return true;
 }
 
-bool Piloto::adicionaEquipa(int id, Carro * c)
+bool Piloto::adicionaCarro(char id)
 {
-	carro = c;
-	idEquipa = id;
+	idCarro = id;
 	return true;
 }
 
-bool Piloto::removeEquipa()
+bool Piloto::removeCarro()
 {
-	idEquipa = -1;
-	carro = nullptr;
+	idCarro = '-';
 	return true;
 }
 
-bool Piloto::passaSegundo()
+bool Piloto::tomaDecisao(Carro * carro)
 {
-	if (temEquipa()) {//tem carro
-		carro->acelera(1);
-		//acelera o carro
+	if (temCarro()) {//tem carro
+		
 		return true;
 	}
 
-	return false;
-}
-
-bool Piloto::paraMovimento()
-{
-	carro->para();
 	return false;
 }
 
@@ -85,7 +98,7 @@ std::string Piloto::pilotoToString() const
 	os << "Piloto:" << nome << "(" << tipo << ")";
 	//if (temCarro())
 		//os << ", tem carro '" << carro->obtemId();
-	if (temEquipa())
-		os << "' e encontra - se na equipa" << idEquipa;
+	/*if (temEquipa())
+		os << "' e encontra - se na equipa" << idEquipa;*/
 	return os.str();
 }

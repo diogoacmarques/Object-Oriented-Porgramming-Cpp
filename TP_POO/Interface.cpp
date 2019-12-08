@@ -78,7 +78,7 @@ bool Interface::inciar()
 				if (comando == "listacarros")
 					cout << jogo.listaCarros();
 				else if (comando == "preparaAutodromo") {
-					if (!jogo.insereEquipaAutodromo())
+					if (!jogo.insereCarrosAutodromo())
 						modo = 1;
 				}
 				else if (comando == "carregabat")

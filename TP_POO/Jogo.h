@@ -64,7 +64,7 @@ public:
 	bool carregaTudo();
 
 	//corrida
-	bool insereEquipaAutodromo();
+	bool insereCarrosAutodromo();
 	bool corrida();
 
 	//acidente

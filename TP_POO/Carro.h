@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Piloto.h"
 class Carro
 {
 	std::string marca, modelo;
@@ -16,8 +17,12 @@ class Carro
 	//estado
 	bool danoIrreparavel = false;
 	bool sinalEmergencia = false;
-	//Equipa
-	int idEquipa;
+	
+	//Pista
+	bool naPista;
+
+	//Piloto
+	Piloto * piloto;
 
 public:
 	//capacidadeInicial capacidadeMaxima marca modelo (modelo pode não ser inserido)
@@ -33,11 +38,24 @@ public:
 	int obtemVelMax() const;
 	std::string obtemCarro() const;
 
-		//Equipa
-	bool temEquipa() const;//verifica se o carro tem algum piloto
-	bool adicionaEquipa(int id);
-	bool removeEquipa();
+	//	//Equipa
+	//bool temEquipa() const;//verifica se o carro tem algum piloto
+	//bool adicionaEquipa(int id);
+	//bool removeEquipa();
 
+	//piloto
+	bool temPiloto() const;
+	bool adicionaPiloto(Piloto * p);
+	bool removePiloto();
+	std::string obtemNomePiloto() const;
+
+	//Pista
+	bool verificaPista() const;
+	bool entraPista();
+	bool saiPista();
+
+
+	bool entraNaGaragem();
 	//movimento
 	int obtemVelocidade() const;
 	bool acelera(int quantidade);

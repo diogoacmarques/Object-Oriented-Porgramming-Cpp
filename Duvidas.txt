@@ -2,3 +2,10 @@
 - Tipos de pilotos, utilizar um extend ?
 - Tipo crazy driver, os 5% de probabilidade, é por cada segundo ? sim
 -Como podemos fazer a associação entre autódromos, pista e garagem ? (Classes diferentes, mesma classe ?)
+
+
+mandar dados por ponteiro e não dentro da interface
+--Tentar eliminar a classe equipa. Manter so piloto e carro
+--ler e separar na interface e mandar para o jogo só os parametros.
+--Cuidado com os couts
+--Estamos a dar ordens a equipa "uma coisa que nem existe"

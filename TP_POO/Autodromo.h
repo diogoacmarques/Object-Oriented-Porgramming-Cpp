@@ -1,7 +1,6 @@
 #pragma once
 #include "Pista.h"
 #include "Garagem.h"
-#include "Equipa.h"
 #include <string>
 #include <vector>
 class Autodromo
@@ -17,7 +16,7 @@ public:
 	std::string autodromoToString() const;
 
 	//garagem
-	bool carregaEquipasGaragem(std::vector<Equipa *> e);
+	bool insereCarrosNaGaragem(std::vector<Carro *> e);
 	bool carregaBaterias();
 	//std::string obtemCarrosGaragem() const;
 

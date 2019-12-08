@@ -271,8 +271,6 @@ std::string Jogo::lista() const
 	os << dvg.obtemTodosCarros() << endl;
 	os << "Pilotos:" << endl;
 	os << dvg.obtemTodosPilotos() << endl;
-	os << "Equipas:" << endl;
-	os << dvg.obtemTodasEquipas() << endl;
 	os << "Autodromos:" << endl;
 	os << autodromoToString() << endl;
 
@@ -345,12 +343,12 @@ bool Jogo::carregaTudo()
 	return autodromoEmCompeticao->carregaBaterias();
 }
 
-bool Jogo::insereEquipaAutodromo()
+bool Jogo::insereCarrosAutodromo()
 {
 	Autodromo * autodromoEmCompeticao = camp->obtemAutodromoCompeticao();
 	//insere os carros e pilotos no autodromo onde vai decorrer a proxima corrida
 	//cout << "A inserir as equipa na garagem" << endl;
-	if (!autodromoEmCompeticao->carregaEquipasGaragem(dvg.carregaEquipas())) {//carro e piloto:
+	if (!autodromoEmCompeticao->insereCarrosNaGaragem(dvg.obtemVectorCarros())) {//carro e piloto:
 		cout << "Nao existem equipas disponiveis para criar um campeonato, a eliminar" << endl;
 		delete camp;
 		camp = nullptr;

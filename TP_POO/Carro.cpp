@@ -6,7 +6,7 @@ using namespace std;
 
 char Carro::idStatic = 'a';//inicializar o 'cont'
 
-Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), idEquipa(-1)
+Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), piloto(nullptr),naPista(false)
 {
 	if (idStatic < 'a' || idStatic > 'z')
 		idStatic = '?';
@@ -65,34 +65,79 @@ std::string Carro::obtemCarro() const
 	return os.str();
 }
 
-bool Carro::temEquipa() const
+//bool Carro::temEquipa() const
+//{
+//	if (idEquipa == -1)
+//		return false;
+//	else
+//		return true;
+//}
+//
+//bool Carro::adicionaEquipa(int id)
+//{
+//	if (!temEquipa()) {
+//		idEquipa = id;
+//		return true;
+//	}
+//	else
+//		return false;
+//}
+//
+//bool Carro::removeEquipa()
+//{
+//	idEquipa = -1;
+//	return true;
+//}
+
+
+bool Carro::temPiloto() const
 {
-	if (idEquipa == -1)
+	if (piloto == nullptr)
 		return false;
 	else
 		return true;
 }
 
-bool Carro::adicionaEquipa(int id)
+bool Carro::adicionaPiloto(Piloto * p)
 {
-	if (!temEquipa()) {
-		idEquipa = id;
-		return true;
-	}
-	else
-		return false;
-}
-
-bool Carro::removeEquipa()
-{
-	idEquipa = -1;
+	piloto = p;
 	return true;
 }
-//
-//std::string Carro::obtemNomePiloto() const
-//{
-//	return nomePiloto;
-//}
+
+bool Carro::removePiloto()
+{
+	piloto = nullptr;
+	return true;
+}
+
+std::string Carro::obtemNomePiloto() const
+{
+	return piloto->obtemNome();
+}
+
+bool Carro::verificaPista() const
+{
+	return naPista;
+}
+
+bool Carro::entraPista()
+{
+	naPista = true;
+	return true;
+}
+
+bool Carro::saiPista()
+{
+	naPista = false;
+	return true;
+}
+
+bool Carro::entraNaGaragem()
+{
+	movimento = false;
+	naPista = false;
+	return true;
+}
 
 int Carro::obtemVelocidade() const
 {
@@ -133,13 +178,7 @@ int Carro::obtemDistanciaPercorrida() const
 
 bool Carro::passaSegundo()
 {
-	if (mAh - metroSegundo >= 0) {//se tem bateria para a distancia
-		mAh -= metroSegundo;
-		mPercorrido += metroSegundo;
-		return true;
-	}
-	else
-		para();
+	piloto->tomaDecisao(this);
 	return false;
 }
 
