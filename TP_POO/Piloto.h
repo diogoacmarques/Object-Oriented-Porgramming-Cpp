@@ -19,18 +19,12 @@ public:
 	std::string obtemNome() const;
 	std::string obtemTipo() const;
 
-	//Equipa
-	//bool temEquipa() const;//verifica se o piloto tem equipa(carro)
-	//bool adicionaEquipa(int id,Carro * c);
-	//bool removeEquipa();
-
 	//Carro
 	bool temCarro() const;
 	bool adicionaCarro(char id);
 	bool removeCarro();
 
-
-	bool tomaDecisao(Carro * c);//meta 1
+	virtual bool tomaDecisao(Carro * c);
 
 	//toString
 	std::string pilotoToString() const;
