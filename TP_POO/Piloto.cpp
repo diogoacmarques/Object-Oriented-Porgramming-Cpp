@@ -82,16 +82,6 @@ bool Piloto::removeCarro()
 	return true;
 }
 
-bool Piloto::tomaDecisao(Carro * carro)
-{
-	if (temCarro()) {//tem carro
-		
-		return true;
-	}
-
-	return false;
-}
-
 std::string Piloto::pilotoToString() const
 {
 	ostringstream os;
