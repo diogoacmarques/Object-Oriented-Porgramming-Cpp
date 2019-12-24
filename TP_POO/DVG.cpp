@@ -1,4 +1,7 @@
 #include "DVG.h"
+#include "CrazyDriver.h"
+#include "PilotoRapido.h"
+#include "PilotoSurpresa.h"
 #include <iostream>
 #include <sstream>
 
@@ -37,27 +40,24 @@ std::vector<Piloto*> DVG::obtemVectorPilotos() const
 bool DVG::criaPiloto(string tipo, string nome)
 {
 	Piloto * tmp;
-	//do {
-		//tmp = obtemPiloto(nome);
-		//if (tmp != nullptr) {//existe este nome
-			//nome = nome + "x";
-		///}
-		//else {//nao existe nenhum com este nome
-			tmp = new Piloto(nome);		
-			todosPilotos.push_back(tmp);
-			return true;
-			//return true;
-		//}
-	//} while (1);
+	if (tipo == "crazy")
+		tmp = new CrazyDriver(nome);
+	else if (tipo == "rapido")
+		tmp = new PilotoRapido(nome);
+	else if (tipo == "surpresa")
+		tmp = new PilotoSurpresa(nome);
+	else
+		return false;
 
-	return false;
+	todosPilotos.push_back(tmp);
+	return true;
 }
 
 bool DVG::apagaPiloto(std::string nome)
 {
 	int pos = obtemPosVectorPiloto(nome);
 
-	if (todosPilotos.at(pos)->temCarro()) {
+	if (todosPilotos.at(pos)->verificaCarro()) {
 		cout << "Este piloto tem carro (sair do carro)" << endl;
 		return false;
 	}
@@ -118,7 +118,7 @@ bool DVG::apagaCarro(char letra)
 {
 	int pos = obtemPosVectorCarro(letra);
 
-	if (todosCarros.at(pos)->temPiloto()) {
+	if (todosCarros.at(pos)->verificaPiloto()) {
 		cout << "Este carro tem piloto (sair do carro)" << endl;
 		return false;
 	}
@@ -150,7 +150,7 @@ bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)
 
 	if (carroP != nullptr && pilotoP != nullptr) {//se existe
 		//cout << "Encontrei o carro e o piloto!" << endl;
-		if (!carroP->temPiloto() && !pilotoP->temCarro()) {//se nao tem piloto/carro
+		if (!carroP->verificaPiloto() && !pilotoP->verificaCarro()) {//se nao tem piloto/carro
 			//cout << "Estao ambos livres" << endl;
 			if (carroP->adicionaPiloto(pilotoP) && pilotoP->adicionaCarro(idCarro)) {
 				cout << "Sucesso a associar carro/piloto" << endl;
@@ -181,7 +181,7 @@ bool DVG::removePilotoCarro(char idCarro)
 
 	if (carroP != nullptr && pilotoP != nullptr) {//se existe
 		//cout << "Encontrei o carro e o piloto!" << endl;
-		if (carroP->temPiloto() && pilotoP->temCarro()) {//se nao tem piloto/carro
+		if (carroP->verificaPiloto() && pilotoP->verificaCarro()) {//se nao tem piloto/carro
 			//cout << "Ambos estao ocupados" << endl;
 			if (carroP->removePiloto() && pilotoP->removeCarro()) {
 				cout << "Sucesso a remover carro/piloto" << endl;

@@ -1,4 +1,5 @@
 #include "Carro.h"
+#include "Pista.h"
 #include <iostream>
 #include <sstream>
 
@@ -18,6 +19,20 @@ Carro::~Carro()
 	cout << "Destrutor_Carro(" << marca << "/" << modelo << ")" << endl;
 }
 
+bool Carro::verificaDano() const
+{
+	if (danoIrreparavel) {
+		cout << "O carro esta danificado!" << endl;
+		return true;
+	}
+	return false;
+}
+
+bool Carro::verificaEmergencia() const
+{
+	return sinalEmergencia;
+}
+
 int Carro::obtemBateriaMax() const
 {
 	return capcidadeMaxima;
@@ -25,18 +40,20 @@ int Carro::obtemBateriaMax() const
 
 int Carro::carregaBateria(int n)
 {
-	if (n > 0 && !movimento) {// e positivo e esta parado
-		if (mAh + n < capcidadeMaxima) {//nivel da bateria + n < capacidade maxima
+	if (verificaDano())
+		return false;
+
+	if (n > 0 && metroSegundo == 0) {// e positivo e esta parado
+		if (mAh + n <= capcidadeMaxima) {//nivel da bateria + n < capacidade maxima
 			mAh += n;
 		}
 		else {
 			mAh = capcidadeMaxima;
 			cout << "O carro " << id << " foi carregado completamente " << mAh << "mAh/" << capcidadeMaxima << endl;
-		}
-			
+		}	
 	}
 	else {
-		cout << "O carro esta em movimento ou nao e negativo" << endl;
+		cout << "O carro esta em movimento ou o valor nao e valido" << endl;
 	}
 
 	return 0;
@@ -44,6 +61,9 @@ int Carro::carregaBateria(int n)
 
 bool Carro::carregamentoTotal()
 {
+	if (verificaDano())
+		return false;
+
 	mAh = capcidadeMaxima;
 	return true;
 }
@@ -58,6 +78,18 @@ int Carro::obtemVelMax() const
 	return velcidadeMaxima;
 }
 
+void Carro::ativaSinalEmergencia()
+{
+	sinalEmergencia = true;
+	return;
+}
+
+void Carro::danificaCarro()
+{
+	danoIrreparavel = true;
+	return;
+}
+
 std::string Carro::obtemCarro() const
 {
 	ostringstream os;
@@ -65,32 +97,7 @@ std::string Carro::obtemCarro() const
 	return os.str();
 }
 
-//bool Carro::temEquipa() const
-//{
-//	if (idEquipa == -1)
-//		return false;
-//	else
-//		return true;
-//}
-//
-//bool Carro::adicionaEquipa(int id)
-//{
-//	if (!temEquipa()) {
-//		idEquipa = id;
-//		return true;
-//	}
-//	else
-//		return false;
-//}
-//
-//bool Carro::removeEquipa()
-//{
-//	idEquipa = -1;
-//	return true;
-//}
-
-
-bool Carro::temPiloto() const
+bool Carro::verificaPiloto() const
 {
 	if (piloto == nullptr)
 		return false;
@@ -100,14 +107,30 @@ bool Carro::temPiloto() const
 
 bool Carro::adicionaPiloto(Piloto * p)
 {
-	piloto = p;
-	return true;
+	if (!verificaDano()){
+		piloto = p;
+		return true;
+	}
+	else
+		return false;
+	
+	
 }
 
 bool Carro::removePiloto()
 {
+	if (verificaDano())
+		return false;
+
 	piloto = nullptr;
 	return true;
+}
+
+bool Carro::decisaoPiloto(Pista * p)
+{
+	piloto->tomaDecisao(this, p);
+	return passaSegundo();
+
 }
 
 std::string Carro::obtemNomePiloto() const
@@ -122,6 +145,9 @@ bool Carro::verificaPista() const
 
 bool Carro::entraPista()
 {
+	if (verificaDano())
+		return false;
+
 	naPista = true;
 	return true;
 }
@@ -134,7 +160,10 @@ bool Carro::saiPista()
 
 bool Carro::entraNaGaragem()
 {
-	movimento = false;
+	if (verificaDano())
+		return false;
+
+	metroSegundo = 0;
 	naPista = false;
 	return true;
 }
@@ -144,16 +173,38 @@ int Carro::obtemVelocidade() const
 	return metroSegundo;
 }
 
-bool Carro::acelera(int quantidade)
+bool Carro::acelera()
 {
 
-	if (danoIrreparavel && sinalEmergencia)
+	if (verificaDano() && sinalEmergencia)
 		return false;
 
 	if (mAh > 0) {
-		metroSegundo += quantidade;
-		movimento = true;
-		passaSegundo();
+		if (velcidadeMaxima < metroSegundo) {
+			metroSegundo++;
+			//passaSegundo
+			return true;
+		}
+		else {
+			cout << "O carro ja esta na sua velocidade maxima" << endl;
+		}
+		
+	}
+	else {
+		cout << "Carro " << id << " ficou sem bateria" << endl;
+		para();
+		return false;
+	}
+
+	return false;
+}
+
+bool Carro::trava()
+{
+	if (metroSegundo > 0 && !verificaDano()) {
+		metroSegundo--;
+		if(metroSegundo > 0)
+			passaSegundo();
 		return true;
 	}
 	else {
@@ -161,12 +212,13 @@ bool Carro::acelera(int quantidade)
 		para();
 		return false;
 	}
+
+	return false;
 }
 
 bool Carro::para()
 {
 	metroSegundo = 0;
-	movimento = false;
 	return true;
 }
 
@@ -178,8 +230,19 @@ int Carro::obtemDistanciaPercorrida() const
 
 bool Carro::passaSegundo()
 {
-	piloto->tomaDecisao(this);
-	return false;
+	if (verificaDano())
+		return false;
+
+	if (mAh <= metroSegundo) {//ainda tem energia
+		mAh -= metroSegundo;
+		mPercorrido += metroSegundo;
+	}
+	else {//nao tem energia
+		mAh = 0;
+		trava();
+	}	
+
+	return true;
 }
 
 bool Carro::resetDistancia()

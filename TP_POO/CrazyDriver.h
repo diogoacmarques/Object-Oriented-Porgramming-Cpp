@@ -1,9 +1,13 @@
 #pragma once
 #include "Piloto.h"
-class CrazyDriver : Piloto
+class CrazyDriver : public Piloto
 {
+	int iniciaCorridaApos;
+	int pos;
 public:
-	CrazyDriver();
+	CrazyDriver(std::string n);
 	~CrazyDriver();
+
+	bool tomaDecisao(Carro * c, Pista * p);
 };
 

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Pista::Pista(int nM, int comp):comprimento(comp),nMax(nM), emCompeticao(false)
+Pista::Pista(int nM, int comp) :comprimento(comp), nMax(nM), emCompeticao(false)
 {
 	cout << "Construtor Pista" << endl;
 }
@@ -16,20 +16,39 @@ Pista::~Pista()
 
 bool Pista::insereCarro(Carro * c)
 {
+	if (emCompeticao) {
+		cout << "A corrida ja comecou" << endl;
+		return false;
+	}
+
 	if (carrosNaPista.size() + 1 >= nMax) {
 		carrosNaPista.push_back(c);
 		cout << "A pista(" << nMax << ") ja nao aguenta com mais carros(" << carrosNaPista.size() << ")" << endl;
 		return false;
-	}	
+	}
 	else {
 		carrosNaPista.push_back(c);
 		cout << "A Pista inseriu o carro " << c->obtemId() << endl;
 		return true;
 	}
-		
+
 }
 
-std::vector<Carro*> Pista::removeCarros()
+Carro * Pista::removeCarro(char idCarro)
+{
+	vector<Carro*>::iterator it = carrosNaPista.begin();
+	while (it != carrosNaPista.end()) {
+		if((*it)->obtemId() == idCarro){
+			(*it)->saiPista();
+
+		}
+
+		it++;
+	}
+	return nullptr;
+}
+
+std::vector<Carro*> Pista::removeTodosCarros()
 {
 	vector<Carro*> tmp = carrosNaPista;
 	carrosNaPista.clear();
@@ -48,29 +67,38 @@ int Pista::obtemNMax() const
 
 bool Pista::passaTempo(int segundos)
 {
+	if (!emCompeticao) {
+		cout << "A pista nao se encontra em corrida" << endl;
+		return false;
+	}
+
 	string lixo;
 	bool check = true;
 	if (carrosNaPista.size() == 0) {
 		cout << "nao existem equipas em competicao" << endl;
 		return true;
 	}
-	//verificar o piloto e conforme o seu tipo, atua
 
-	//e possivel obter a localização do carro através do piloto
 
 	if (segundos == 0) {
 		cout << obtemPista();
 		return true;
 	}
-	bool verifcaCorrida = false;
 
+
+	bool verifcaCorrida = false;
 	for (int i = 0; i < segundos; i++) {
 		verifcaCorrida = false;
 		for (int j = 0; j < carrosNaPista.size(); j++) {
-			
+		
+
 			if (carrosNaPista.at(j)->verificaPista()) {
+
+				if (carrosNaPista.at(j)->verificaEmergencia())//se tiver sinal de emergencia ligado
+					removeCarro(carrosNaPista.at(j)->obtemId());
+
 				verifcaCorrida = true;
-				check = carrosNaPista.at(j)->passaSegundo();
+				check = carrosNaPista.at(j)->decisaoPiloto(this);
 
 				//verifica se ganhou
 				if (carrosNaPista.at(j)->obtemDistanciaPercorrida() >= comprimento) {
@@ -100,6 +128,7 @@ bool Pista::passaTempo(int segundos)
 		}
 		else {
 			cout << "Ja nao existe equipas a competir(final da corrida)" << endl;
+			terminarCorrida();
 			return false;
 		}
 			
@@ -109,8 +138,38 @@ bool Pista::passaTempo(int segundos)
 	return true;
 }
 
+int Pista::obtemTempoCorrida() const
+{
+	return tempoCorrida;
+}
+
+int Pista::obtemCarrosNaPista() const
+{
+	return (int)carrosNaPista.size();
+}
+
+int Pista::obtemPosCorrida(char idCarro)
+{
+	for (int i = 0; i < carrosNaPista.size(); i++)
+		if (carrosNaPista.at(i)->obtemId() == idCarro)
+			return i;
+
+	return -1;
+}
+
+bool Pista::danificaCarro(int pos)
+{
+	carrosNaPista.at(pos)->danificaCarro();
+	return true;
+}
+
 bool Pista::iniciaCorrida()
 {
+	if(carrosNaPista.size() < 2){
+		cout << "Nao existem carros suficientes para iniciar a corrida" << endl;
+		return false;
+	}
+	tempoCorrida = 0;
 	emCompeticao = true;
 	return true;
 }

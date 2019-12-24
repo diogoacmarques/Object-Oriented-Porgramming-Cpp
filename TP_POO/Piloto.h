@@ -3,6 +3,7 @@
 #include <vector>
 
 class Carro;
+class Pista;
 
 class Piloto
 {
@@ -10,7 +11,6 @@ class Piloto
 	std::string nome;
 	const std::string tipo;
 	char idCarro;
-	
 public:
 	Piloto(std::string n);
 	~Piloto();
@@ -20,11 +20,11 @@ public:
 	std::string obtemTipo() const;
 
 	//Carro
-	bool temCarro() const;
+	bool verificaCarro() const;
 	bool adicionaCarro(char id);
 	bool removeCarro();
 
-	virtual bool tomaDecisao(Carro * c);
+	virtual bool tomaDecisao(Carro * c,Pista * p) = 0;
 
 	//toString
 	std::string pilotoToString() const;

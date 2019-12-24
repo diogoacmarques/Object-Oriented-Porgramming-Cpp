@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 #include "Piloto.h"
+
+class Pista;
+
 class Carro
 {
 	std::string marca, modelo;
@@ -10,7 +13,6 @@ class Carro
 	int mAh;
 	const int capcidadeMaxima;
 	//moviemento
-	bool movimento = false;
 	int metroSegundo = 0;
 	int mPercorrido = 0;
 	const int velcidadeMaxima;
@@ -30,12 +32,16 @@ public:
 	~Carro();
 
 	//funcionalidades
+	bool verificaDano() const;
+	bool verificaEmergencia() const;
 	int obtemBateriaMax() const;
 	int obtemBateriaAtual() const;
 	int carregaBateria(int n);
 	bool carregamentoTotal();
 	char obtemId() const;
 	int obtemVelMax() const;
+	void ativaSinalEmergencia();
+	void danificaCarro();
 	std::string obtemCarro() const;
 
 	//	//Equipa
@@ -44,9 +50,10 @@ public:
 	//bool removeEquipa();
 
 	//piloto
-	bool temPiloto() const;
+	bool verificaPiloto() const;
 	bool adicionaPiloto(Piloto * p);
 	bool removePiloto();
+	bool decisaoPiloto(Pista * p);
 	std::string obtemNomePiloto() const;
 
 	//Pista
@@ -58,14 +65,15 @@ public:
 	bool entraNaGaragem();
 	//movimento
 	int obtemVelocidade() const;
-	bool acelera(int quantidade);
+	bool acelera();
+	bool trava();
 	bool para();
 	int obtemDistanciaPercorrida() const;
 	bool passaSegundo();
+
 	bool resetDistancia();
 
 	//toString
 	std::string carroToString() const;
 
 };
-

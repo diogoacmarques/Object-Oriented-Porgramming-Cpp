@@ -62,7 +62,7 @@ std::string Piloto::obtemTipo() const
 //	return true;
 //}
 
-bool Piloto::temCarro() const
+bool Piloto::verificaCarro() const
 {
 	if (idCarro == '-')
 		return false;
@@ -72,6 +72,9 @@ bool Piloto::temCarro() const
 
 bool Piloto::adicionaCarro(char id)
 {
+	if (verificaCarro())
+		return false;
+
 	idCarro = id;
 	return true;
 }

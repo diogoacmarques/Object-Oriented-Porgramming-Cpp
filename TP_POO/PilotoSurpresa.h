@@ -1,9 +1,12 @@
 #pragma once
 #include "Piloto.h"
-class PilotoSurpresa : Piloto
+
+class PilotoSurpresa : public Piloto
 {
 public:
-	PilotoSurpresa();
+	PilotoSurpresa(std::string n);
 	~PilotoSurpresa();
+
+	bool tomaDecisao(Carro * c, Pista * p);
 };
 

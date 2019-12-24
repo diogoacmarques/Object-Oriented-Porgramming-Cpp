@@ -46,7 +46,7 @@ std::string Autodromo::autodromoToString() const
 bool Autodromo::insereCarrosNaGaragem(vector<Carro*> carros)
 {
 	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar a equipa para a garagem" << endl;
-	return garagem.recebeCarros(carros);
+	return garagem.recebeTodosCarros(carros);
 	return false;
 }
 
@@ -101,7 +101,7 @@ bool Autodromo::passaTempo(int segundos)
 {
 	if (!pista.passaTempo(segundos)) {//falso se nao ha mais equipas a correr
 		cout << "A meter os carros de volta na garagem" << endl;
-		garagem.recebeCarros(pista.removeCarros());
+		garagem.recebeTodosCarros(pista.removeTodosCarros());
 		return false;
 	}
 	return true;

@@ -9,7 +9,8 @@ public:
 	~Garagem();
 
 	//funcionalidade
-	bool recebeCarros(std::vector<Carro*> c);
+	bool recebeTodosCarros(std::vector<Carro*> c);
+	bool recebeCarro(Carro * c);
 	Carro * obtemCarroDisponivel();
 	bool carregaTodasBaterias();
 

@@ -14,7 +14,7 @@ Garagem::~Garagem()
 	cout << "Destrutor da garagem" << endl;
 }
 
-bool Garagem::recebeCarros(std::vector<Carro*> tmp)
+bool Garagem::recebeTodosCarros(std::vector<Carro*> tmp)
 {
 	carros = tmp;
 	for (int i = 0; i < carros.size(); i++) {//reset
@@ -31,6 +31,13 @@ bool Garagem::recebeCarros(std::vector<Carro*> tmp)
 		return false;
 	}
 	
+}
+
+bool Garagem::recebeCarro(Carro * c)
+{
+	carros.push_back(c);
+	c->entraNaGaragem();
+	return true;
 }
 
 Carro * Garagem::obtemCarroDisponivel()
