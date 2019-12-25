@@ -10,14 +10,20 @@ class Piloto
 	static std::vector<std::string> todosNomesPilotos;
 	std::string nome;
 	const std::string tipo;
+	int pontuacao;
 	char idCarro;
 public:
 	Piloto(std::string n);
 	~Piloto();
 
+
 	//funcionalidades
 	std::string obtemNome() const;
 	std::string obtemTipo() const;
+
+	//pontuacao
+	void adicionaPontuacao(int pontos);
+	void resetPontuacao();
 
 	//Carro
 	bool verificaCarro() const;

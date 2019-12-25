@@ -27,8 +27,6 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 	}
 
 
-	
-
 	if (c->obtemBateriaAtual() == 0) {
 		c->ativaSinalEmergencia();
 		return false;

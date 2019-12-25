@@ -138,6 +138,14 @@ std::string Carro::obtemNomePiloto() const
 	return piloto->obtemNome();
 }
 
+bool Carro::verificaAptidao() const
+{
+	if (danoIrreparavel || naPista)
+		return false;
+	else
+		return true;
+}
+
 bool Carro::verificaPista() const
 {
 	return naPista;
@@ -155,6 +163,13 @@ bool Carro::entraPista()
 bool Carro::saiPista()
 {
 	naPista = false;
+	return true;
+}
+
+bool Carro::acabaCorrida(int pontos)
+{
+	saiPista();
+	piloto->adicionaPontuacao(pontos);
 	return true;
 }
 

@@ -46,8 +46,11 @@ bool DVG::criaPiloto(string tipo, string nome)
 		tmp = new PilotoRapido(nome);
 	else if (tipo == "surpresa")
 		tmp = new PilotoSurpresa(nome);
-	else
+	else {
+		cout << "erro" << endl;
 		return false;
+	}
+		
 
 	todosPilotos.push_back(tmp);
 	return true;

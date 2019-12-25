@@ -55,11 +55,13 @@ public:
 	bool removePiloto();
 	bool decisaoPiloto(Pista * p);
 	std::string obtemNomePiloto() const;
+	bool verificaAptidao() const;//verifica se reune condições para correr
 
 	//Pista
 	bool verificaPista() const;
 	bool entraPista();
 	bool saiPista();
+	bool acabaCorrida(int pontos);
 
 
 	bool entraNaGaragem();

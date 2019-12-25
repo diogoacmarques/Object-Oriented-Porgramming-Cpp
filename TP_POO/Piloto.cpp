@@ -6,7 +6,7 @@ using namespace std;
 
 std::vector<std::string> Piloto::todosNomesPilotos;
 
-Piloto::Piloto(std::string n) :tipo("normal"), idCarro('-')
+Piloto::Piloto(std::string n) :tipo("normal"), idCarro('-'),pontuacao(0)
 {
 
 	for (int i = 0; i < todosNomesPilotos.size(); i++) {
@@ -38,6 +38,18 @@ std::string Piloto::obtemNome() const
 std::string Piloto::obtemTipo() const
 {
 	return tipo;
+}
+
+void Piloto::adicionaPontuacao(int pontos)
+{
+	pontuacao += pontos;
+	return;
+}
+
+void Piloto::resetPontuacao()
+{
+	pontuacao = 0;
+	return;
 }
 
 //bool Piloto::temEquipa() const

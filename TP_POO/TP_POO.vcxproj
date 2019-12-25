@@ -42,7 +42,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -124,6 +124,7 @@
     <ClCompile Include="Autodromo.cpp" />
     <ClCompile Include="Campeonato.cpp" />
     <ClCompile Include="Carro.cpp" />
+    <ClCompile Include="Consola.cpp" />
     <ClCompile Include="CrazyDriver.cpp" />
     <ClCompile Include="DVG.cpp" />
     <ClCompile Include="Garagem.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Autodromo.h" />
     <ClInclude Include="Campeonato.h" />
     <ClInclude Include="Carro.h" />
+    <ClInclude Include="Consola.h" />
     <ClInclude Include="CrazyDriver.h" />
     <ClInclude Include="DVG.h" />
     <ClInclude Include="Garagem.h" />

@@ -103,7 +103,20 @@ bool Pista::passaTempo(int segundos)
 				//verifica se ganhou
 				if (carrosNaPista.at(j)->obtemDistanciaPercorrida() >= comprimento) {
 					cout << "A equipa " << carrosNaPista.at(j)->obtemId() << " acabou a corrida" << endl;
-					carrosNaPista.at(j)->saiPista();
+					int pos = obtemPosCorrida(carrosNaPista.at(j)->obtemId());
+					if (pos == 0) {
+						carrosNaPista.at(j)->acabaCorrida(10);
+					}
+					else if (pos == 1) {
+						carrosNaPista.at(j)->acabaCorrida(5);
+					}
+					else if (pos == 2) {
+						carrosNaPista.at(j)->acabaCorrida(2);
+					}
+					else {
+						carrosNaPista.at(j)->acabaCorrida(0);
+					}
+					
 					//equipasNaPista.erase(equipasNaPista.begin() + j);
 					continue;
 				}

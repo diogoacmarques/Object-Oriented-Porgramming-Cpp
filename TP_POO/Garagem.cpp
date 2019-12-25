@@ -44,7 +44,7 @@ Carro * Garagem::obtemCarroDisponivel()
 {
 	Carro * tmp;
 	for (int i = 0; i < carros.size(); i++) {
-		if (!carros.at(i)->verificaPista()) {
+		if (!carros.at(i)->verificaAptidao()) {
 			carros.at(i)->entraPista();
 			tmp = carros.at(i);
 			carros.erase(carros.begin() + i);

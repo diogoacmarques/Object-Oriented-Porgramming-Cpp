@@ -16,6 +16,12 @@ Interface::~Interface()
 
 bool Interface::inciar()
 {
+	
+	Consola::setTextSize(15, 15);
+	Consola::setScreenSize(100, 50);   // linhas colunas. valores grandes pode nao dar
+	Consola::setBackgroundColor(Consola::CINZENTO);  // favor consultar o .h para ver as constantes
+	Consola::setTextColor(Consola::CYAN_CLARO);
+	Consola::clrscr();
 	cout << "Starting interface!" << endl;
 
 	string linha;//getline
@@ -212,8 +218,14 @@ bool Interface::cria(std::string parametros)
 		}
 
 		//cout << "\tPiloto:(" << tipoPiloto << "," << nome << ")\n" << endl;
-		jogo.criaPiloto(tipo, nome);
-		return true;
+		if (jogo.criaPiloto(tipoPiloto, nome)) {
+			return true;
+		}
+		else {
+			cout << "Este tipo de piloto nao existe: " << tipoPiloto << endl;
+			return false;
+		}
+			
 	}
 	else if (tipo == "a") {
 		//autodromo

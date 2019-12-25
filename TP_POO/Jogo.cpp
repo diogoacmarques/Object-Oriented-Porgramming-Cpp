@@ -63,7 +63,8 @@ bool Jogo::lerFicheiroPiloto(std::string fileName)
 
 			//cout << "\tPiloto:(" << tipo << "," << nome << ")\n" << endl;
 			if (!nome.empty() && !tipo.empty()) {
-				criaPiloto(tipo, nome);
+				if (!criaPiloto(tipo, nome))
+					cout << "Este tipo nao existe: " << tipo << endl;
 			}
 			else
 				cout << "Valores de ficheiro invalidos" << endl;
