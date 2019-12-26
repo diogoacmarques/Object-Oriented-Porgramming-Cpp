@@ -26,6 +26,7 @@ public:
 	bool criaCarro(int velMax,int capInicial, int capMax, std::string marca, std::string modelo = "");
 	bool apagaCarro(char letra);
 	int obtemPosVectorCarro(char letra) const;
+	bool destroiCarro(char idCarro);
 
 
 	//Carro/Piloto

@@ -50,7 +50,6 @@ bool Interface::inciar()
 				//meta 1: Execução de todos os comandos exceto savedgv, loaddgv e deldgv.
 				if (comando == "carregaP")
 					jogo.lerFicheiroPiloto(linha);
-				//lerFicheiroPiloto(linha);
 				else if (comando == "carregaC")
 					jogo.lerFicheiroCarro(linha);
 				else if (comando == "carregaA")
@@ -79,34 +78,40 @@ bool Interface::inciar()
 					cout << "Este comando nao se encontra na lista do modo 1!" << endl;
 			}
 			else {//modo 2
-				//meta 1 : Comando “campeonato <A1>” (só há um autódromo).
-				//meta 1 : Comando “passatempo <N>”
-				if (comando == "listacarros")
+				if (comando == "listacarros") {
+					log.push_back("listaCarros");
 					cout << jogo.listaCarros();
+					}
 				else if (comando == "preparaAutodromo") {
+					log.push_back("preparaAutodromo");
 					if (!jogo.insereCarrosAutodromo())
 						modo = 1;
 				}
 				else if (comando == "carregabat")
-					func();
-				else if (comando == "carregatudo")
+					carregaBat(linha);
+				else if (comando == "carregatudo") {
+					log.push_back("carregaTudo");
 					jogo.carregaTudo();
+				}
 				else if (comando == "corrida") {
+					log.push_back("corrida");
 					if (jogo.corrida())
 						modo = 2;
 					else
 						modo = 1;
 				}
 				else if (comando == "acidente")
-					func();
+					acidente(linha);
 				else if (comando == "stop")
-					func();
+					stop(linha);
 				else if (comando == "destroi")
-					func();
+					destroi(linha);
 				else if (comando == "passatempo")
 					passaTempo(linha);
-				else if (comando == "log")
-					func();
+				else if (comando == "log") {
+					for (auto l : log)
+						cout << l << endl;
+				}
 				else
 					cout << "Este comando nao se encontra na lista do modo 2!" << endl;
 			}
@@ -199,6 +204,8 @@ bool Interface::cria(std::string parametros)
 
 		cout << "\tCarro:" << marca << "," << modelo << "(" << capInicial << "/" << capMaxima << ") e velocidae" << velMax << "\n" << endl;
 		jogo.criaCarro(stoi(velMax),stoi(capInicial), stoi(capMaxima), marca, modelo);
+
+		//log.push_back("cria c " + velMax + " " + capInicial + " " + capMaxima + " " + marca + " " + modelo);
 		return true;
 		
 	}	
@@ -220,6 +227,7 @@ bool Interface::cria(std::string parametros)
 		//cout << "\tPiloto:(" << tipoPiloto << "," << nome << ")\n" << endl;
 		if (jogo.criaPiloto(tipoPiloto, nome)) {
 			return true;
+			//log.push_back("cria p " + tipoPiloto + " " + nome);
 		}
 		else {
 			cout << "Este tipo de piloto nao existe: " << tipoPiloto << endl;
@@ -249,6 +257,8 @@ bool Interface::cria(std::string parametros)
 
 		//cout << "\tAutodromo[" << n << "]:" << nome << "(" << comprimento << " metros)\n" << endl;
 		jogo.criaAutodromo(n, comprimento, nome);
+		//log.push_back("cria a " + to_string(n) + " " + to_string(comprimento) +" " + nome);
+
 		return true;
 	}
 	else {
@@ -397,6 +407,7 @@ bool Interface::campeonato(std::string parametros)
 	}
 	
 	if (!autodromosCampeonato.empty()) {
+		log.push_back("campeonato " + parametros);
 		return jogo.campeonato(autodromosCampeonato);//A1 A2 A3 A4
 	}
 		
@@ -422,8 +433,125 @@ bool Interface::passaTempo(std::string parametros)
 	//cout << "Corrida avanca em " << segundos << " segundos." << endl;
 
 	jogo.passatempo(segundos);
+	log.push_back("passatempo " + to_string(segundos));
 
 	return true;
+}
+
+bool Interface::carregaBat(std::string parametros)
+{
+	int quantidade;
+	char idCarro;
+	if (parametros.empty()) {
+		cout << "Insira os seguintes parametros:(<letraCarro> <Q>):";
+		getline(cin, parametros);
+	}
+	
+	if (parametros.empty()) {
+		cout << "parametros nao insereridos" << endl;
+		return false;
+	}
+	
+	string tmp = splitLine(parametros);
+	parametros.erase(0, tmp.size() + 1);
+
+	idCarro = tmp[0];
+
+	if (parametros.empty()) {
+		cout << "Quantidade nao insererida" << endl;
+		return false;
+	}
+
+	quantidade = stoi(parametros);
+
+	log.push_back("carregabat " + to_string(idCarro) + " " + to_string(quantidade));
+
+
+	if (!jogo.carregaBat(idCarro, quantidade)) {
+		cout << "Parametros <letraCarro> ou <Q> invalidos" << endl;
+		return false;
+	}
+
+	return true;
+}
+
+bool Interface::acidente(std::string parametros)
+{
+	
+	if (parametros.empty()) {//sem parametros
+		cout << "Indique o id do carro:";
+		getline(cin, parametros);
+	}
+
+	string idCarro = splitLine(parametros);
+
+	
+	if (!idCarro.empty()){
+		char id = idCarro[0];
+		log.push_back("acidente " + id);
+		if (jogo.acidente(id))
+			cout << "O carro com o id '" << id << "' teve um acidente" << endl;
+		else
+			cout << "O carro com o id '" << id << "' nao teve um acidente" << endl;
+		return true;
+	}
+	else {
+		cout << "O id do carro inserido e invalido." << endl;
+		return false;
+	}
+	return false;
+}
+
+bool Interface::stop(std::string parametros)
+{
+	if (parametros.empty()) {//sem parametros
+		cout << "Indique o nome do piloto:";
+		getline(cin, parametros);
+	}
+
+	string nomePiloto = splitLine(parametros);
+
+	if (!nomePiloto.empty()) {
+		log.push_back("stop " + nomePiloto);
+
+		if (jogo.stopPiloto(nomePiloto))
+			cout << "O piloto '" << nomePiloto << "' ativou o sinalDeEmergencia" << endl;
+		else
+			cout << "O piloto '" << nomePiloto << "' nao ativou o sinalDeEmergencia" << endl;
+
+		return true;
+	}
+	else {
+		cout << "O nome do piloto inserido e invalido." << endl;
+		return false;
+	}
+	return false;
+}
+
+bool Interface::destroi(std::string parametros)
+{
+	if (parametros.empty()) {//sem parametros
+		cout << "Indique o id do Carro";
+		getline(cin, parametros);
+	}
+
+	string idCarro = splitLine(parametros);
+
+	if (!idCarro.empty()) {
+		char id = idCarro[0];
+		log.push_back("acidente " + id);
+
+		if (jogo.destroi(id))
+			cout << "O carro com o id '" << id << "' foi destruido" << endl;
+		else
+			cout << "O carro com o id '" << id << "' nao foi destruido" << endl;
+		return true;
+	}
+	else {
+		cout << "O ID do carro inserido e invalido." << endl;
+		return false;
+	}
+	return false;
 }
 
 std::string Interface::precisaNomeFicheiro()

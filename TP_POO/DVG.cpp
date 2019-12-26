@@ -146,6 +146,25 @@ int DVG::obtemPosVectorCarro(char letra) const
 	return -1;
 }
 
+bool DVG::destroiCarro(char idCarro)
+{
+	Carro * c = obtemCarro(idCarro);
+	if(c == nullptr)
+		return false;
+
+	if (c->verificaPiloto()) {//tem piloto
+		Piloto * p = obtemPiloto(c->obtemNomePiloto());
+		if (p == nullptr)
+			return false;
+
+		p->removeCarro();	
+	}
+
+	delete c;
+
+	return true;
+}
+
 bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)
 {
 	Carro * carroP = obtemCarro(idCarro);

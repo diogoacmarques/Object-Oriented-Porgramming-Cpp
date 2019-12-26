@@ -8,6 +8,7 @@ class Interface
 
 	std::string nome;
 	int modo;
+	std::vector<std::string> log;
 
 	std::string precisaNomeFicheiro();
 
@@ -27,8 +28,13 @@ class Interface
 
 	bool passaTempo(std::string parametros);
 
-	bool verificaDigitos(std::string parametros);
+	bool carregaBat(std::string parametros);
 
+	bool acidente(std::string parametros);
+
+	bool stop(std::string parametros);
+
+	bool destroi(std::string parametros);
 public:
 	Interface(std::string n = "default");
 	~Interface();

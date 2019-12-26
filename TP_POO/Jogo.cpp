@@ -337,6 +337,19 @@ std::string Jogo::listaCarros() const
 	return autodromoEmCompeticao->listaCarrosGaragem();
 }
 
+bool Jogo::carregaBat(char idCarro, int quantidade)
+{
+	if (quantidade <= 0)
+		return false;
+
+	Carro * c = dvg.obtemCarro(idCarro);
+	if (c == nullptr)
+		return false;
+
+	c->carregaBateria(quantidade);
+	return true;
+}
+
 bool Jogo::carregaTudo()
 {
 	//carrega as baterias todas
@@ -374,6 +387,39 @@ bool Jogo::corrida()
 	autoCompeticao->iniciaPista();
 	
 	return true;
+}
+
+bool Jogo::acidente(char idCarro)
+{
+	Carro * c = dvg.obtemCarro(idCarro);
+	if (c == nullptr)
+		return false;
+
+	c->danificaCarro();
+	return true;
+}
+
+bool Jogo::stopPiloto(std::string nome)
+{
+	Piloto * p = dvg.obtemPiloto(nome);
+	if (p == nullptr)
+		return false;
+
+	//verifica se tem carro
+	if (p->verificaCarro()) {
+		Carro * c = dvg.obtemCarro(p->obtemIdCarro());
+		if (c == nullptr)
+			return false;
+
+		return p->stop(c);
+			
+	}
+	return true;
+}
+
+bool Jogo::destroi(char idCarro)
+{
+	return dvg.destroiCarro(idCarro);;
 }
 
 bool Jogo::passatempo(int segundos)

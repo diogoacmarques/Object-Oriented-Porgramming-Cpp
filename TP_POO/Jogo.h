@@ -59,6 +59,7 @@ public:
 	std::string listaCarros() const;
 
 	//carregabat
+	bool carregaBat(char idCarro, int quantidade);
 
 	//carregatudo
 	bool carregaTudo();
@@ -67,11 +68,14 @@ public:
 	bool insereCarrosAutodromo();
 	bool corrida();
 
-	//acidente
+	//acidente carro
+	bool acidente(char idCarro);
 
-	//stop
+	//stop piloto
+	bool stopPiloto(std::string nome);
 
 	//destroi
+	bool destroi(char idCarro);
 
 	//passatempo
 	bool passatempo(int segundos);

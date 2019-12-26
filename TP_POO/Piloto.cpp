@@ -1,4 +1,5 @@
 #include "Piloto.h"
+#include "Carro.h"
 #include <iostream>
 #include <sstream>
 
@@ -52,6 +53,15 @@ void Piloto::resetPontuacao()
 	return;
 }
 
+bool Piloto::stop(Carro * c)
+{
+	if (c == nullptr)
+		return false;
+
+	c->ativaSinalEmergencia();
+	return true;
+}
+
 //bool Piloto::temEquipa() const
 //{
 //	if (idEquipa == -1 && carro == nullptr)
@@ -73,6 +83,11 @@ void Piloto::resetPontuacao()
 //	carro = nullptr;
 //	return true;
 //}
+
+char Piloto::obtemIdCarro() const
+{
+	return idCarro;
+}
 
 bool Piloto::verificaCarro() const
 {
