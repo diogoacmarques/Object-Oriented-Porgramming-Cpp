@@ -24,6 +24,12 @@ class Interface
 
 	std::string listaTudo();
 
+	bool saveDgv(std::string parametros);
+
+	bool loadDgv(std::string parametros);
+
+	bool deleteDgv(std::string parametros);
+
 	bool campeonato(std::string parametros);
 
 	bool passaTempo(std::string parametros);

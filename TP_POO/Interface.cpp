@@ -385,6 +385,54 @@ std::string Interface::listaTudo()
 	return jogo.lista();
 }
 
+bool Interface::saveDgv(std::string parametros)
+{
+	if (parametros.empty()) {//sem parametros
+		cout << "Nome da DGV:";
+		getline(cin, parametros);
+		parametros = splitLine(parametros);
+	}
+
+	if (parametros.empty()){
+		cout << "Nome nao inserido, a cancelar." << endl;
+		return false;
+	}
+
+	return jogo.saveDGV(parametros);
+}
+
+bool Interface::loadDgv(std::string parametros)
+{
+	if (parametros.empty()) {//sem parametros
+		cout << "Nome da DGV:";
+		getline(cin, parametros);
+		parametros = splitLine(parametros);
+	}
+
+	if (parametros.empty()) {
+		cout << "Nome nao inserido, a cancelar." << endl;
+		return false;
+	}
+
+	return jogo.loadDGV(parametros);
+}
+
+bool Interface::deleteDgv(std::string parametros)
+{
+	if (parametros.empty()) {//sem parametros
+		cout << "Nome da DGV:";
+		getline(cin, parametros);
+		parametros = splitLine(parametros);
+	}
+
+	if (parametros.empty()) {
+		cout << "Nome nao inserido, a cancelar." << endl;
+		return false;
+	}
+
+	return jogo.delDGV(parametros);
+}
+
 bool Interface::campeonato(std::string parametros)
 {
 	vector<string> autodromosCampeonato;

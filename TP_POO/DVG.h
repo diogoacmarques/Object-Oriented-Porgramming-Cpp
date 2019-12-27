@@ -6,11 +6,14 @@
 
 class DVG
 {
+	std::string nome;
 	std::vector<Piloto*> todosPilotos;
 	std::vector<Carro*> todosCarros;
 public:
-	DVG();
+	DVG(std::string n);
+	DVG(const DVG & original);
 	~DVG();
+	DVG & operator=(const DVG & original);
 
 	//Piloto
 	Piloto * obtemPiloto(std::string nome) const;//devia ser privado?
@@ -36,5 +39,6 @@ public:
 	//toString
 	std::string obtemTodosCarros() const;
 	std::string obtemTodosPilotos() const;
+	std::string obtemNome() const;
 
 };

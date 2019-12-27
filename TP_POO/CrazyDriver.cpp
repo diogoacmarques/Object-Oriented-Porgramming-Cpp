@@ -54,4 +54,9 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 	return true;
 }
 
+Piloto * CrazyDriver::dupilica()
+{
+	return new CrazyDriver(*this);
+}
+
 

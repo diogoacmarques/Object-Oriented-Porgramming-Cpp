@@ -9,5 +9,6 @@ public:
 	~PilotoRapido();
 
 	bool tomaDecisao(Carro * c, Pista * p);
+	Piloto * dupilica();
 };
 

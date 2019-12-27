@@ -7,8 +7,13 @@
 
 using namespace std;
 
-DVG::DVG()
+DVG::DVG(std::string n):nome(n)
 {
+}
+
+DVG::DVG(const DVG & original)
+{
+	*this = original;
 }
 
 DVG::~DVG()
@@ -18,6 +23,31 @@ DVG::~DVG()
 		delete todosCarros.at(i);
 	for (int i = 0; i < todosPilotos.size(); i++)
 		delete todosPilotos.at(i);
+}
+
+DVG & DVG::operator=(const DVG & original)
+{
+	if (this == &original)
+		return *this;
+
+	//limpa
+	for (Piloto * p : original.todosPilotos)
+		delete p;
+	todosPilotos.clear();
+	for (Carro * c : original.todosCarros)
+		delete c;
+	todosCarros.clear();
+
+	//adiciona
+	for (int i = 0; i < original.todosPilotos.size(); i++)
+		todosPilotos.push_back(original.todosPilotos.at(i)->dupilica());
+	
+	for (int i = 0; i < original.todosCarros.size(); i++)
+		todosCarros.push_back(original.todosCarros.at(i));//confirmar isto
+
+	nome = original.nome;
+
+	return;
 }
 
 Piloto * DVG::obtemPiloto(std::string nome) const
@@ -246,4 +276,9 @@ std::string DVG::obtemTodosPilotos() const
 		it++;
 	}
 	return os.str();
+}
+
+std::string DVG::obtemNome() const
+{
+	return nome;
 }

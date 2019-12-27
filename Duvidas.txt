@@ -5,7 +5,5 @@
 
 
 mandar dados por ponteiro e não dentro da interface
---Tentar eliminar a classe equipa. Manter so piloto e carro
 --ler e separar na interface e mandar para o jogo só os parametros.
 --Cuidado com os couts
---Estamos a dar ordens a equipa "uma coisa que nem existe"

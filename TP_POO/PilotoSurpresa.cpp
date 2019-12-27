@@ -16,3 +16,8 @@ bool PilotoSurpresa::tomaDecisao(Carro * c, Pista * p)
 {
 	return false;
 }
+
+Piloto * PilotoSurpresa::dupilica()
+{
+	return new PilotoSurpresa(*this);
+}

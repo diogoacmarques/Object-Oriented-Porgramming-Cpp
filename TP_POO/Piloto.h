@@ -32,6 +32,7 @@ public:
 	bool removeCarro();
 
 	virtual bool tomaDecisao(Carro * c,Pista * p) = 0;
+	virtual Piloto * dupilica() = 0;
 
 	//toString
 	std::string obtemNome() const;

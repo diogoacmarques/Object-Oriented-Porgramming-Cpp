@@ -8,5 +8,6 @@ public:
 	~PilotoSurpresa();
 
 	bool tomaDecisao(Carro * c, Pista * p);
+	Piloto * dupilica();
 };
 

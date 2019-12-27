@@ -6,6 +6,7 @@
 class Jogo
 {
 	DVG dvg;
+	std::vector<DVG *> bakcupsDVG;
 	Campeonato * camp;
 	std::vector <Autodromo*> todosAutodromos;
 
@@ -15,6 +16,8 @@ class Jogo
 public:
 	Jogo();
 	~Jogo();
+
+
 
 	//Ficheiro
 	bool lerFicheiroPiloto(std::string fileName);

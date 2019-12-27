@@ -9,5 +9,6 @@ public:
 	~CrazyDriver();
 
 	bool tomaDecisao(Carro * c, Pista * p);
+	Piloto * dupilica();
 };
 

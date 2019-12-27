@@ -25,17 +25,17 @@ bool Jogo::verificaDigitos(std::string parametros)
 	return true;
 }
 
-Jogo::Jogo()
+Jogo::Jogo():dvg("original")
 {
 }
 
 Jogo::~Jogo()
 {
 	cout << "Destrutor_Jogo" << endl;
-	//delete [] todosAutodromos;
-	for (int i = 0; i < todosAutodromos.size(); i++)
-		delete todosAutodromos.at(i);
-	todosAutodromos.clear();
+	for (auto a : todosAutodromos)
+		delete a;
+	for (auto d : bakcupsDVG)
+		delete d;
 }
 
 bool Jogo::lerFicheiroPiloto(std::string fileName)
@@ -276,6 +276,49 @@ std::string Jogo::lista() const
 	os << autodromoToString() << endl;
 
 	return os.str();
+}
+
+bool Jogo::saveDGV(std::string nome)
+{
+	bool checkNome = false;
+	if (nome == dvg.obtemNome())
+		checkNome = true;
+	for (auto d : bakcupsDVG)
+		if (d->obtemNome() == nome)
+			checkNome = true;
+
+	if (checkNome) {
+		cout << "Ja existe uma dgv com este nome." << endl;
+		return false;
+	}
+
+
+	DVG * newDVG = new DVG(nome);
+	newDVG = &dvg;//construtor por cópia
+
+	bakcupsDVG.push_back(newDVG);
+
+	return true;
+}
+
+bool Jogo::loadDGV(std::string nome)
+{
+	for (auto d : bakcupsDVG)
+		if (d->obtemNome() == nome) {
+			dvg = *d;
+			return true;
+		}
+	return false;
+}
+
+bool Jogo::delDGV(std::string nome)
+{
+	for (auto d : bakcupsDVG)
+		if (d->obtemNome() == nome) {
+			delete d;
+			return true;
+		}
+	return false;
 }
 
 bool Jogo::verificaAutodromo(std::string nomeA) const

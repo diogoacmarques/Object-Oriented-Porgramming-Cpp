@@ -33,3 +33,8 @@ bool PilotoRapido::tomaDecisao(Carro * c, Pista * p)
 	tempoPassado++;
 	return false;
 }
+
+Piloto * PilotoRapido::dupilica()
+{
+	return new PilotoRapido(*this);
+}
