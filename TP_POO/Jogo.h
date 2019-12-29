@@ -17,8 +17,6 @@ public:
 	Jogo();
 	~Jogo();
 
-
-
 	//Ficheiro
 	bool lerFicheiroPiloto(std::string fileName);
 	bool lerFicheiroCarro(std::string fileName);
@@ -84,7 +82,6 @@ public:
 	bool passatempo(int segundos);
 
 	//log
-	
 
 	
 
