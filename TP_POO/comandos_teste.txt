@@ -1,0 +1,13 @@
+carregaC carros.txt
+carregaP pilotos.txt
+carregaA autodromos.txt
+
+entranocarro a diogo
+entranocarro b miguel
+entranocarro d joao
+entranocarro e andre
+entranocarro f joaquim
+
+campeonato A4 A5 A3
+preparaAutodromo
+corrida
