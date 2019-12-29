@@ -438,16 +438,34 @@ bool Jogo::carregaBat(char idCarro, int quantidade)
 bool Jogo::carregaTudo()
 {
 	//carrega as baterias todas
-	Autodromo * autodromoEmCompeticao = camp->obtemAutodromoCompeticao();
-	return autodromoEmCompeticao->carregaBaterias();
+	Autodromo * autoCompeticao = camp->obtemAutodromoCompeticao();
+	if (autoCompeticao == nullptr) {
+		cout << "Nao existe autodromo em comepeticao" << endl;
+		return false;
+	}
+	return autoCompeticao->carregaBaterias();
 }
 
 bool Jogo::insereCarrosAutodromo()
 {
-	Autodromo * autodromoEmCompeticao = camp->obtemAutodromoCompeticao();
-	//insere os carros e pilotos no autodromo onde vai decorrer a proxima corrida
+	Autodromo * autoCompeticao = camp->obtemAutodromoCompeticao();
+	if (autoCompeticao == nullptr) {
+		cout << "Nao existe autodromo em comepeticao" << endl;
+		return false;
+	}
+	//insere os carros no autodromo onde vai decorrer a proxima corrida
 	//cout << "A inserir as equipa na garagem" << endl;
-	if (!autodromoEmCompeticao->insereCarrosNaGaragem(dvg.obtemVectorCarros())) {//carro e piloto:
+	if (autoCompeticao->obtemEstado()) {
+		cout << "A garagem ja esta preparada, experimente (corrida)" << endl;
+		return true;
+	}
+
+	if (dvg.obtemNumCarros() <= 0) {
+		cout << "A dgv nao tem carros para competir." << endl;
+		return false;
+	}
+
+	if (!autoCompeticao->insereCarrosNaGaragem(dvg.obtemVectorCarros())) {//carro e piloto:
 		cout << "Nao existem equipas disponiveis para criar um campeonato, a eliminar" << endl;
 		delete camp;
 		camp = nullptr;
@@ -463,6 +481,16 @@ bool Jogo::corrida()
 	Autodromo * autoCompeticao;
 
 	autoCompeticao = camp->obtemAutodromoCompeticao();
+
+	if (autoCompeticao == nullptr) {
+		cout << "Nao existe autodromo em comepeticao" << endl;
+		return false;
+	}
+	
+	if (autoCompeticao->obtemEstadoPista()) {//se a pista esta em competicao
+		cout << "A corrida ja comecou" << endl;
+		return true;
+	}
 
 	if (!autoCompeticao->insereEquipaPista()) {
 		cout << "Nao existem pilotos/carros disponiveis para correr, experimente (preparaAutodromo)" << endl;
@@ -509,6 +537,18 @@ bool Jogo::destroi(char idCarro)
 
 bool Jogo::passatempo(int segundos)
 {
+	Autodromo * autoCompeticao = camp->obtemAutodromoCompeticao();
+
+	if (autoCompeticao == nullptr) {
+		cout << "Nao existe autodromo em comepeticao" << endl;
+		return false;
+	}
+
+	if (!autoCompeticao->obtemEstadoPista()) {
+		cout << "O autodromo nao esta em competicao, experimente (corrida)" << endl;
+		return true;
+	}
+
 	if (!camp->passaTempo(segundos))//se a corrida acabar
 		camp->proximoAutodromo();
 	return true;

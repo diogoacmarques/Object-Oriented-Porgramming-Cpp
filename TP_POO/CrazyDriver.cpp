@@ -27,9 +27,9 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 	int carrosNaPista = p->obtemCarrosNaPista();
 	int posAtual = p->obtemPosCorrida(c->obtemId());
 	if ((rand() % 100) < 5) {//faz algo que danifica o automovel
-		cout << c->obtemNomePiloto() << " danificou o carro " << endl;
+		cout << c->obtemNomePiloto() << " danificou o carro " << c->obtemId() << endl;
 		c->danificaCarro();
-		if(p->obtemPosCorrida(c->obtemId()) < p->obtemCarrosEmCompeticao())
+		if(p->obtemPosCorrida(c->obtemId()) + 1 < p->obtemNumCarrosEmCompeticao())
 			p->danificaCarro(posAtual + 1);
 	}
 
@@ -42,7 +42,7 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 
 
 	if (p->obtemTempoCorrida() >= iniciaCorridaApos) {
-		cout << "ja passou o tempo iniciaCorridaApos" << endl;
+		//cout << "ja passou o tempo iniciaCorridaApos" << endl;
 
 		if (pos > posAtual && posAtual != carrosNaPista) {//ficou para tras mas nao e o ultimo
 			cout << "a acelarar 2x" << endl;
@@ -60,12 +60,12 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 			}
 			else {//esta em ultimo lugar
 				c->trava();
-				cout << "estou em ultimo lugar..." << endl;
+				cout << "estou em ultimo lugar... desisto" << endl;
 			}
 
 		}
-	}else
-		cout << "ainda nao passou o tempo(" << p->obtemTempoCorrida() << ") iniciaCorridaApos:" << iniciaCorridaApos <<  endl;
+	}//else
+		//cout << "ainda nao passou o tempo(" << p->obtemTempoCorrida() << ") iniciaCorridaApos:" << iniciaCorridaApos <<  endl;
 
 	return true;
 }

@@ -86,17 +86,19 @@ bool Pista::passaTempo(int segundos)
 	}
 
 
-	bool verifcaCorrida = false;
+	int verifcaCorrida;
 	for (int i = 0; i < segundos; i++) {
-		verifcaCorrida = false;
+		verifcaCorrida = 0;
 		for (int j = 0; j < carrosNaPista.size(); j++) {
 		
 			if (carrosNaPista.at(j)->verificaPista()) {
 
-				if (carrosNaPista.at(j)->verificaEmergencia())//se tiver sinal de emergencia ligado
+				if (carrosNaPista.at(j)->verificaEmergencia()) {//se tiver sinal de emergencia ligado
+					cout << "O carro com o id '" << carrosNaPista.at(j)->obtemId() << "' tem o sinal de emergencia ligado, a remover da pista." << endl;
 					removeCarro(carrosNaPista.at(j)->obtemId());
+				}
 
-				verifcaCorrida = true;
+				verifcaCorrida++;
 				check = carrosNaPista.at(j)->decisaoPiloto(this);
 
 				//verifica se ganhou
@@ -130,10 +132,10 @@ bool Pista::passaTempo(int segundos)
 				
 		}
 
-		if (verifcaCorrida) {
+		if (verifcaCorrida>0) {
 			ordenaPosicoes();
 			cout << obtemPista();
-			cout << "Prima a tecla 'enter'..." << endl;
+			cout << "Esta(o) " << verifcaCorrida << " carro(s) a competir. Prima a tecla 'enter'..." << endl;
 			getchar();
 		}
 		else {
@@ -167,7 +169,7 @@ int Pista::obtemPosCorrida(char idCarro)
 	return -1;
 }
 
-int Pista::obtemCarrosEmCompeticao() const
+int Pista::obtemNumCarrosEmCompeticao() const
 {
 	return (int)carrosNaPista.size();
 }
@@ -205,7 +207,7 @@ bool Pista::obtemEstado() const
 
 void Pista::ordenaPosicoes()
 {
-	cout << "A ordenar...";
+	//cout << "A ordenar...";
 	bool checkOrdenacao;
 	Carro * tmp;
 	do {
@@ -220,7 +222,7 @@ void Pista::ordenaPosicoes()
 		}
 
 	} while (checkOrdenacao);
-	cout << " Done!" << endl;
+	//cout << " Done!" << endl;
 	return;
 }
 

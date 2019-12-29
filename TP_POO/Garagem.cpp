@@ -65,6 +65,11 @@ bool Garagem::carregaTodasBaterias()
 	return true;
 }
 
+int Garagem::obtemNumCarros() const
+{
+	return (int)carros.size();
+}
+
 std::string Garagem::listaCarros() const
 {
 	ostringstream os;

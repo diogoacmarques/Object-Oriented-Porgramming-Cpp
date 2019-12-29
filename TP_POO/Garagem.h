@@ -13,6 +13,7 @@ public:
 	bool recebeCarro(Carro * c);
 	Carro * obtemCarroDisponivel();
 	bool carregaTodasBaterias();
+	int obtemNumCarros() const;
 
 	std::string listaCarros() const;
 };
