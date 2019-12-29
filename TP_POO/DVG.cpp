@@ -18,7 +18,7 @@ DVG::DVG(const DVG & original)
 
 DVG::~DVG()
 {
-	cout << "Destrutor DVG" << endl;
+	cout << "Destrutor DVG " << nome << endl;
 	for (int i = 0; i < todosCarros.size(); i++)
 		delete todosCarros.at(i);
 	for (int i = 0; i < todosPilotos.size(); i++)
@@ -27,9 +27,11 @@ DVG::~DVG()
 
 DVG & DVG::operator=(const DVG & original)
 {
+	//cout << "construtor por copia" << endl;
 	if (this == &original)
 		return *this;
 
+	//cout << "a limpar..." << endl;
 	//limpa
 	for (Piloto * p : todosPilotos)
 		delete p;
@@ -42,8 +44,11 @@ DVG & DVG::operator=(const DVG & original)
 	for (int i = 0; i < original.todosPilotos.size(); i++)
 		todosPilotos.push_back(original.todosPilotos.at(i)->dupilica());
 	
-	for (int i = 0; i < original.todosCarros.size(); i++)
-		todosCarros.push_back(original.todosCarros.at(i));//confirmar isto
+	Carro * c;
+	for (int i = 0; i < original.todosCarros.size(); i++) {
+		Carro c = *original.todosCarros.at(i);
+		todosCarros.push_back(new Carro(c));//confirmar isto
+	}
 
 	//nome = original.nome;
 

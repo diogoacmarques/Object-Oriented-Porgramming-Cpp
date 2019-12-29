@@ -334,9 +334,13 @@ bool Jogo::saveDGV(std::string nome)
 
 bool Jogo::loadDGV(std::string nome)
 {
+	cout << "a procurar dgv..." << endl;
 	for (auto d : bakcupsDVG)
 		if (d->obtemNome() == nome) {
+			cout << "vou agora trocar de DGV" << endl;
 			dvg = *d;
+			cout << "Feita a troca de DGV para :";
+			cout << dvg.obtemNome() << endl;
 			return true;
 		}
 	return false;
@@ -344,11 +348,18 @@ bool Jogo::loadDGV(std::string nome)
 
 bool Jogo::delDGV(std::string nome)
 {
-	for (auto d : bakcupsDVG)
-		if (d->obtemNome() == nome) {
-			delete d;
+	std::vector<DVG *>::iterator it = bakcupsDVG.begin();
+	while (it != bakcupsDVG.end()) {
+		if ((*it)->obtemNome() == nome) {
+			//cout << "Encontrei a DGV '" << nome << "'" << endl;
+			delete (*it);
+			bakcupsDVG.erase(it);
 			return true;
 		}
+		it++;
+	}
+
+	cout << "Nao foi possivel encontrar DGV com o nome:'" << nome << "'" << endl;
 	return false;
 }
 

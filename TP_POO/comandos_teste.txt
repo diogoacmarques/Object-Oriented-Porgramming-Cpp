@@ -11,3 +11,14 @@ entranocarro f joaquim
 campeonato A4 A5 A3
 preparaAutodromo
 corrida
+
+
+
+***troca de dgv****
+carregaC carros.txt
+carregaP pilotos.txt
+carregaA autodromos.txt
+
+savedgv teste
+clear
+lista
