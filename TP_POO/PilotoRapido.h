@@ -8,6 +8,8 @@ public:
 	PilotoRapido(std::string n);
 	~PilotoRapido();
 
+	std::string obtemTipo() const;
+
 	bool tomaDecisao(Carro * c, Pista * p);
 	Piloto * dupilica();
 };
