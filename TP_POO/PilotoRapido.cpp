@@ -14,6 +14,11 @@ PilotoRapido::~PilotoRapido()
 {
 }
 
+std::string PilotoRapido::obtemTipo() const
+{
+	return "rapido";
+}
+
 bool PilotoRapido::tomaDecisao(Carro * c, Pista * p)
 {
 	srand((int)time(NULL));
