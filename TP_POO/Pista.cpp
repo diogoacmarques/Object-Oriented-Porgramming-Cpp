@@ -131,6 +131,7 @@ bool Pista::passaTempo(int segundos)
 		}
 
 		if (verifcaCorrida) {
+			ordenaPosicoes();
 			cout << obtemPista();
 			cout << "Prima a tecla 'enter'..." << endl;
 			getchar();
@@ -168,7 +169,7 @@ int Pista::obtemPosCorrida(char idCarro)
 
 int Pista::obtemCarrosEmCompeticao() const
 {
-	return carrosNaPista.size();;
+	return (int)carrosNaPista.size();
 }
 
 bool Pista::danificaCarro(int pos)
@@ -202,10 +203,10 @@ bool Pista::obtemEstado() const
 	return emCompeticao;
 }
 
-bool Pista::ordenaPosicoes()
+void Pista::ordenaPosicoes()
 {
-
-	int checkOrdenacao;
+	cout << "A ordenar...";
+	bool checkOrdenacao;
 	Carro * tmp;
 	do {
 		checkOrdenacao = false;
@@ -219,8 +220,8 @@ bool Pista::ordenaPosicoes()
 		}
 
 	} while (checkOrdenacao);
-
-	return false;
+	cout << " Done!" << endl;
+	return;
 }
 
 std::string Pista::obtemPista() const
@@ -228,8 +229,13 @@ std::string Pista::obtemPista() const
 	ostringstream os;
 	if (obtemEstado()) {//se tem corrida
 		os << "Pista:" << comprimento << " metros, com max de " << nMax << " carros" << endl;
-		for (int i = 0; i < carrosNaPista.size(); i++)
-			os << carrosNaPista.at(i)->infoCompeticao() << endl;
+		for (int i = 0; i < carrosNaPista.size(); i++){
+			os << carrosNaPista.at(i)->infoCompeticao();
+			if (carrosNaPista.at(i)->obtemDistanciaPercorrida() >= comprimento)
+				os << "(Fim!)";
+			os << endl;
+		}
+
 	}
 	else {
 		os << "A corrida ainda nao foi iniciada" << endl;

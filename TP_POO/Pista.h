@@ -35,7 +35,7 @@ public:
 	bool terminarCorrida();
 	bool obtemEstado() const;
 
-	bool ordenaPosicoes();
+	void ordenaPosicoes();
 
 	//toString
 	std::string obtemPista() const;

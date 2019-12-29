@@ -128,9 +128,11 @@ Carro * DVG::obtemCarro(char letra) const
 	return nullptr;
 }
 
-vector<Carro*> DVG::obtemVectorCarros() const
+vector<Carro*> DVG::obtemVectorCarros()
 {
-	return todosCarros;
+	vector<Carro *> carros = todosCarros;
+	todosCarros.clear();
+	return carros;
 }
 
 bool DVG::criaCarro(int velMax,int capInicial, int capMax, std::string marca, std::string modelo)
@@ -256,6 +258,9 @@ bool DVG::removePilotoCarro(char idCarro)
 
 std::string DVG::obtemTodosCarros() const
 {
+	if (todosCarros.size() == 0)
+		return "";
+
 	ostringstream os;
 	vector<Carro*>::const_iterator it = todosCarros.begin();
 
@@ -268,6 +273,9 @@ std::string DVG::obtemTodosCarros() const
 
 std::string DVG::obtemTodosPilotos() const
 {
+	if (todosPilotos.size() == 0)
+		return "";
+
 	ostringstream os;
 	vector<Piloto*>::const_iterator it = todosPilotos.begin();
 

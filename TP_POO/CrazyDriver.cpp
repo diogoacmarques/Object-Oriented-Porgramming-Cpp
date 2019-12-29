@@ -52,7 +52,7 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 		}
 
 		pos = posAtual;
-		cout << "next test" << endl;
+		//cout << "next test" << endl;
 
 		if (pos != 1) {
 			if (pos != carrosNaPista) {
@@ -60,6 +60,7 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 			}
 			else {//esta em ultimo lugar
 				c->trava();
+				cout << "estou em ultimo lugar..." << endl;
 			}
 
 		}

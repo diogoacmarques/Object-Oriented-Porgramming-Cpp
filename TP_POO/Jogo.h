@@ -26,7 +26,7 @@ public:
 	bool criaCarro(int velMax,int capMaxima, int capInicial, std::string marca, std::string modelo = "");
 	bool criaPiloto(std::string tipo, std::string nome);
 	bool criaAutodromo(int nMax, int comprimento,std::string nome);
-	std::string autodromoToString()const ;
+	std::string autodromosToString()const ;
 
 	//apaga
 	bool apagaCarro(char id);

@@ -220,7 +220,7 @@ bool Jogo::criaAutodromo(int nMax, int comprimento, std::string nome)
 	return true;
 }
 
-std::string Jogo::autodromoToString() const
+std::string Jogo::autodromosToString() const
 {
 	ostringstream os;
 	vector<Autodromo*>::const_iterator it = todosAutodromos.begin();
@@ -268,12 +268,32 @@ bool Jogo::saiDoCarro(char idCarro)
 std::string Jogo::lista() const
 {
 	ostringstream os;
-	os << "Carros:" << endl;
-	os << dvg.obtemTodosCarros() << endl;
-	os << "Pilotos:" << endl;
-	os << dvg.obtemTodosPilotos() << endl;
-	os << "Autodromos:" << endl;
-	os << autodromoToString() << endl;
+	string carros = dvg.obtemTodosCarros();
+	string pilotos = dvg.obtemTodosPilotos();
+	string autodromos = autodromosToString();
+
+	if (carros.empty())
+		cout << "Ainda nao existem carros criados." << endl;
+	else {
+		cout << "Caros:" << endl;
+		cout << carros << endl;
+	}
+	
+	if (carros.empty())
+		cout << "Ainda nao existem piltoos criados." << endl;
+	else
+	{
+		cout << "Pilotos:" << endl;
+		cout << pilotos << endl;
+	}
+
+	if (carros.empty())
+		cout << "Ainda nao existem autodroms criados" << endl;
+	else {
+		cout << "Autodromos:" << endl;
+		cout << autodromos << endl;
+
+	}
 
 	return os.str();
 }
