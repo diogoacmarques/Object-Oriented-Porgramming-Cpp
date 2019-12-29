@@ -65,7 +65,7 @@ bool Autodromo::insereEquipaPista()
 	while (levaMais) {//se houver espaço na pista
 		carroDisponivel = garagem.obtemCarroDisponivel();
 		if (carroDisponivel == nullptr) {//se ja nao ha piloto
-			//cout << "a garagem ja nao encontra mais pilotos disponiveis" << endl;
+			cout << "a garagem ja nao encontra mais pilotos disponiveis" << endl;
 			break;
 		}
 		
