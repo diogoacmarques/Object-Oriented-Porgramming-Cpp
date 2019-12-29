@@ -91,7 +91,6 @@ bool Pista::passaTempo(int segundos)
 		verifcaCorrida = false;
 		for (int j = 0; j < carrosNaPista.size(); j++) {
 		
-
 			if (carrosNaPista.at(j)->verificaPista()) {
 
 				if (carrosNaPista.at(j)->verificaEmergencia())//se tiver sinal de emergencia ligado
@@ -102,7 +101,7 @@ bool Pista::passaTempo(int segundos)
 
 				//verifica se ganhou
 				if (carrosNaPista.at(j)->obtemDistanciaPercorrida() >= comprimento) {
-					cout << "A equipa " << carrosNaPista.at(j)->obtemId() << " acabou a corrida" << endl;
+					cout << "O carro " << carrosNaPista.at(j)->obtemId() << " acabou a corrida" << endl;
 					int pos = obtemPosCorrida(carrosNaPista.at(j)->obtemId());
 					if (pos == 0) {
 						carrosNaPista.at(j)->acabaCorrida(10);
@@ -117,15 +116,13 @@ bool Pista::passaTempo(int segundos)
 						carrosNaPista.at(j)->acabaCorrida(0);
 					}
 					
-					//equipasNaPista.erase(equipasNaPista.begin() + j);
 					continue;
 				}
 
 				if (!check) {//se nao consegue andar mais(falta bateria /acidente/...)
-					cout << "O piloto " << carrosNaPista.at(j)->obtemId() << " nao pode andar mais" << endl;
-					carrosNaPista.at(j)->saiPista();
-					//equipasNaPista.erase(equipasNaPista.begin() + j);
-					check = true;
+					cout << "O carro " << carrosNaPista.at(j)->obtemId() << " nao pode andar mais" << endl;
+					carrosNaPista.at(j)->acabaCorrida(0);
+					check = true;//reset
 					continue;
 				}
 
@@ -137,7 +134,6 @@ bool Pista::passaTempo(int segundos)
 			cout << obtemPista();
 			cout << "Prima a tecla 'enter'..." << endl;
 			getchar();
-			
 		}
 		else {
 			cout << "Ja nao existe equipas a competir(final da corrida)" << endl;
@@ -145,7 +141,7 @@ bool Pista::passaTempo(int segundos)
 			return false;
 		}
 			
-		
+		tempoCorrida++;
 	}
 
 	return true;
@@ -168,6 +164,11 @@ int Pista::obtemPosCorrida(char idCarro)
 			return i;
 
 	return -1;
+}
+
+int Pista::obtemCarrosEmCompeticao() const
+{
+	return carrosNaPista.size();;
 }
 
 bool Pista::danificaCarro(int pos)
@@ -201,13 +202,34 @@ bool Pista::obtemEstado() const
 	return emCompeticao;
 }
 
+bool Pista::ordenaPosicoes()
+{
+
+	int checkOrdenacao;
+	Carro * tmp;
+	do {
+		checkOrdenacao = false;
+		for (int i = 0; i < carrosNaPista.size()-1; i++) {
+			if (carrosNaPista.at(i)->obtemDistanciaPercorrida() < carrosNaPista.at(i + 1)->obtemDistanciaPercorrida()) {
+				checkOrdenacao = true;
+				tmp = carrosNaPista.at(i);
+				carrosNaPista.at(i) = carrosNaPista.at(i + 1);
+				carrosNaPista.at(i + 1) = tmp;
+			}
+		}
+
+	} while (checkOrdenacao);
+
+	return false;
+}
+
 std::string Pista::obtemPista() const
 {
 	ostringstream os;
 	if (obtemEstado()) {//se tem corrida
-		os << "Pista:" << comprimento << "metros, com max de " << nMax << " carros" << endl;
+		os << "Pista:" << comprimento << " metros, com max de " << nMax << " carros" << endl;
 		for (int i = 0; i < carrosNaPista.size(); i++)
-			os << carrosNaPista.at(i)->carroToString() << endl;
+			os << carrosNaPista.at(i)->infoCompeticao() << endl;
 	}
 	else {
 		os << "A corrida ainda nao foi iniciada" << endl;
@@ -220,4 +242,31 @@ std::string Pista::obtemPista() const
 	1. B Ferrari / Vettel(rápido) - 5mAh, 290mAh - 2410m – 55m / s
 	2. D Mercedes / Hamilton(crazy) - 5mAh, 350mAh - 2300m – 50m / s*/
 	return os.str();
+}
+
+void Pista::desenhaPista() const
+{
+	int tam = comprimento;
+	while (tam > Consola::ScreeSizeY) {
+		tam = tam / 2;
+	}
+
+	Consola::gotoxy(15, 0);
+	cout << "Tamanho da pista:" << comprimento
+		<< " | Tam=" << tam << ",nMax=" << nMax;
+
+	Consola::setBackgroundColor(Consola::COR_DE_ROSA);
+
+	for (int i = 0; i < tam; i++) {
+
+		for (int j = 0; j < nMax; j++) {
+			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
+			cout << " ";
+		}
+
+	}
+
+	Consola::setBackgroundColor(Consola::CINZENTO);
+	cout << endl;
+	return;
 }
