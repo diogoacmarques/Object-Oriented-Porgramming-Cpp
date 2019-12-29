@@ -9,7 +9,6 @@ class Piloto
 {
 	static std::vector<std::string> todosNomesPilotos;
 	std::string nome;
-	const std::string tipo;
 	int pontuacao;
 	char idCarro;
 public:
@@ -36,7 +35,7 @@ public:
 
 	//toString
 	std::string obtemNome() const;
-	std::string obtemTipo() const;
+	virtual std::string obtemTipo() const = 0;
 
 	std::string pilotoToString() const;
 

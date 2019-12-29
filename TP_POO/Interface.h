@@ -1,6 +1,5 @@
 #pragma once
 #include "Jogo.h"
-#include "Consola.h"
 #include <string>
 class Interface
 {

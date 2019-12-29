@@ -16,30 +16,43 @@ CrazyDriver::~CrazyDriver()
 {
 }
 
+std::string CrazyDriver::obtemTipo() const
+{
+	return "crazy";
+}
+
 bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 {//melhorar funcao
 
 	int carrosNaPista = p->obtemCarrosNaPista();
 	int posAtual = p->obtemPosCorrida(c->obtemId());
 	if ((rand() % 100) < 5) {//faz algo que danifica o automovel
+		cout << c->obtemNomePiloto() << " danificou o carro " << endl;
 		c->danificaCarro();
-		p->danificaCarro(posAtual - 1);
+		if(p->obtemPosCorrida(c->obtemId()) < p->obtemCarrosEmCompeticao())
+			p->danificaCarro(posAtual + 1);
 	}
 
 
 	if (c->obtemBateriaAtual() == 0) {
+		cout << "a ativar o sinal de emergencia" << endl;
 		c->ativaSinalEmergencia();
 		return false;
 	}
 
 
 	if (p->obtemTempoCorrida() >= iniciaCorridaApos) {
+		cout << "ja passou o tempo iniciaCorridaApos" << endl;
+
 		if (pos > posAtual && posAtual != carrosNaPista) {//ficou para tras mas nao e o ultimo
+			cout << "a acelarar 2x" << endl;
 			c->acelera();
 			c->acelera();
+			//return true;
 		}
 
 		pos = posAtual;
+		cout << "next test" << endl;
 
 		if (pos != 1) {
 			if (pos != carrosNaPista) {
@@ -50,7 +63,9 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 			}
 
 		}
-	}
+	}else
+		cout << "ainda nao passou o tempo(" << p->obtemTempoCorrida() << ") iniciaCorridaApos:" << iniciaCorridaApos <<  endl;
+
 	return true;
 }
 

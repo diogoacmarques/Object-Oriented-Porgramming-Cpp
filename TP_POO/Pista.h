@@ -1,5 +1,6 @@
 #pragma once
 #include "Carro.h"
+#include "Consola.h"
 #include <string>
 #include <vector>
 class Pista
@@ -26,6 +27,7 @@ public:
 	int obtemTempoCorrida() const;
 	int obtemCarrosNaPista() const;
 	int obtemPosCorrida(char idCarro);
+	int obtemCarrosEmCompeticao() const;
 
 	bool danificaCarro(int pos);
 
@@ -33,8 +35,11 @@ public:
 	bool terminarCorrida();
 	bool obtemEstado() const;
 
+	bool ordenaPosicoes();
+
 	//toString
 	std::string obtemPista() const;
+	void desenhaPista() const;
 
 };
 

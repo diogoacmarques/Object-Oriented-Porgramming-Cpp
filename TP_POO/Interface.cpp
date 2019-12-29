@@ -16,12 +16,13 @@ Interface::~Interface()
 
 bool Interface::inciar()
 {
-	
 	Consola::setTextSize(15, 15);
-	Consola::setScreenSize(100, 50);   // linhas colunas. valores grandes pode nao dar
+	Consola::setScreenSize(Consola::ScreeSizeY, Consola::ScreeSizeX);  // linhas colunas. valores grandes pode nao dar
 	Consola::setBackgroundColor(Consola::CINZENTO);  // favor consultar o .h para ver as constantes
 	Consola::setTextColor(Consola::CYAN_CLARO);
 	Consola::clrscr();
+	Consola::gotoxy(0, 0);
+
 	cout << "Starting interface!" << endl;
 
 	string linha;//getline
@@ -42,6 +43,10 @@ bool Interface::inciar()
 				break;
 			else if (comando == "clear") {
 				system("cls");
+				continue;
+			}
+			else if (comando == "teste") {
+				func();
 				continue;
 			}
 				
@@ -65,11 +70,11 @@ bool Interface::inciar()
 				else if (comando == "lista")
 					cout << listaTudo();
 				else if (comando == "savedgv")
-					func();//meta 2
+					saveDgv(linha);//meta 2
 				else if (comando == "loaddgv")
-					func();//meta 2
+					loadDgv(linha);//meta 2
 				else if (comando == "deldgv")
-					func();//meta 2
+					deleteDgv(linha);//meta 2
 				else if (comando == "campeonato") {
 					if (campeonato(linha))
 						modo = 2;
@@ -614,6 +619,31 @@ std::string Interface::precisaNomeFicheiro()
 
 bool Interface::func()
 {
-	cout << "Funcao temporaria para os comandos que ainda nao tem funcao construida!" << endl;
+	int comprimento = 40;//parametros teste
+	int nMax = 5;//parametros teste
+
+	int tam = comprimento;
+	while (tam > Consola::ScreeSizeY) {//reduz o tamanho da pista para caber no ecra
+		tam = tam / 2;
+	}
+
+	Consola::gotoxy(15, 0);
+	cout << "Tamanho da pista:" << comprimento
+		<< " | Tam=" << tam << ",nMax=" << nMax;
+
+	Consola::setBackgroundColor(Consola::COR_DE_ROSA);
+
+	for (int i = 0; i < tam; i++) {
+
+		for (int j = 0; j < nMax; j++) {
+			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
+			cout << " ";
+		}
+
+	}
+
+	Consola::setBackgroundColor(Consola::CINZENTO);
+	cout << endl;
+
 	return false;
 }

@@ -27,6 +27,9 @@ class Consola {
 	static HWND hwnd;
 
 public:
+	//novo
+	const static int ScreeSizeX = 100;
+	const static int ScreeSizeY = 50;
 
 	// para usar nas cores
 	const static int PRETO = 0;

@@ -7,7 +7,7 @@ using namespace std;
 
 char Carro::idStatic = 'a';//inicializar o 'cont'
 
-Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), piloto(nullptr),naPista(false)
+Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), piloto(nullptr),naPista(false),acelarador(0)
 {
 	if (idStatic < 'a' || idStatic > 'z')
 		idStatic = '?';
@@ -90,10 +90,10 @@ void Carro::danificaCarro()
 	return;
 }
 
-std::string Carro::obtemCarro() const
+std::string Carro::infoCompeticao() const
 {
 	ostringstream os;
-	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")";
+	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ") a " << metroSegundo << "m/s total = " << mPercorrido;
 	return os.str();
 }
 
@@ -140,7 +140,7 @@ std::string Carro::obtemNomePiloto() const
 
 bool Carro::verificaAptidao() const
 {
-	if (danoIrreparavel || naPista)
+	if (danoIrreparavel || naPista || piloto == nullptr)
 		return false;
 	else
 		return true;
@@ -169,6 +169,7 @@ bool Carro::saiPista()
 bool Carro::acabaCorrida(int pontos)
 {
 	saiPista();
+	acelarador = 0;
 	piloto->adicionaPontuacao(pontos);
 	return true;
 }
@@ -190,45 +191,18 @@ int Carro::obtemVelocidade() const
 
 bool Carro::acelera()
 {
-
-	if (verificaDano() && sinalEmergencia)
-		return false;
-
-	if (mAh > 0) {
-		if (velcidadeMaxima < metroSegundo) {
-			metroSegundo++;
-			//passaSegundo
-			return true;
-		}
-		else {
-			cout << "O carro ja esta na sua velocidade maxima" << endl;
-		}
-		
-	}
-	else {
-		cout << "Carro " << id << " ficou sem bateria" << endl;
-		para();
-		return false;
-	}
-
-	return false;
+	metroSegundo++;
+	return true;
 }
 
 bool Carro::trava()
 {
-	if (metroSegundo > 0 && !verificaDano()) {
+	if (metroSegundo > 0)
 		metroSegundo--;
-		if(metroSegundo > 0)
-			passaSegundo();
-		return true;
-	}
-	else {
-		cout << "Carro " << id << " ficou sem bateria" << endl;
-		para();
-		return false;
-	}
-
-	return false;
+	else
+		metroSegundo = 0;
+	
+	return true;
 }
 
 bool Carro::para()
@@ -248,14 +222,19 @@ bool Carro::passaSegundo()
 	if (verificaDano())
 		return false;
 
-	if (mAh <= metroSegundo) {//ainda tem energia
-		mAh -= metroSegundo;
+	if (metroSegundo > 0) {//se esta a andar
+		if (mAh >= metroSegundo) {//se tem energia para fazer a distancia
+			mAh -= metroSegundo;
+			//cout << marca << " perdeu " << metroSegundo << " de energia e tem agora " << mAh << endl;
+		}
+		else {//nao tem energia
+			//cout << marca << " nao tem energia" << endl;
+			mAh = 0;
+			metroSegundo = 0;
+			return false;
+		}	
 		mPercorrido += metroSegundo;
 	}
-	else {//nao tem energia
-		mAh = 0;
-		trava();
-	}	
 
 	return true;
 }
@@ -270,8 +249,8 @@ std::string Carro::carroToString() const
 {
 	ostringstream os;
 	os << "carro[" << id << "]:" << marca << "(" << modelo << ") com bateria " << mAh << "/" << capcidadeMaxima << " e velocidade maxima de " << velcidadeMaxima;
-	/*if (tempiloto())
-		os << " tem piloto " << nomepiloto;*/
+	if (verificaPiloto())
+		os << " tem piloto " << piloto->obtemNome();
 
 	/*if (movimento)
 		os << " a andar " << metrosegundo << " mts/seg (" << mpercorrido << "metros total)";

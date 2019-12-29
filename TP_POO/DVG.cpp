@@ -47,7 +47,7 @@ DVG & DVG::operator=(const DVG & original)
 
 	nome = original.nome;
 
-	return;
+	return *this;
 }
 
 Piloto * DVG::obtemPiloto(std::string nome) const

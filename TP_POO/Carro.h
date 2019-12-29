@@ -13,6 +13,7 @@ class Carro
 	int mAh;
 	const int capcidadeMaxima;
 	//moviemento
+	bool acelarador;//postiivo acelarar
 	int metroSegundo = 0;
 	int mPercorrido = 0;
 	const int velcidadeMaxima;
@@ -42,12 +43,7 @@ public:
 	int obtemVelMax() const;
 	void ativaSinalEmergencia();
 	void danificaCarro();
-	std::string obtemCarro() const;
-
-	//	//Equipa
-	//bool temEquipa() const;//verifica se o carro tem algum piloto
-	//bool adicionaEquipa(int id);
-	//bool removeEquipa();
+	std::string infoCompeticao() const;
 
 	//piloto
 	bool verificaPiloto() const;
@@ -62,7 +58,6 @@ public:
 	bool entraPista();
 	bool saiPista();
 	bool acabaCorrida(int pontos);
-
 
 	bool entraNaGaragem();
 	//movimento

@@ -12,6 +12,11 @@ PilotoSurpresa::~PilotoSurpresa()
 {
 }
 
+std::string PilotoSurpresa::obtemTipo() const
+{
+	return "surpresa";
+}
+
 bool PilotoSurpresa::tomaDecisao(Carro * c, Pista * p)
 {
 	return false;

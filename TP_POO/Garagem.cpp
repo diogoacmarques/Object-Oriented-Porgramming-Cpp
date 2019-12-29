@@ -44,7 +44,7 @@ Carro * Garagem::obtemCarroDisponivel()
 {
 	Carro * tmp;
 	for (int i = 0; i < carros.size(); i++) {
-		if (!carros.at(i)->verificaAptidao()) {
+		if (carros.at(i)->verificaAptidao()) {
 			carros.at(i)->entraPista();
 			tmp = carros.at(i);
 			carros.erase(carros.begin() + i);
@@ -69,7 +69,7 @@ std::string Garagem::listaCarros() const
 {
 	ostringstream os;
 	for (int i = 0; i < carros.size(); i++)
-		os << carros.at(i)->obtemCarro() << endl;
+		os << carros.at(i)->carroToString() << endl;
 	return os.str();
 }
 

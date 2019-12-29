@@ -6,7 +6,7 @@ using namespace std;
 
 
 int main() {
-	Interface a("alpha");
+	Interface a;
 	a.inciar();
 	return 0;
 }
