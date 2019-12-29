@@ -620,9 +620,9 @@ std::string Interface::precisaNomeFicheiro()
 bool Interface::func()
 {
 	int comprimento = 40;//parametros teste
-	int nMax = 19;//parametros teste
+	int nMax = 16;//parametros teste
 	//Precisa de ter 3 espaços de estrada para cada carro, para se ver bem
-	//Mais NumeroDePistas-1, para dar para o '|'
+	//Mais NumeroDePistas-1, para dar para o '|', ou seja, tem que se calcular o numero de pistas x 4
 	int tam = comprimento;
 	while (tam > Consola::ScreeSizeY) {//reduz o tamanho da pista para caber no ecra
 		tam = tam / 2;
@@ -632,14 +632,18 @@ bool Interface::func()
 	cout << "Tamanho da pista:" << comprimento
 		<< " | Tam=" << tam << ",nMax=" << nMax;
 
-	
 
 	for (int i = 0; i < tam; i++) {
 
 		for (int j = 0; j < nMax; j++) {
-			Consola::setBackgroundColor(Consola::COR_DE_ROSA);
+			Consola::setBackgroundColor(Consola::PRETO);
 			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
 			cout << " ";
+			if (i == tam - 1) {
+				Consola::setBackgroundColor(Consola::BRANCO_CLARO);
+				Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
+				cout << " ";
+			}
 		}
 		for (int j = 0; j <= nMax; j+=4) {
 				Consola::setTextColor(Consola::BRANCO_CLARO);
