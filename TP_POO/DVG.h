@@ -15,6 +15,8 @@ public:
 	~DVG();
 	DVG & operator=(const DVG & original);
 
+	bool alteraNome(std::string n);
+
 	//Piloto
 	Piloto * obtemPiloto(std::string nome) const;//devia ser privado?
 	std::vector<Piloto*> obtemVectorPilotos() const;
