@@ -22,7 +22,7 @@ Carro::~Carro()
 bool Carro::verificaDano() const
 {
 	if (danoIrreparavel) {
-		cout << "O carro esta danificado!" << endl;
+		//cout << "O carro esta danificado!" << endl;
 		return true;
 	}
 	return false;
@@ -94,6 +94,10 @@ std::string Carro::infoCompeticao() const
 {
 	ostringstream os;
 	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ") a " << metroSegundo << "m/s total = " << mPercorrido;
+	if (verificaDano())
+		os << " (danificado)";
+	if(mAh == 0)
+		os << "(sem bateria)";
 	return os.str();
 }
 
