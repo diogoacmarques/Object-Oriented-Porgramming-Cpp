@@ -7,7 +7,7 @@ using namespace std;
 
 std::vector<std::string> Piloto::todosNomesPilotos;
 
-Piloto::Piloto(std::string n) :tipo("normal"), idCarro('-'),pontuacao(0)
+Piloto::Piloto(std::string n) :idCarro('-'),pontuacao(0)
 {
 
 	for (int i = 0; i < todosNomesPilotos.size(); i++) {
@@ -19,7 +19,7 @@ Piloto::Piloto(std::string n) :tipo("normal"), idCarro('-'),pontuacao(0)
 	
 	todosNomesPilotos.push_back(n);
 	nome = n;
-	cout << "\tConstrutor_Piloto:(" << tipo << "," << nome << ")\n" << endl;
+	cout << "\tConstrutor_Piloto:(" << "," << nome << ")\n" << endl;
 }
 
 Piloto::~Piloto()
@@ -32,13 +32,10 @@ Piloto::~Piloto()
 		}
 	}
 }
+
 std::string Piloto::obtemNome() const
 {
 	return nome;
-}
-std::string Piloto::obtemTipo() const
-{
-	return tipo;
 }
 
 void Piloto::adicionaPontuacao(int pontos)
@@ -62,27 +59,6 @@ bool Piloto::stop(Carro * c)
 	return true;
 }
 
-//bool Piloto::temEquipa() const
-//{
-//	if (idEquipa == -1 && carro == nullptr)
-//		return false;
-//	else
-//		return true;
-//}
-//
-//bool Piloto::adicionaEquipa(int id, Carro * c)
-//{
-//	carro = c;
-//	idEquipa = id;
-//	return true;
-//}
-//
-//bool Piloto::removeEquipa()
-//{
-//	idEquipa = -1;
-//	carro = nullptr;
-//	return true;
-//}
 
 char Piloto::obtemIdCarro() const
 {
@@ -115,10 +91,8 @@ bool Piloto::removeCarro()
 std::string Piloto::pilotoToString() const
 {
 	ostringstream os;
-	os << "Piloto:" << nome << "(" << tipo << ")";
-	//if (temCarro())
-		//os << ", tem carro '" << carro->obtemId();
-	/*if (temEquipa())
-		os << "' e encontra - se na equipa" << idEquipa;*/
+	os << "Piloto:" << nome << "(" << obtemTipo() << ")";
+	if (verificaCarro())
+		os << ", tem carro '" << idCarro;
 	return os.str();
 }
