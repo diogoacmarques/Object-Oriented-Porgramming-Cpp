@@ -619,8 +619,12 @@ std::string Interface::precisaNomeFicheiro()
 
 bool Interface::func()
 {
-	int comprimento = 40;//parametros teste
-	int nMax = 16;//parametros teste
+	int comprimento = 40;//parametros teste (comprimento da pista)
+	int nMax = 4;//parametros teste (numero maximo de carros na pista)
+
+	int numeroDeLinhasPorPista = 4; //(3 de pista + 1 barreira)
+
+
 	//Precisa de ter 3 espaços de estrada para cada carro, para se ver bem
 	//Mais NumeroDePistas-1, para dar para o '|', ou seja, tem que se calcular o numero de pistas x 4
 	int tam = comprimento;
@@ -635,7 +639,7 @@ bool Interface::func()
 
 	for (int i = 0; i < tam; i++) {
 
-		for (int j = 0; j < nMax; j++) {
+		for (int j = 0; j < nMax*numeroDeLinhasPorPista; j++) {
 			Consola::setBackgroundColor(Consola::PRETO);
 			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
 			cout << " ";
@@ -645,7 +649,7 @@ bool Interface::func()
 				cout << " ";
 			}
 		}
-		for (int j = 0; j <= nMax; j+=4) {
+		for (int j = 0; j <= nMax* numeroDeLinhasPorPista; j+=4) {
 				Consola::setTextColor(Consola::BRANCO_CLARO);
 				Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
 				cout << "|";
