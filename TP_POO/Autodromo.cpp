@@ -6,7 +6,7 @@ using namespace std;
 
 std::vector<std::string> Autodromo::todosNomesAutodromos;
 
-Autodromo::Autodromo(int n_Max, int comprimento, std::string n):pista(n_Max,comprimento)
+Autodromo::Autodromo(int n_Max, int comprimento, std::string n) :pista(n_Max, comprimento), preparado(false)
 {
 	for (int i = 0; i < todosNomesAutodromos.size(); i++) {
 		if (n == todosNomesAutodromos.at(i)) {
@@ -43,16 +43,38 @@ std::string Autodromo::autodromoToString() const
 	return os.str();
 }
 
+bool Autodromo::obtemEstado() const
+{
+	return preparado;
+}
+
 bool Autodromo::insereCarrosNaGaragem(vector<Carro*> carros)
 {
 	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar a equipa para a garagem" << endl;
-	return garagem.recebeTodosCarros(carros);
+	if (garagem.recebeTodosCarros(carros)) {
+		preparado = true;
+		return true;
+	}
+	else {
+		preparado = false;
+		return false;
+	}
 	return false;
 }
 
 bool Autodromo::carregaBaterias()
 {
 	return garagem.carregaTodasBaterias();
+}
+
+int Autodromo::verificaNumCarrosGaragem() const
+{
+	return garagem.obtemNumCarros();
+}
+
+bool Autodromo::obtemEstadoPista() const
+{
+	return pista.obtemEstado();
 }
 
 bool Autodromo::insereEquipaPista()

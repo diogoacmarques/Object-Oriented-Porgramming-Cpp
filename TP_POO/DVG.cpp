@@ -44,11 +44,8 @@ DVG & DVG::operator=(const DVG & original)
 	for (int i = 0; i < original.todosPilotos.size(); i++)
 		todosPilotos.push_back(original.todosPilotos.at(i)->dupilica());
 	
-	Carro * c;
-	for (int i = 0; i < original.todosCarros.size(); i++) {
-		Carro c = *original.todosCarros.at(i);
-		todosCarros.push_back(new Carro(c));//confirmar isto
-	}
+	for (int i = 0; i < original.todosCarros.size(); i++)
+		todosCarros.push_back(new Carro(*original.todosCarros.at(i)));//confirmar isto
 
 	//nome = original.nome;
 
@@ -125,6 +122,11 @@ int DVG::obtemPosVectorPiloto(std::string nome) const
 			return i;
 
 	return -1;
+}
+
+int DVG::obtemNumPilotos() const
+{
+	return (int)todosPilotos.size();
 }
 
 Carro * DVG::obtemCarro(char letra) const
@@ -206,6 +208,11 @@ bool DVG::destroiCarro(char idCarro)
 	delete c;
 
 	return true;
+}
+
+int DVG::obtemNumCarros() const
+{
+	return (int)todosCarros.size();
 }
 
 bool DVG::associaCarroPiloto(char idCarro, std::string nomePiloto)

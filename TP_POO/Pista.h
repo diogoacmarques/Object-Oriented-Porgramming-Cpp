@@ -27,7 +27,7 @@ public:
 	int obtemTempoCorrida() const;
 	int obtemCarrosNaPista() const;
 	int obtemPosCorrida(char idCarro);
-	int obtemCarrosEmCompeticao() const;
+	int obtemNumCarrosEmCompeticao() const;
 
 	bool danificaCarro(int pos);
 

@@ -23,7 +23,7 @@ public:
 	bool criaPiloto(std::string tipo,std::string nome);
 	bool apagaPiloto(std::string nome);
 	int obtemPosVectorPiloto(std::string nome) const;
-
+	int obtemNumPilotos() const;
 
 	//Carro
 	Carro * obtemCarro(char letra) const;
@@ -32,6 +32,7 @@ public:
 	bool apagaCarro(char letra);
 	int obtemPosVectorCarro(char letra) const;
 	bool destroiCarro(char idCarro);
+	int obtemNumCarros() const;
 
 
 	//Carro/Piloto

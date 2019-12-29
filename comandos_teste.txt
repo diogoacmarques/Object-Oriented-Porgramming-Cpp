@@ -5,13 +5,13 @@ carregaA autodromos.txt
 entranocarro a diogo
 entranocarro b miguel
 entranocarro d joao
-entranocarro e andre
+entranocarro e diogox
 entranocarro f joaquim
 
-campeonato A4 A5 A3
+campeonato A1 A4 A3 A5
 preparaAutodromo
 corrida
-
+clear
 
 
 ***troca de dgv****
