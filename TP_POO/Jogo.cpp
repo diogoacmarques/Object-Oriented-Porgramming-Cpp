@@ -271,6 +271,16 @@ std::string Jogo::lista() const
 	string carros = dvg.obtemTodosCarros();
 	string pilotos = dvg.obtemTodosPilotos();
 	string autodromos = autodromosToString();
+	
+	cout << "DGV atual:" << dvg.obtemNome() << endl;
+
+	if (bakcupsDVG.size() == 0)
+		cout << "Sem backups DGV" << endl;
+	else {
+		cout << "Bakcups DGV:" << endl;
+		for (auto b : bakcupsDVG)
+			cout << "\t" << b->obtemNome() << endl;
+	}
 
 	if (carros.empty())
 		cout << "Ainda nao existem carros criados." << endl;
@@ -313,8 +323,9 @@ bool Jogo::saveDGV(std::string nome)
 	}
 
 
-	DVG * newDVG = new DVG(nome);
-	newDVG = &dvg;//construtor por cópia
+	DVG * newDVG = new DVG(dvg);
+	newDVG->alteraNome(nome);
+	//newDVG = &dvg;//construtor por cópia
 
 	bakcupsDVG.push_back(newDVG);
 

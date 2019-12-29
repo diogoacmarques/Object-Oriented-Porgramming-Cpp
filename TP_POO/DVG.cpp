@@ -31,10 +31,10 @@ DVG & DVG::operator=(const DVG & original)
 		return *this;
 
 	//limpa
-	for (Piloto * p : original.todosPilotos)
+	for (Piloto * p : todosPilotos)
 		delete p;
 	todosPilotos.clear();
-	for (Carro * c : original.todosCarros)
+	for (Carro * c : todosCarros)
 		delete c;
 	todosCarros.clear();
 
@@ -45,10 +45,15 @@ DVG & DVG::operator=(const DVG & original)
 	for (int i = 0; i < original.todosCarros.size(); i++)
 		todosCarros.push_back(original.todosCarros.at(i));//confirmar isto
 
-	nome = original.nome;
-
+	//nome = original.nome;
 
 	return *this;
+}
+
+bool DVG::alteraNome(std::string n)
+{
+	nome = n;
+	return true;
 }
 
 Piloto * DVG::obtemPiloto(std::string nome) const
