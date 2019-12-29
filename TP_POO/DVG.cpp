@@ -47,15 +47,8 @@ DVG & DVG::operator=(const DVG & original)
 
 	nome = original.nome;
 
-<<<<<<< HEAD
-//--<<<<<<< HEAD
-	//return;
-//=======
 	return *this;
-//>>>>>>> 43b4e0e7e9501a4d72a2c0a279dd13c2558b5c58
-=======
-	return *this;
->>>>>>> 43b4e0e7e9501a4d72a2c0a279dd13c2558b5c58
+
 }
 
 Piloto * DVG::obtemPiloto(std::string nome) const
