@@ -131,7 +131,9 @@ void Autodromo::terminarCorrida()
 
 bool Autodromo::passaTempo(int segundos)
 {
-	if (!pista.passaTempo(segundos)) {//falso se fim da corrida
+	return pista.passaTempo(segundos, &garagem);
+
+	/*if (!) {
 		cout << "A meter os carros de volta na garagem" << endl;
 		garagem.recebeTodosCarros(pista.removeTodosCarros());
 		return false;
@@ -141,6 +143,5 @@ bool Autodromo::passaTempo(int segundos)
 		if (tmp.size() != 0)
 			for (auto c : tmp)
 				garagem.recebeCarro(c);
-	}
-	return true;
+	}*/
 }

@@ -3,6 +3,9 @@
 #include "Consola.h"
 #include <string>
 #include <vector>
+
+class Garagem;
+
 class Pista
 {
 	const int comprimento;
@@ -18,13 +21,12 @@ public:
 	bool insereCarro(Carro * c);
 	Carro * removeCarro(char idCarro);
 	std::vector<Carro*> removeTodosCarros();
-	std::vector<Carro*> removeCarrosDesnecessarios();
 	
 
 	int obtemComprimento() const;
 	int obtemNMax() const;
 
-	bool passaTempo(int segundos);
+	bool passaTempo(int segundos, Garagem * g);
 
 	int obtemTempoCorrida() const;
 	int obtemCarrosNaPista() const;
