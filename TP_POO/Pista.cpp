@@ -98,6 +98,7 @@ bool Pista::passaTempo(int segundos)
 				if (carrosNaPista.at(j)->verificaEmergencia()) {//se tiver sinal de emergencia ligado
 					cout << "O carro com o id '" << carrosNaPista.at(j)->obtemId() << "' tem o sinal de emergencia ligado, a remover da pista." << endl;
 					removeCarro(carrosNaPista.at(j)->obtemId());
+					//Ou entao mandar para a garagem aqui
 					continue;
 				}
 
