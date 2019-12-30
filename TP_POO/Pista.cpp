@@ -125,30 +125,20 @@ bool Pista::passaTempo(int segundos)
 				}
 
 				if (!check) {//se nao consegue andar mais(falta bateria /acidente/...)
-<<<<<<< HEAD
 					Consola::gotoxy(0, 13);
-=======
-					Consola::gotoxy(10, 16);
->>>>>>> f7fef5ff2db46ef13178e18d5653bc7be456b624
 					cout << "O carro " << carrosNaPista.at(j)->obtemId() << " nao pode andar mais" << endl;
 					carrosNaPista.at(j)->acabaCorrida(0);
 					check = true;//reset
 					continue;
 				}
-
 			}
 				
 		}
 
 		if (verifcaCorrida>0) {
 			ordenaPosicoes();
-<<<<<<< HEAD
 			desenhaPista();
 			//cout << obtemPista();
-=======
-			Consola::gotoxy(10, 15);
-			cout << obtemPista();
->>>>>>> f7fef5ff2db46ef13178e18d5653bc7be456b624
 			cout << "Esta(o) " << verifcaCorrida << " carro(s) a competir. Prima a tecla 'enter'..." << endl;
 			getchar();
 		}
