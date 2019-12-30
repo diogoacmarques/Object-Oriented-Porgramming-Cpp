@@ -21,8 +21,8 @@ class Carro
 	bool danoIrreparavel = false;
 	bool sinalEmergencia = false;
 	
-	//Pista
-	bool naPista;
+	//competicao
+	bool emCompeticao;
 
 	//Piloto
 	Piloto * piloto;
@@ -54,10 +54,9 @@ public:
 	bool verificaAptidao() const;//verifica se reune condições para correr
 
 	//Pista
-	bool verificaPista() const;
-	bool entraPista();
-	bool saiPista();
-	bool acabaCorrida(int pontos);
+	bool verificaCompeticao() const;
+	bool iniciaCompeticao();
+	bool fimCompeticao();
 
 	bool entraNaGaragem();
 	//movimento

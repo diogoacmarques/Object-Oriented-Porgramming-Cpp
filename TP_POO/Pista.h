@@ -18,6 +18,8 @@ public:
 	bool insereCarro(Carro * c);
 	Carro * removeCarro(char idCarro);
 	std::vector<Carro*> removeTodosCarros();
+	std::vector<Carro*> removeCarrosDesnecessarios();
+	
 
 	int obtemComprimento() const;
 	int obtemNMax() const;

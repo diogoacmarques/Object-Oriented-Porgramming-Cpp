@@ -39,8 +39,8 @@ Carro * Pista::removeCarro(char idCarro)
 	vector<Carro*>::iterator it = carrosNaPista.begin();
 	while (it != carrosNaPista.end()) {
 		if((*it)->obtemId() == idCarro){
-			(*it)->saiPista();
-
+			(*it)->fimCompeticao();
+			return *it;
 		}
 
 		it++;
@@ -55,6 +55,24 @@ std::vector<Carro*> Pista::removeTodosCarros()
 	return tmp;
 }
 
+std::vector<Carro*> Pista::removeCarrosDesnecessarios()
+{
+	vector<Carro *> tmp;
+	for (auto c : carrosNaPista)
+		if (c->verificaAptidao() || c->obtemBateriaAtual() == 0)
+			tmp.push_back(c);
+
+	//remover os carros do vetor na pista
+	vector<Carro*>::iterator it = carrosNaPista.begin();
+		while (it != carrosNaPista.end()) {
+			if ((*it)->verificaAptidao() || (*it)->obtemBateriaAtual() == 0)
+				it = carrosNaPista.erase(it);
+			else
+				it++;
+		}
+	return tmp;
+}
+
 int Pista::obtemComprimento() const
 {
 	return comprimento;
@@ -65,7 +83,7 @@ int Pista::obtemNMax() const
 	return nMax;
 }
 
-bool Pista::passaTempo(int segundos)
+bool Pista::passaTempo(int segundos)//false = fim da corrida
 {
 	if (!emCompeticao) {
 		cout << "A pista nao se encontra em corrida" << endl;
@@ -93,13 +111,12 @@ bool Pista::passaTempo(int segundos)
 		verifcaCorrida = 0;
 		for (int j = 0; j < carrosNaPista.size(); j++) {
 		
-			if (carrosNaPista.at(j)->verificaPista()) {
-
+			if (carrosNaPista.at(j)->verificaCompeticao()) {
 				if (carrosNaPista.at(j)->verificaEmergencia()) {//se tiver sinal de emergencia ligado
-					cout << "O carro com o id '" << carrosNaPista.at(j)->obtemId() << "' tem o sinal de emergencia ligado, a remover da pista." << endl;
-					removeCarro(carrosNaPista.at(j)->obtemId());
-					//Ou entao mandar para a garagem aqui
-					continue;
+					cout << "O carro com o id '" << carrosNaPista.at(j)->obtemId() << "' tem o sinal de emergencia ligado, a remover da pista." << endl;	
+					desenhaPista();
+					getchar();
+					return true;//sai para remover da pista
 				}
 
 				verifcaCorrida++;
@@ -109,18 +126,8 @@ bool Pista::passaTempo(int segundos)
 				if (carrosNaPista.at(j)->obtemDistanciaPercorrida() >= comprimento) {
 					cout << "O carro " << carrosNaPista.at(j)->obtemId() << " acabou a corrida" << endl;
 					int pos = obtemPosCorrida(carrosNaPista.at(j)->obtemId());
-					if (pos == 0) {
-						carrosNaPista.at(j)->acabaCorrida(10);
-					}
-					else if (pos == 1) {
-						carrosNaPista.at(j)->acabaCorrida(5);
-					}
-					else if (pos == 2) {
-						carrosNaPista.at(j)->acabaCorrida(2);
-					}
-					else {
-						carrosNaPista.at(j)->acabaCorrida(0);
-					}
+					carrosNaPista.at(j)->fimCompeticao();
+					//adicionar pontos da competicao (to do)-------------------------------------------------------------------------------------------------
 					
 					continue;
 				}
@@ -128,7 +135,7 @@ bool Pista::passaTempo(int segundos)
 				if (!check) {//se nao consegue andar mais(falta bateria /acidente/...)
 					Consola::gotoxy(0, 13);
 					cout << "O carro " << carrosNaPista.at(j)->obtemId() << " nao pode andar mais" << endl;
-					carrosNaPista.at(j)->acabaCorrida(0);
+					carrosNaPista.at(j)->fimCompeticao();
 					check = true;//reset
 					continue;
 				}
@@ -199,7 +206,7 @@ bool Pista::iniciaCorrida()
 bool Pista::terminarCorrida()
 {
 	for (int i = 0; i < carrosNaPista.size(); i++)
-		carrosNaPista.at(i)->saiPista();
+		carrosNaPista.at(i)->fimCompeticao();
 	//Permite terminar a corrida. Os carros são removidos da pista e vão para a garagem, e os pilotosaem dos veículos.
 	emCompeticao = false;
 	return false;
