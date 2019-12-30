@@ -56,6 +56,7 @@ bool Piloto::stop(Carro * c)
 		return false;
 
 	c->ativaSinalEmergencia();
+	cout << nome << " forcado a parar" << endl;
 	return true;
 }
 

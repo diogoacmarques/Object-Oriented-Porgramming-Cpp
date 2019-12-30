@@ -72,32 +72,32 @@ int Pista::obtemNMax() const
 bool Pista::passaTempo(int segundos, Garagem * g)//false = fim da corrida
 {
 	if (!emCompeticao) {
+		Consola::gotoxy(0, 0);
 		cout << "A pista nao se encontra em corrida" << endl;
-		return false;
+		return true;
 	}
 
 	string lixo;
 	if (carrosNaPista.size() == 0) {
+		Consola::gotoxy(0, 0);
 		cout << "nao existem equipas em competicao" << endl;
-		return false;
+		return true;
 	}
 
 
 	if (segundos == 0) {
-		//cout << obtemPista();
 		desenhaPista();
 		return true;
 	}
 
-	Consola::clrscr();
-
 	int verifcaCorrida;
 	for (int i = 0; i < segundos; i++) {
+		Consola::clrscr();
 		verifcaCorrida = 0;
 		for (auto carro : carrosNaPista) {
 			if (carro->verificaCompeticao()) {
 				if (carro->verificaEmergencia() || carro->obtemBateriaAtual() == 0 || carro->verificaDano()) {//(falta bateria /acidente/sinal emergencia)
-					cout << "O carro com o id '" << carro->obtemId() << "' tem o sinal de emergencia ligado, a remover da pista." << endl;	
+					cout << "O carro com o id '" << carro->obtemId() << "' foi removido da pista." << endl;
 					g->recebeCarro(removeCarro(carro->obtemId()));//mete na garagem
 					continue;
 				}
@@ -128,7 +128,7 @@ bool Pista::passaTempo(int segundos, Garagem * g)//false = fim da corrida
 		else {
 			cout << "Ja nao existe equipas a competir(final da corrida)" << endl;
 			terminarCorrida();
-			return true;
+			return false;
 		}
 			
 		tempoCorrida++;
@@ -217,7 +217,7 @@ std::string Pista::obtemPista() const
 {
 	ostringstream os;
 	if (obtemEstado()) {//se tem corrida
-		os << "Pista:" << comprimento << " metros, com max de " << nMax << " carros" << endl;
+		os << "Pista:" << comprimento << " metros, tempo = " << tempoCorrida << endl;
 		for (int i = 0; i < carrosNaPista.size(); i++){
 			os << carrosNaPista.at(i)->infoCompeticao();
 			if (carrosNaPista.at(i)->obtemDistanciaPercorrida() >= comprimento)
@@ -245,18 +245,18 @@ void Pista::desenhaPista() const
 	//int nMax = 4;//parametros teste (numero maximo de carros na pista)
 	
 	int numeroDeLinhasPorPista = 4; //(3 de pista + 1 barreira)
-
+	//Consola::clrscr();
 	Consola::gotoxy(0, 0);
 	cout << obtemPista();
 
 	int tam = comprimento;
-	int fatorReducao = 1;
+	int fatorReducao = 0;
 	while (tam > Consola::ScreeSizeY) {//reduz o tamanho da pista para caber no ecra
 		tam = tam / 2;
 		fatorReducao++;
 	}
 
-	int linhaInfo = 7;//(int)carrosNaPista.size() + 1;
+	int linhaInfo = (int)carrosNaPista.size() + 3;
 	Consola::gotoxy(0, linhaInfo);
 	cout << "Numero de carros da pista: " << nMax << endl;
 	cout << "Numero de carros a competir: " << carrosNaPista.size() << endl;
@@ -294,11 +294,13 @@ void Pista::desenhaPista() const
 
 	int distancia;
 	for (int i = 0; i < carrosNaPista.size(); i++) {//carros
-		distancia = carrosNaPista.at(i)->obtemDistanciaPercorrida() / (fatorReducao);
-		//Consola::gotoxy(0,i);
-		//Consola::setBackgroundColor(Consola::CINZENTO);
-		//Consola::setTextColor(Consola::PRETO);
-		//cout << "Carro " << carrosNaPista.at(i)->obtemId() << " percorreu:" << carrosNaPista.at(i)->obtemDistanciaPercorrida() << "m ou " << distancia << " na pista";
+		distancia = carrosNaPista.at(i)->obtemDistanciaPercorrida();
+		for(int f = 0;f<fatorReducao;f++)
+			distancia = distancia / 2;
+		Consola::gotoxy(0,i+20);
+		Consola::setBackgroundColor(Consola::CINZENTO);
+		Consola::setTextColor(Consola::PRETO);
+		cout << "Carro " << carrosNaPista.at(i)->obtemId() << " percorreu:" << carrosNaPista.at(i)->obtemDistanciaPercorrida() << "m ou " << distancia << " na pista";
 
 		if (distancia == 0) {//inicio 
 			Consola::setBackgroundColor(Consola::BRANCO_CLARO);
@@ -341,10 +343,11 @@ void Pista::desenhaPista() const
 	Consola::setTextColor(Consola::VERMELHO_CLARO);
 	cout << "\tDano Irreparavel" << endl;
 
+
+
 	//before exit
 	Consola::setTextColor(Consola::CYAN_CLARO);
-	linhaInfo += 5;
-	Consola::gotoxy(0, linhaInfo);
+	Consola::gotoxy(0, 30);
 
 	return;
 }

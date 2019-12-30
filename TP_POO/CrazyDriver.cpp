@@ -35,7 +35,7 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 
 
 	if (c->obtemBateriaAtual() == 0) {
-		cout << "a ativar o sinal de emergencia" << endl;
+		cout << obtemNome() << "[crazy] ativar o sinal de emergencia por falta de bateria" << endl;
 		c->ativaSinalEmergencia();
 		return false;
 	}
