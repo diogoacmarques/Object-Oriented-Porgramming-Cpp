@@ -122,6 +122,7 @@ bool Pista::passaTempo(int segundos)
 				}
 
 				if (!check) {//se nao consegue andar mais(falta bateria /acidente/...)
+					Consola::gotoxy(10, 16);
 					cout << "O carro " << carrosNaPista.at(j)->obtemId() << " nao pode andar mais" << endl;
 					carrosNaPista.at(j)->acabaCorrida(0);
 					check = true;//reset
@@ -134,6 +135,7 @@ bool Pista::passaTempo(int segundos)
 
 		if (verifcaCorrida>0) {
 			ordenaPosicoes();
+			Consola::gotoxy(10, 15);
 			cout << obtemPista();
 			cout << "Esta(o) " << verifcaCorrida << " carro(s) a competir. Prima a tecla 'enter'..." << endl;
 			getchar();
@@ -230,6 +232,7 @@ std::string Pista::obtemPista() const
 {
 	ostringstream os;
 	if (obtemEstado()) {//se tem corrida
+		Consola::gotoxy(10, 15);
 		os << "Pista:" << comprimento << " metros, com max de " << nMax << " carros" << endl;
 		for (int i = 0; i < carrosNaPista.size(); i++){
 			os << carrosNaPista.at(i)->infoCompeticao();
