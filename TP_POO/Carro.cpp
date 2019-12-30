@@ -183,6 +183,7 @@ bool Carro::entraNaGaragem()
 	if (verificaDano())
 		return false;
 
+	mPercorrido = 0;
 	metroSegundo = 0;
 	naPista = false;
 	return true;

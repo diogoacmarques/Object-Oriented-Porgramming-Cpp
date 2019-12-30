@@ -139,7 +139,7 @@ bool Pista::passaTempo(int segundos)
 			ordenaPosicoes();
 			desenhaPista();
 			//cout << obtemPista();
-			cout << "Esta(o) " << verifcaCorrida << " carro(s) a competir. Prima a tecla 'enter'..." << endl;
+			cout << "Prima a tecla 'enter'..." << endl;
 			getchar();
 		}
 		else {
@@ -264,6 +264,7 @@ void Pista::desenhaPista() const
 	
 	int numeroDeLinhasPorPista = 4; //(3 de pista + 1 barreira)
 
+
 	int tam = comprimento;
 	int fatorReducao = 1;
 	while (tam > Consola::ScreeSizeY) {//reduz o tamanho da pista para caber no ecra
@@ -271,12 +272,14 @@ void Pista::desenhaPista() const
 		fatorReducao++;
 	}
 
-	Consola::gotoxy(0, 5);
+	int linhaInfo = (int)carrosNaPista.size() + 1;
+	Consola::gotoxy(0, linhaInfo);
 	cout << "Numero de carros da pista: " << nMax << endl;
 	cout << "Numero de carros a competir: " << carrosNaPista.size() << endl;
 	cout << "Tamanho da pista real: " << comprimento << endl;
 	cout << "Tamanho da pista reduzida: " << tam << endl;
 	cout << "Fator Reducao: " << fatorReducao << endl;
+	linhaInfo += 5;
 
 	for (int y = 0; y < tam; y++) {//pista
 
@@ -301,7 +304,7 @@ void Pista::desenhaPista() const
 
 	Consola::setBackgroundColor(Consola::CINZENTO);
 	Consola::setTextColor(Consola::CYAN_CLARO);
-	Consola::gotoxy(0, 10);
+	Consola::gotoxy(0, linhaInfo++);
 	cout << "fim do desenho da pista" << endl;
 	//getchar();
 	
@@ -329,7 +332,7 @@ void Pista::desenhaPista() const
 		}
 
 		if (carrosNaPista.at(i)->verificaDano()) {
-			Consola::setTextColor(Consola::VERMELHO);
+			Consola::setTextColor(Consola::VERMELHO_CLARO);
 		}
 		else if (carrosNaPista.at(i)->verificaEmergencia()) {
 			Consola::setTextColor(Consola::AMARELO_CLARO);
@@ -342,12 +345,23 @@ void Pista::desenhaPista() const
 		cout << carrosNaPista.at(i)->obtemId();
 	}
 
+	//Significado cores
 	Consola::setBackgroundColor(Consola::CINZENTO);
 	Consola::setTextColor(Consola::CYAN_CLARO);
-	Consola::gotoxy(0, 11);
+	Consola::gotoxy(0, linhaInfo++);
 	cout << "fim do desenho dos carros" << endl;
-	//getchar();
-	cout << endl;
+	cout << "Cores:" << endl;
+	Consola::setTextColor(Consola::AZUL_CLARO);
+	cout << "\tSem bateria" << endl;
+	Consola::setTextColor(Consola::AMARELO_CLARO);
+	cout << "\tSinal Emergencia" << endl;
+	Consola::setTextColor(Consola::VERMELHO_CLARO);
+	cout << "\tDano Irreparavel" << endl;
+
+	//before exit
+	Consola::setTextColor(Consola::CYAN_CLARO);
+	linhaInfo += 5;
+	Consola::gotoxy(0, linhaInfo);
 
 	return;
 }
