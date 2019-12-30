@@ -169,6 +169,7 @@ bool Carro::fimCompeticao()
 	emCompeticao = false;
 	acelarador = 0;
 	mPercorrido = 0;
+	sinalEmergencia = false;
 	return true;
 }
 
