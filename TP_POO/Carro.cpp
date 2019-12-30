@@ -95,7 +95,9 @@ std::string Carro::infoCompeticao() const
 	ostringstream os;
 	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ") a " << metroSegundo << "m/s total = " << mPercorrido;
 	if (verificaDano())
-		os << " (danificado)";
+		os << "(danificado)";
+	if (sinalEmergencia)
+		os << "(Sinal Emergencia)";
 	if(mAh == 0)
 		os << "(sem bateria)";
 	return os.str();
