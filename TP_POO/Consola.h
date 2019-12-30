@@ -29,7 +29,7 @@ class Consola {
 public:
 	//novo
 	const static int ScreeSizeX = 100;
-	const static int ScreeSizeY = 50;
+	const static int ScreeSizeY = 60;
 
 	// para usar nas cores
 	const static int PRETO = 0;

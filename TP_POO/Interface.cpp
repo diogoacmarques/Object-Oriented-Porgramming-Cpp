@@ -87,11 +87,11 @@ bool Interface::inciar()
 					log.push_back("listaCarros");
 					cout << jogo.listaCarros();
 					}
-				else if (comando == "preparaAutodromo") {
-					log.push_back("preparaAutodromo");
-					if (!jogo.insereCarrosAutodromo())
-						modo = 1;
-				}
+				//else if (comando == "preparaAutodromo") {
+				//	log.push_back("preparaAutodromo");
+				//	if (!jogo.insereCarrosAutodromo())
+				//		modo = 1;
+				//}
 				else if (comando == "carregabat")
 					carregaBat(linha);
 				else if (comando == "carregatudo") {
@@ -628,8 +628,10 @@ bool Interface::func()
 	//Precisa de ter 3 espaços de estrada para cada carro, para se ver bem
 	//Mais NumeroDePistas-1, para dar para o '|', ou seja, tem que se calcular o numero de pistas x 4
 	int tam = comprimento;
+	int reduz = 0;
 	while (tam > Consola::ScreeSizeY) {//reduz o tamanho da pista para caber no ecra
 		tam = tam / 2;
+		reduz++;
 	}
 
 	Consola::gotoxy(15, 0);
@@ -637,26 +639,23 @@ bool Interface::func()
 		<< " | Tam=" << tam << ",nMax=" << nMax;
 
 
-	for (int i = 0; i < tam; i++) {
+	for (int i = 0; i < tam; i++) {//desenha pista
 
 		for (int j = 0; j < nMax*numeroDeLinhasPorPista; j++) {
 			Consola::setBackgroundColor(Consola::PRETO);
 			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
 			cout << " ";
-			if (i == tam - 1) {
+			if (i == tam - 1 || i == 0) {//meta/linha partida
 				Consola::setBackgroundColor(Consola::BRANCO_CLARO);
 				Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
 				cout << " ";
 			}
 		}
-		for (int j = 0; j <= nMax* numeroDeLinhasPorPista; j+=4) {
-				Consola::setTextColor(Consola::BRANCO_CLARO);
-				Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
-				cout << "|";
+		for (int j = 0; j <= nMax * numeroDeLinhasPorPista; j += 4) {//barreira
+			Consola::setTextColor(Consola::BRANCO_CLARO);
+			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
+			cout << "|";
 		}
-
-		
-
 	}
 
 	Consola::setBackgroundColor(Consola::CINZENTO);

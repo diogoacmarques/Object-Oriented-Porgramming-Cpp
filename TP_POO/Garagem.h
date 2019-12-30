@@ -14,6 +14,7 @@ public:
 	Carro * obtemCarroDisponivel();
 	bool carregaTodasBaterias();
 	int obtemNumCarros() const;
+	std::vector<Carro *> retiraTodosCarros();
 
 	std::string listaCarros() const;
 };

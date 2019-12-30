@@ -19,6 +19,9 @@ public:
 	bool termina();
 
 	Autodromo * obtemAutodromoCompeticao() const;
+	int obtemNumAutodromoCompeticao() const;
+
+	std::vector<Carro*> obtemCarrosAutodromoAnterior();
 
 	bool verificaraExistenciaCorrida() const;
 	bool passaTempo(int segundos);

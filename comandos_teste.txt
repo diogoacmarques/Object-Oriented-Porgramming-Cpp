@@ -8,11 +8,10 @@ entranocarro d joao
 entranocarro e diogox
 entranocarro f joaquim
 
-campeonato A1 A4 A3 A5
-preparaAutodromo
+campeonato A5 A3 A4 A1
 corrida
 clear
-
+passatempo 0
 
 ***troca de dgv****
 carregaC carros.txt

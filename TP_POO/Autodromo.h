@@ -22,6 +22,7 @@ public:
 	bool carregaBaterias();
 	int verificaNumCarrosGaragem() const;
 	std::string listaCarrosGaragem() const;
+	std::vector <Carro*> retiraCarros();
 
 
 	//pista

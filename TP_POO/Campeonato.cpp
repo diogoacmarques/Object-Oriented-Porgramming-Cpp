@@ -26,7 +26,7 @@ bool Campeonato::proximoAutodromo()
 	}
 	else {
 		autodromoEmCompeticao++;
-		cout << "[Campeonato]Autdromo em comepeticao = " << autodromoEmCompeticao + 1 << endl;
+		cout << "[Campeonato]Autodromo em competicao = " << autodromoEmCompeticao + 1 << endl;
 		return true;
 	}
 
@@ -48,6 +48,22 @@ Autodromo * Campeonato::obtemAutodromoCompeticao() const
 		return autodromosCampeonato.at(autodromoEmCompeticao);
 	else
 		return nullptr;
+}
+
+int Campeonato::obtemNumAutodromoCompeticao() const
+{
+	return autodromoEmCompeticao;
+}
+
+std::vector<Carro*> Campeonato::obtemCarrosAutodromoAnterior()
+{
+	if (autodromoEmCompeticao > 0) {
+		return autodromosCampeonato.at(autodromoEmCompeticao - 1)->retiraCarros();	
+	}
+	else {
+		cout << "Nao existe nenhum autodromo anterior para retirar os carros" << endl;
+	}
+	return std::vector<Carro*>();
 }
 
 bool Campeonato::verificaraExistenciaCorrida() const

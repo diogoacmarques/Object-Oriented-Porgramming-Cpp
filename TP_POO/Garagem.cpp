@@ -70,6 +70,13 @@ int Garagem::obtemNumCarros() const
 	return (int)carros.size();
 }
 
+std::vector<Carro*> Garagem::retiraTodosCarros()
+{
+	vector<Carro*> tmp = carros;
+	carros.clear();
+	return tmp;
+}
+
 std::string Garagem::listaCarros() const
 {
 	ostringstream os;
@@ -77,50 +84,3 @@ std::string Garagem::listaCarros() const
 		os << carros.at(i)->carroToString() << endl;
 	return os.str();
 }
-
-//Piloto * Garagem::retira()
-//{
-//	Piloto * tmp;
-//
-//	if (!pilotosNaGaragem.empty()) {
-//		for (int i = 0; i < pilotosNaGaragem.size(); i++) {
-//			tmp = pilotosNaGaragem.at(i);
-//			if (tmp->temCarro() && !tmp->temPista()) {
-//				cout << "Garagem encontrou o piloto " << tmp->obtemNome() << " para a pista" << endl;
-//				return tmp;
-//			}
-//				
-//		}
-//	}
-//	
-//	cout << "Garagem nao tem nenhum piloto para a pista" << endl;
-//	return nullptr;
-//}
-//
-//std::string Garagem::obtemCarros() const
-//{
-//	ostringstream os;
-//	if (!carrosNaGaragem.empty()) {
-//		//cout << "Autodromo(garagem) carregou os carros:" << endl;
-//		for (int i = 0; i < carrosNaGaragem.size(); i++)
-//			os << carrosNaGaragem.at(i)->carroToString() << endl;
-//	}
-//	else
-//		return "A garagem nao tem carros";
-//
-//	return os.str();
-//}
-//
-//std::string Garagem::obtemPilotos() const
-//{
-//	ostringstream os;
-//	if (!pilotosNaGaragem.empty()) {
-//		//cout << "Autodromo(garagem) carregou os carros:" << endl;
-//		for (int i = 0; i < pilotosNaGaragem.size(); i++)
-//			os << pilotosNaGaragem.at(i)->pilotoToString() << endl;
-//	}
-//	else
-//		return "A garagem nao tem carros";
-//
-//	return os.str();
-//}

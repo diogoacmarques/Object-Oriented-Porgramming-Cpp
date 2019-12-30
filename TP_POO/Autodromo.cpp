@@ -109,6 +109,16 @@ std::string Autodromo::listaCarrosGaragem() const
 	return os.str();
 }
 
+std::vector<Carro*> Autodromo::retiraCarros()
+{
+	vector<Carro*> tmp = garagem.retiraTodosCarros();//vai buscar os carros a garagem
+	vector<Carro*> tmp2 = pista.removeTodosCarros();//vai buscar os carros a pista
+	for (auto t : tmp2)
+		tmp.push_back(t);
+
+	return tmp;
+}
+
 void Autodromo::iniciaPista()
 {
 	pista.iniciaCorrida();
