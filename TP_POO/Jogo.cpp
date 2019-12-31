@@ -502,8 +502,11 @@ bool Jogo::corrida()
 
 	if (autoCompeticao->obtemEstadoPista()) {//se a pista esta em competicao -> proximo autodromo
 		cout << "A passar a competicao para o proximo autodromo." << endl;
-		camp->proximoAutodromo();	
-		return corrida();;
+		if (camp->proximoAutodromo() == false) {
+			return false;
+		}
+			return corrida();;
+		
 	}
 
 
