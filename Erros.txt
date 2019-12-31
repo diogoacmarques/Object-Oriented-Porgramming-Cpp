@@ -3,3 +3,5 @@
 -Quando um carro acaba a corrida. O da pista ao lado, vai para a pista dele.
 -Quando se faz o comando "corrida" o cout sai sempre um carro a menos do que devia(não prioritario).
 
+-Devolver os carros ao dgv no fim do campeonato
+

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 
+
 using namespace std;
 
 std::vector<std::string> Autodromo::todosNomesAutodromos;
@@ -79,7 +80,6 @@ bool Autodromo::obtemEstadoPista() const
 
 bool Autodromo::insereEquipaPista()
 {
-	
 	Carro * carroDisponivel;
 	bool levaMais = true;//pista
 	int pilotosInseridos = 0;
@@ -132,16 +132,4 @@ void Autodromo::terminarCorrida()
 bool Autodromo::passaTempo(int segundos)
 {
 	return pista.passaTempo(segundos, &garagem);
-
-	/*if (!) {
-		cout << "A meter os carros de volta na garagem" << endl;
-		garagem.recebeTodosCarros(pista.removeTodosCarros());
-		return false;
-	}
-	else {
-		vector<Carro*> tmp = pista.removeCarrosDesnecessarios();
-		if (tmp.size() != 0)
-			for (auto c : tmp)
-				garagem.recebeCarro(c);
-	}*/
 }

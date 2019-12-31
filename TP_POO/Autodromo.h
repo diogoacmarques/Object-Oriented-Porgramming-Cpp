@@ -3,6 +3,7 @@
 #include "Garagem.h"
 #include <string>
 #include <vector>
+
 class Autodromo
 {
 	static std::vector<std::string> todosNomesAutodromos;

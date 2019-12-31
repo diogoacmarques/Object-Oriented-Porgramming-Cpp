@@ -9,11 +9,13 @@ class Campeonato
 	std::string nome;	
 	std::vector<Autodromo*> autodromosCampeonato;//vector com o pointeiro para todos os campeoantos
 	int autodromoEmCompeticao;//inteiro para o numero do autodromo em que a corrida esta a ser efetuada
+	std::vector<Carro*> carrosPontuacao;//vetor de carros para seguir os pontos
 public:
 	Campeonato(std::string n);//conjunto de autodromos onde iram correr os carros (os carros já se encontram em cada autodromo)
 	~Campeonato();
 
 	//funcionalidades
+	bool carregaCarros(std::vector<Carro*> v);
 	bool carregaAutodromos(std::vector<Autodromo*> a);
 	bool proximoAutodromo();
 	bool termina();

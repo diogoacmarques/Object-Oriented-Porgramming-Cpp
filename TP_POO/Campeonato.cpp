@@ -12,6 +12,12 @@ Campeonato::~Campeonato()
 	cout << "Destrutor campeonato '" << nome << "'" << endl;
 }
 
+bool Campeonato::carregaCarros(std::vector<Carro*> v)
+{
+	carrosPontuacao = v;
+	return true;
+}
+
 bool Campeonato::carregaAutodromos(std::vector<Autodromo*> a)
 {
 	autodromosCampeonato = a;
@@ -21,7 +27,7 @@ bool Campeonato::carregaAutodromos(std::vector<Autodromo*> a)
 bool Campeonato::proximoAutodromo()
 {
 	if ((autodromoEmCompeticao + 1) == autodromosCampeonato.size()) {
-		cout << "ja nao existem mais autodromos para competira = final da comepeitcao" << endl;
+		cout << "ja nao existem mais autodromos para competir = final da comepeitcao" << endl;
 		return false;
 	}
 	else {
@@ -85,6 +91,5 @@ bool Campeonato::passaTempo(int segundos)
 		cout << "Nao existe corrida em curso..." << endl;
 		return false;
 	}
-	
 	
 }

@@ -144,6 +144,8 @@ Carro * DVG::obtemCarro(char letra) const
 vector<Carro*> DVG::obtemVectorCarros()
 {
 	vector<Carro *> carros = todosCarros;
+	for (auto c : todosCarros)
+		c->resetPontuacao();
 	todosCarros.clear();
 	return carros;
 }

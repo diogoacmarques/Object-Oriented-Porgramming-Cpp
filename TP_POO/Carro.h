@@ -23,6 +23,7 @@ class Carro
 	
 	//competicao
 	bool emCompeticao;
+	int pontuacao;
 
 	//Piloto
 	Piloto * piloto;
@@ -44,6 +45,11 @@ public:
 	void ativaSinalEmergencia();
 	void danificaCarro();
 	std::string infoCompeticao() const;
+
+	//pontuacao
+	bool adicionaPontuacao(int pontos);
+	int obtemPontuacao() const;
+	bool resetPontuacao();
 
 	//piloto
 	bool verificaPiloto() const;

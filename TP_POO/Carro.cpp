@@ -7,7 +7,7 @@ using namespace std;
 
 char Carro::idStatic = 'a';//inicializar o 'cont'
 
-Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), piloto(nullptr),emCompeticao(false),acelarador(0)
+Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), piloto(nullptr),emCompeticao(false),acelarador(0), pontuacao(0)
 {
 	if (idStatic < 'a' || idStatic > 'z')
 		idStatic = '?';
@@ -101,6 +101,23 @@ std::string Carro::infoCompeticao() const
 	if(mAh == 0)
 		os << "(sem bateria)";
 	return os.str();
+}
+
+bool Carro::adicionaPontuacao(int pontos)
+{
+	pontuacao += pontos;
+	return true;
+}
+
+int Carro::obtemPontuacao() const
+{
+	return pontuacao;
+}
+
+bool Carro::resetPontuacao()
+{
+	pontuacao = 0;
+	return true;
 }
 
 bool Carro::verificaPiloto() const

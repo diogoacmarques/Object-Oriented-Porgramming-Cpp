@@ -109,7 +109,15 @@ bool Pista::passaTempo(int segundos, Garagem * g)//false = fim da corrida
 				if (carro->obtemDistanciaPercorrida() >= comprimento) {
 					int pos = obtemPosCorrida(carro->obtemId());
 					carro->fimCompeticao();//mas mantem na pista
-					//adicionar pontos da competicao (to do)-------------------------------------------------------------------------------------------------
+					if (obtemPosCorrida(carro->obtemId()) == 0) {
+						carro->adicionaPontuacao(10);
+					}
+					else if (carro->obtemId() == 1) {
+						carro->adicionaPontuacao(5);
+					}
+					else if (carro->obtemId() == 2) {
+						carro->adicionaPontuacao(2);
+					}
 					continue;
 				}
 
@@ -199,6 +207,9 @@ void Pista::ordenaPosicoes()
 	do {
 		checkOrdenacao = false;
 		for (int i = 0; i < carrosNaPista.size()-1; i++) {
+			if (carrosNaPista.at(i)->obtemDistanciaPercorrida() >= comprimento)
+				continue;
+
 			if (carrosNaPista.at(i)->obtemDistanciaPercorrida() < carrosNaPista.at(i + 1)->obtemDistanciaPercorrida()) {
 				checkOrdenacao = true;
 				tmp = carrosNaPista.at(i);

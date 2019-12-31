@@ -478,12 +478,16 @@ bool Jogo::insereCarrosAutodromo()
 		return false;
 		}
 
-		if (!autoCompeticao->insereCarrosNaGaragem(dvg.obtemVectorCarros())) {//carro e piloto:
+		vector<Carro*> tmp;
+		tmp = dvg.obtemVectorCarros();
+
+		if (!autoCompeticao->insereCarrosNaGaragem(tmp)) {//carro e piloto:
 			cout << "Nao existem equipas disponiveis para criar um campeonato, a eliminar (minimo 2)" << endl;
 			delete camp;
 			camp = nullptr;
 			return false;
 		}
+		camp->carregaCarros(tmp);
 	}
 	
 	carregaTudo();//carrega as baterias todas
@@ -505,7 +509,7 @@ bool Jogo::corrida()
 		if (camp->proximoAutodromo() == false) {
 			return false;
 		}
-			return corrida();;
+			return corrida();
 		
 	}
 
