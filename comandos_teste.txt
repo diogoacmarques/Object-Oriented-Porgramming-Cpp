@@ -4,6 +4,7 @@ carregaA autodromos.txt
 
 entranocarro a diogo
 entranocarro b miguel
+entranocarro c diogox
 entranocarro d joao
 entranocarro e diogox
 entranocarro f joaquim

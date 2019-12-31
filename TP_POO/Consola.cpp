@@ -18,6 +18,7 @@ Nov 2018 - Pequenos melhoramentos nos comentários
 #include "consola.h"                      
 #include <windows.h>
 #include <stdio.h>
+#include <iostream>
 
 // Definição das variáveis estáticas
 HANDLE Consola::hconsola = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -34,6 +35,18 @@ Consola::Consola() {
 	// e já ninguém usa esses "sistemas"
 }
 */
+
+void Consola::clearWarningArea(int y) {
+	gotoxy(0, y);
+	setBackgroundColor(VERDE);
+	for (int i = 0; i < Warning; i++) {
+		for (int j = 0; j < ScreenSizeX/2; j++)
+			std::cout << " ";
+		std::cout << "\n";
+	}
+		
+	return;
+}
 
 void Consola::gotoxy(int x, int y) {
 	COORD coord;

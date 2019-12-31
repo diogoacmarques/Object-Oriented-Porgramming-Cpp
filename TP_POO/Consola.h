@@ -27,9 +27,14 @@ class Consola {
 	static HWND hwnd;
 
 public:
-	//novo
-	const static int ScreeSizeX = 100;
-	const static int ScreeSizeY = 60;
+	//###################### novo ###############################
+	const static int ScreenSizeX = 100;
+	const static int ScreenSizeY = 60;
+	const static int Warning = 10;
+	//funcoes
+	static void clearWarningArea(int y);
+
+	//###################### fim novo ###############################
 
 	// para usar nas cores
 	const static int PRETO = 0;

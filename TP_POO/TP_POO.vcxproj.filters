@@ -77,9 +77,6 @@
     <ClInclude Include="Jogo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Pista.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Garagem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -96,6 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Consola.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pista.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -17,7 +17,7 @@ Interface::~Interface()
 bool Interface::inciar()
 {
 	Consola::setTextSize(15, 15);
-	Consola::setScreenSize(Consola::ScreeSizeY, Consola::ScreeSizeX);  // linhas colunas. valores grandes pode nao dar
+	Consola::setScreenSize(Consola::ScreenSizeY, Consola::ScreenSizeX);  // linhas colunas. valores grandes pode nao dar
 	Consola::setBackgroundColor(Consola::CINZENTO);  // favor consultar o .h para ver as constantes
 	Consola::setTextColor(Consola::CYAN_CLARO);
 	Consola::clrscr();
@@ -629,7 +629,7 @@ bool Interface::func()
 	//Mais NumeroDePistas-1, para dar para o '|', ou seja, tem que se calcular o numero de pistas x 4
 	int tam = comprimento;
 	int reduz = 0;
-	while (tam > Consola::ScreeSizeY) {//reduz o tamanho da pista para caber no ecra
+	while (tam > Consola::ScreenSizeY) {//reduz o tamanho da pista para caber no ecra
 		tam = tam / 2;
 		reduz++;
 	}
@@ -643,17 +643,17 @@ bool Interface::func()
 
 		for (int j = 0; j < nMax*numeroDeLinhasPorPista; j++) {
 			Consola::setBackgroundColor(Consola::PRETO);
-			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
+			Consola::gotoxy((Consola::ScreenSizeX / 2) + 20 + j + 1, i + 1);
 			cout << " ";
 			if (i == tam - 1 || i == 0) {//meta/linha partida
 				Consola::setBackgroundColor(Consola::BRANCO_CLARO);
-				Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
+				Consola::gotoxy((Consola::ScreenSizeX / 2) + 20 + j + 1, i + 1);
 				cout << " ";
 			}
 		}
 		for (int j = 0; j <= nMax * numeroDeLinhasPorPista; j += 4) {//barreira
 			Consola::setTextColor(Consola::BRANCO_CLARO);
-			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + j + 1, i + 1);
+			Consola::gotoxy((Consola::ScreenSizeX / 2) + 20 + j + 1, i + 1);
 			cout << "|";
 		}
 	}

@@ -83,21 +83,21 @@ bool Pista::passaTempo(int segundos, Garagem * g)//false = fim da corrida
 		cout << "nao existem equipas em competicao" << endl;
 		return true;
 	}
-
+	Consola::clrscr();
 
 	if (segundos == 0) {
 		desenhaPista();
 		return true;
 	}
 
+
 	int verifcaCorrida;
 	for (int i = 0; i < segundos; i++) {
-		Consola::clrscr();
+		
 		verifcaCorrida = 0;
 		for (auto carro : carrosNaPista) {
 			if (carro->verificaCompeticao()) {
 				if (carro->verificaEmergencia() || carro->obtemBateriaAtual() == 0 || carro->verificaDano()) {//(falta bateria /acidente/sinal emergencia)
-					cout << "O carro com o id '" << carro->obtemId() << "' foi removido da pista." << endl;
 					g->recebeCarro(removeCarro(carro->obtemId()));//mete na garagem
 					continue;
 				}
@@ -107,9 +107,8 @@ bool Pista::passaTempo(int segundos, Garagem * g)//false = fim da corrida
 
 				//verifica se ganhou
 				if (carro->obtemDistanciaPercorrida() >= comprimento) {
-					cout << "O carro " << carro->obtemId() << " acabou a corrida" << endl;
 					int pos = obtemPosCorrida(carro->obtemId());
-					carro->fimCompeticao();//mas mantemna pista
+					carro->fimCompeticao();//mas mantem na pista
 					//adicionar pontos da competicao (to do)-------------------------------------------------------------------------------------------------
 					continue;
 				}
@@ -241,39 +240,50 @@ std::string Pista::obtemPista() const
 
 void Pista::desenhaPista() const
 {
-	//int comprimento = 40;//parametros teste (comprimento da pista)
-	//int nMax = 4;//parametros teste (numero maximo de carros na pista)
-	
+	Consola::clrscr();
+	int linhaInfo = 0;
 	int numeroDeLinhasPorPista = 4; //(3 de pista + 1 barreira)
-	//Consola::clrscr();
 	Consola::gotoxy(0, 0);
 	cout << obtemPista();
+	linhaInfo += (int)carrosNaPista.size();
 
 	int tam = comprimento;
 	int fatorReducao = 0;
-	while (tam > Consola::ScreeSizeY) {//reduz o tamanho da pista para caber no ecra
+	while (tam > Consola::ScreenSizeY) {//reduz o tamanho da pista para caber no ecra
 		tam = tam / 2;
 		fatorReducao++;
 	}
 
-	int linhaInfo = (int)carrosNaPista.size() + 3;
-	Consola::gotoxy(0, linhaInfo);
-	cout << "Numero de carros da pista: " << nMax << endl;
-	cout << "Numero de carros a competir: " << carrosNaPista.size() << endl;
-	cout << "Tamanho da pista real: " << comprimento << endl;
-	cout << "Tamanho da pista reduzida: " << tam << endl;
 	cout << "Fator Reducao: " << fatorReducao << endl;
-	linhaInfo += 5;
+	cout << "Tamanho da pista reduzida: " << tam << endl;
+	linhaInfo += 2;
 
+	//Significado cores
+	Consola::setBackgroundColor(Consola::CINZENTO);
+	Consola::setTextColor(Consola::AZUL_CLARO);
+	cout << "(Sem bateria)";
+	Consola::setTextColor(Consola::AMARELO_CLARO);
+	cout << "(Sinal Emergencia)";
+	Consola::setTextColor(Consola::VERMELHO_CLARO);
+	cout << "(Dano Irreparavel)";
+
+	linhaInfo += 2;
+
+	int linhaWarning = linhaInfo;
+	Consola::gotoxy(0, linhaWarning);
+	Consola::clearWarningArea(linhaInfo);
+	linhaInfo += Consola::Warning;
+
+	
 	for (int y = 0; y < tam; y++) {//pista
 
 		for (int x = 0; x < nMax*numeroDeLinhasPorPista; x++) {
 			Consola::setBackgroundColor(Consola::PRETO);
-			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + x + 1, y + 1);
+			Consola::gotoxy((Consola::ScreenSizeX / 2) + 20 + x + 1, y + 1);
 			cout << " ";
 			if (y == tam - 1 || y == 0 ) {//meta/linha partida
 				Consola::setBackgroundColor(Consola::BRANCO_CLARO);
-				Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + x + 1, y + 1);
+				Consola::gotoxy((Consola::ScreenSizeX / 2) + 20 + x + 1, y + 1);
 				cout << " ";
 			}
 		}
@@ -281,23 +291,27 @@ void Pista::desenhaPista() const
 
 		for (int x = 0; x <= nMax * numeroDeLinhasPorPista; x += 4) {//barreira
 			Consola::setTextColor(Consola::BRANCO_CLARO);
-			Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + x + 1, y + 1);
+			Consola::gotoxy((Consola::ScreenSizeX / 2) + 20 + x + 1, y + 1);
 			cout << "|";
 		}
 	}
 
 	Consola::setBackgroundColor(Consola::CINZENTO);
 	Consola::setTextColor(Consola::CYAN_CLARO);
-	Consola::gotoxy(0, linhaInfo++);
-	cout << "fim do desenho da pista" << endl;
-	//getchar();
-
+	 
 	int distancia;
 	for (int i = 0; i < carrosNaPista.size(); i++) {//carros
+
+		//warnings
+		if (carrosNaPista.at(i)->verificaEmergencia() || carrosNaPista.at(i)->obtemBateriaAtual() == 0 || carrosNaPista.at(i)->verificaDano()) {//(falta bateria /acidente/sinal emergencia)
+			Consola::gotoxy(0, linhaWarning);
+			cout << "Carro[" << carrosNaPista.at(i)->obtemId() << "] ira ser removido da pista.";
+		}
+
 		distancia = carrosNaPista.at(i)->obtemDistanciaPercorrida();
 		for(int f = 0;f<fatorReducao;f++)
 			distancia = distancia / 2;
-		Consola::gotoxy(0,i+20);
+		Consola::gotoxy(0,i+ linhaInfo);
 		Consola::setBackgroundColor(Consola::CINZENTO);
 		Consola::setTextColor(Consola::PRETO);
 		cout << "Carro " << carrosNaPista.at(i)->obtemId() << " percorreu:" << carrosNaPista.at(i)->obtemDistanciaPercorrida() << "m ou " << distancia << " na pista";
@@ -326,28 +340,16 @@ void Pista::desenhaPista() const
 			Consola::setTextColor(Consola::AZUL_CLARO);
 		}
 
-		Consola::gotoxy((Consola::ScreeSizeX / 2) + 20 + 3 + (i * numeroDeLinhasPorPista), distancia + 1);
+		Consola::gotoxy((Consola::ScreenSizeX / 2) + 20 + 3 + (i * numeroDeLinhasPorPista), distancia + 1);
 		cout << carrosNaPista.at(i)->obtemId();
 	}
 
-	//Significado cores
-	Consola::setBackgroundColor(Consola::CINZENTO);
-	Consola::setTextColor(Consola::CYAN_CLARO);
-	Consola::gotoxy(0, linhaInfo++);
-	cout << "fim do desenho dos carros" << endl;
-	cout << "Cores:" << endl;
-	Consola::setTextColor(Consola::AZUL_CLARO);
-	cout << "\tSem bateria" << endl;
-	Consola::setTextColor(Consola::AMARELO_CLARO);
-	cout << "\tSinal Emergencia" << endl;
-	Consola::setTextColor(Consola::VERMELHO_CLARO);
-	cout << "\tDano Irreparavel" << endl;
-
-
+	linhaInfo += (int)carrosNaPista.size();
 
 	//before exit
 	Consola::setTextColor(Consola::CYAN_CLARO);
-	Consola::gotoxy(0, 30);
+	Consola::setBackgroundColor(Consola::CINZENTO);
+	Consola::gotoxy(0, linhaInfo);
 
 	return;
 }
