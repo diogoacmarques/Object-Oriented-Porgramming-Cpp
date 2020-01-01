@@ -36,10 +36,10 @@ Consola::Consola() {
 }
 */
 
-void Consola::clearWarningArea(int y) {
+void Consola::clearWarningArea(int y,int tam) {
 	gotoxy(0, y);
 	setBackgroundColor(VERDE);
-	for (int i = 0; i < Warning; i++) {
+	for (int i = 0; i < tam; i++) {
 		for (int j = 0; j < ScreenSizeX/2; j++)
 			std::cout << " ";
 		std::cout << "\n";

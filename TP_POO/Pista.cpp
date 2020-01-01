@@ -282,8 +282,8 @@ void Pista::desenhaPista() const
 
 	int linhaWarning = linhaInfo;
 	Consola::gotoxy(0, linhaWarning);
-	Consola::clearWarningArea(linhaInfo);
-	linhaInfo += Consola::Warning;
+	Consola::clearWarningArea(linhaInfo,(int)carrosNaPista.size());
+	linhaInfo += (int)carrosNaPista.size();
 
 	
 	for (int y = 0; y < tam; y++) {//pista
@@ -315,7 +315,7 @@ void Pista::desenhaPista() const
 
 		//warnings
 		if (carrosNaPista.at(i)->verificaEmergencia() || carrosNaPista.at(i)->obtemBateriaAtual() == 0 || carrosNaPista.at(i)->verificaDano()) {//(falta bateria /acidente/sinal emergencia)
-			Consola::gotoxy(0, linhaWarning);
+			Consola::gotoxy(0, linhaWarning++);
 			cout << "Carro[" << carrosNaPista.at(i)->obtemId() << "] ira ser removido da pista.";
 		}
 

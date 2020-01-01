@@ -30,9 +30,8 @@ public:
 	//###################### novo ###############################
 	const static int ScreenSizeX = 100;
 	const static int ScreenSizeY = 60;
-	const static int Warning = 10;
 	//funcoes
-	static void clearWarningArea(int y);
+	static void clearWarningArea(int y,int tam);
 
 	//###################### fim novo ###############################
 
