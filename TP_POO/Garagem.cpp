@@ -13,8 +13,6 @@ Garagem::Garagem()
 Garagem::~Garagem()
 {
 	cout << "Destrutor da garagem" << endl;
-	for (auto c : carros)
-		c->danificaCarro();
 }
 
 bool Garagem::recebeTodosCarros(std::vector<Carro*> tmp)

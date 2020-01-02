@@ -13,8 +13,6 @@ Pista::Pista(int nM, int comp) :comprimento(comp), nMax(nM), emCompeticao(false)
 Pista::~Pista()
 {
 	cout << "Destrutor da pista" << endl;
-	for (auto c : carrosNaPista)
-		c->danificaCarro();
 }
 
 bool Pista::insereCarro(Carro * c)

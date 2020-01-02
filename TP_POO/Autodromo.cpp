@@ -30,7 +30,9 @@ Autodromo::~Autodromo()
 			break;
 		}
 	}
-
+	vector<Carro*> todosCarros = retiraCarros();
+	for (auto c : todosCarros)
+		delete c;
 }
 
 std::string Autodromo::obtemNome() const

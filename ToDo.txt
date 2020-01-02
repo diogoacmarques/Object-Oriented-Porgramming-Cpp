@@ -1,6 +1,5 @@
 Ainda por fazer:
 -Piloto Surpresa
--Retornar carros ao dgv no destrutor do autodromo
 -Relatorio
 
 
