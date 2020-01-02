@@ -1,5 +1,6 @@
 #include "Campeonato.h"
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 Campeonato::Campeonato(std::string n):nome(n), autodromoEmCompeticao(0)
@@ -10,6 +11,15 @@ Campeonato::Campeonato(std::string n):nome(n), autodromoEmCompeticao(0)
 Campeonato::~Campeonato()
 {
 	cout << "Destrutor campeonato '" << nome << "'" << endl;
+}
+
+std::string Campeonato::obtemPontuacao() const
+{
+	ostringstream os;
+	for (auto c : carrosPontuacao)
+		os << "Carro[" << c->obtemId() << "]: " << c->obtemPontuacao() << " pontos!" << endl;
+
+	return os.str();
 }
 
 bool Campeonato::carregaCarros(std::vector<Carro*> v)
@@ -26,8 +36,12 @@ bool Campeonato::carregaAutodromos(std::vector<Autodromo*> a)
 
 bool Campeonato::proximoAutodromo()
 {
+	Autodromo * autodromo = obtemAutodromoCompeticao();
+	autodromo->terminarCorrida();
 	if ((autodromoEmCompeticao + 1) == autodromosCampeonato.size()) {
-		cout << "ja nao existem mais autodromos para competir = final da comepeitcao" << endl;
+		Consola::clrscr();
+		
+		cout << "ja nao existem mais autodromos para competir = final da competicao" << endl;
 		return false;
 	}
 	else {

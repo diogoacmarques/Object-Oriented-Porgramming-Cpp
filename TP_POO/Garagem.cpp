@@ -1,6 +1,7 @@
 #include "Garagem.h"
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -42,15 +43,24 @@ bool Garagem::recebeCarro(Carro * c)
 
 Carro * Garagem::obtemCarroDisponivel()
 {
-	Carro * tmp;
+	Carro * tmp = nullptr;
+	vector<Carro*>::iterator it;
 	for (int i = 0; i < carros.size(); i++) {
 		if (carros.at(i)->verificaAptidao() && carros.at(i)->verificaPiloto()) {
-			carros.at(i)->iniciaCompeticao();
-			tmp = carros.at(i);
-			carros.erase(carros.begin() + i);
-			return tmp;
+			if (tmp == nullptr || carros.at(i)->obtemPontuacao() > tmp->obtemPontuacao()) {
+				tmp = carros.at(i);
+				it = carros.begin() + i;
+			}
+			
 		}
 	}
+
+	if (tmp != nullptr) {
+		tmp->iniciaCompeticao();
+		carros.erase(it);
+		return tmp;
+	}
+	
 
 	cout << "Garagem nao tem mais equipas disponiveis" << endl;	
 	return nullptr;

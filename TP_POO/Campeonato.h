@@ -14,6 +14,8 @@ public:
 	Campeonato(std::string n);//conjunto de autodromos onde iram correr os carros (os carros já se encontram em cada autodromo)
 	~Campeonato();
 
+	std::string obtemPontuacao() const;
+
 	//funcionalidades
 	bool carregaCarros(std::vector<Carro*> v);
 	bool carregaAutodromos(std::vector<Autodromo*> a);

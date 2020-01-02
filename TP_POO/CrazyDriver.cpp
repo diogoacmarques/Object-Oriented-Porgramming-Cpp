@@ -22,48 +22,54 @@ std::string CrazyDriver::obtemTipo() const
 }
 
 bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
-{//melhorar funcao
-
+{
+	srand((int)time(NULL));
 	int carrosNaPista = p->obtemCarrosNaPista();
 	int posAtual = p->obtemPosCorrida(c->obtemId());
 	if ((rand() % 100) < 5) {//faz algo que danifica o automovel
-		cout << c->obtemNomePiloto() << " danificou o carro " << c->obtemId() << endl;
 		c->danificaCarro();
-		if(p->obtemPosCorrida(c->obtemId()) + 1 < p->obtemNumCarrosEmCompeticao())
+		//cout << c->obtemNomePiloto() << " danificou o carro " << c->obtemId() << endl;	
+		if (p->obtemPosCorrida(c->obtemId()) + 1 < p->obtemNumCarrosEmCompeticao()) {
 			p->danificaCarro(posAtual + 1);
+			return true;
+		}
+			
 	}
 
 
-	if (c->obtemBateriaAtual() == 0) {
+	if (c->obtemBateriaAtual() == 0) {//se ficar sem energia
 		cout << obtemNome() << "[crazy] ativar o sinal de emergencia por falta de bateria" << endl;
 		c->ativaSinalEmergencia();
 		return false;
 	}
 
+	bool decisao = false;//veririfa se ja tomou alguma decisao
 
 	if (p->obtemTempoCorrida() >= iniciaCorridaApos) {
 		//cout << "ja passou o tempo iniciaCorridaApos" << endl;
 
-		if (pos > posAtual && posAtual != carrosNaPista) {//ficou para tras mas nao e o ultimo
-			cout << "a acelarar 2x" << endl;
-			c->acelera();
-			c->acelera();
-			//return true;
+		if (pos == 0 && !decisao) {//se esta em primeiro
+			//mantem a velocidade
+			decisao = true;
 		}
 
-		pos = posAtual;
-		//cout << "next test" << endl;
-
-		if (pos != 1) {
-			if (pos != carrosNaPista) {
-				c->acelera();
-			}
-			else {//esta em ultimo lugar
-				c->trava();
-				cout << "estou em ultimo lugar... desisto" << endl;
-			}
-
+		if (pos == carrosNaPista && !decisao) {//se esta em ultimo
+			c->trava();
+			decisao = true;
 		}
+
+
+		if (!decisao)
+			c->acelera();//nao esta em primeiro ou em ultimo(esta no meio)
+
+
+		if (pos < posAtual && !decisao) {//antiga < atual = perdeu lugares	
+			c->acelera();
+			decisao = true;
+		}
+
+		pos = posAtual;//atualiza posicao
+
 	}//else
 		//cout << "ainda nao passou o tempo(" << p->obtemTempoCorrida() << ") iniciaCorridaApos:" << iniciaCorridaApos <<  endl;
 

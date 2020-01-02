@@ -333,8 +333,13 @@ void Pista::desenhaPista() const
 		}
 		else if (distancia >= tam) {//fim
 			Consola::setBackgroundColor(Consola::BRANCO_CLARO);
-			Consola::setTextColor(Consola::PRETO);
+			if (carrosNaPista.at(i)->obtemDistanciaPercorrida() >= comprimento)
+				Consola::setTextColor(Consola::VERDE);
+			else
+				Consola::setTextColor(Consola::PRETO);
+
 			distancia = tam - 1;
+			
 		}
 		else {
 			Consola::setBackgroundColor(Consola::PRETO);

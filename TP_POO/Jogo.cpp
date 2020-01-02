@@ -401,12 +401,8 @@ bool Jogo::campeonato(vector<string> nomesAutodromoIn)
 			autodromosCampeonato.push_back(obtemAutodromo(nomesAutodromoIn.at(i)));
 		}
 
-		//if (autodromosCampeonato.size() == nomesAutodromoIn.size())
-			//cout << "Tenho o vetor de ponteiros com os " << autodromosCampeonato.size() << " autodromos" << endl;
-
 		camp = new Campeonato("local");
 		camp->carregaAutodromos(autodromosCampeonato);
-
 		return true;
 	}
 	else {
@@ -507,10 +503,14 @@ bool Jogo::corrida()
 	if (autoCompeticao->obtemEstadoPista()) {//se a pista esta em competicao -> proximo autodromo
 		cout << "A passar a competicao para o proximo autodromo." << endl;
 		if (camp->proximoAutodromo() == false) {
+			cout << "[Jogo]Fim do campeonato." << endl;
+			//obtem carros do autodromo
+			dvg.carregaCarros(autoCompeticao->retiraCarros());
+			delete camp;
+			camp = nullptr;
 			return false;
 		}
 			return corrida();
-		
 	}
 
 
@@ -524,7 +524,7 @@ bool Jogo::corrida()
 	}
 
 	autoCompeticao->iniciaPista();
-	
+	passatempo(0);
 	return true;
 }
 
@@ -578,4 +578,12 @@ bool Jogo::passatempo(int segundos)
 	if (!camp->passaTempo(segundos))//se a corrida acabar
 		camp->proximoAutodromo();
 	return true;
+}
+
+std::string Jogo::pontos() const
+{
+	if (camp == nullptr)
+		return "Nao existe nenhum campeonato neste momento.";
+
+	return camp->obtemPontuacao();
 }

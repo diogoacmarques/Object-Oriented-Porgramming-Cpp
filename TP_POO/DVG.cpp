@@ -31,7 +31,6 @@ DVG & DVG::operator=(const DVG & original)
 	if (this == &original)
 		return *this;
 
-	//cout << "a limpar..." << endl;
 	//limpa
 	for (Piloto * p : todosPilotos)
 		delete p;
@@ -127,6 +126,14 @@ int DVG::obtemPosVectorPiloto(std::string nome) const
 int DVG::obtemNumPilotos() const
 {
 	return (int)todosPilotos.size();
+}
+
+bool DVG::carregaCarros(std::vector<Carro*> carros)
+{
+	for (auto c : carros)
+		todosCarros.push_back(c);
+
+	return true;
 }
 
 Carro * DVG::obtemCarro(char letra) const

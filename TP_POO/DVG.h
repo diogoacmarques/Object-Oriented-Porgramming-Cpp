@@ -26,6 +26,7 @@ public:
 	int obtemNumPilotos() const;
 
 	//Carro
+	bool carregaCarros(std::vector<Carro*> carros);
 	Carro * obtemCarro(char letra) const;
 	std::vector<Carro*> obtemVectorCarros();
 	bool criaCarro(int velMax,int capInicial, int capMax, std::string marca, std::string modelo = "");

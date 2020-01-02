@@ -29,8 +29,8 @@ public:
 	//pista
 	bool obtemEstadoPista() const;
 	bool insereEquipaPista();
-
 	void iniciaPista();
+
 	void terminarCorrida();
 	bool passaTempo(int segundos);
 

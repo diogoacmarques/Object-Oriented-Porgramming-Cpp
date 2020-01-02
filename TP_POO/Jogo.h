@@ -83,6 +83,8 @@ public:
 
 	//log
 
+	//pontos
+	std::string pontos() const;
 	
 
 };

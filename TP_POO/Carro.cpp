@@ -93,7 +93,7 @@ void Carro::danificaCarro()
 std::string Carro::infoCompeticao() const
 {
 	ostringstream os;
-	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ") a " << metroSegundo << "m/s total = " << mPercorrido;
+	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")->" << metroSegundo << "m/s (" << piloto->obtemNome() << "/" << piloto->obtemTipo() << ")" ;
 	if (verificaDano())
 		os << "(danificado)";
 	if (sinalEmergencia)
@@ -187,7 +187,6 @@ bool Carro::fimCompeticao()
 {
 	emCompeticao = false;
 	acelarador = 0;
-	mPercorrido = 0;
 	sinalEmergencia = false;
 	return true;
 }
@@ -198,6 +197,8 @@ bool Carro::entraNaGaragem()
 		return false;
 
 	fimCompeticao();
+	mPercorrido = 0;
+	metroSegundo = 0;
 	return true;
 }
 

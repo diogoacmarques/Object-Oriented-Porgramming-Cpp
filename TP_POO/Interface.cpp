@@ -37,16 +37,40 @@ bool Interface::inciar()
 			linha.erase(0, comando.size() + 1);
 			//cout << "Comando:" << comando << endl;
 			//cout << "Parametros:'" << linha << "'\n" << endl;
-
 			//geral
 			if (comando == "fim")
 				break;
 			else if (comando == "clear") {
-				system("cls");
+				Consola::clrscr();
 				continue;
 			}
-			else if (comando == "teste") {
-				func();
+			else if (comando == "help" || comando == "?") {
+				Consola::clrscr();
+				cout << "Ajuda:" << endl;
+				cout << "\tclear" << endl;
+				cout << "\tcarregaP <nomeFicheiro>" << endl;
+				cout << "\tcarregaC <nomeFicheiro>" << endl;
+				cout << "\tcarregaA <nomeFicheiro>" << endl;
+				cout << "\tcria <letraTipo> <dados do objeto>" << endl;
+				cout << "\tapaga <letraTipo> identificador" << endl;
+				cout << "\tentranocarro <letraCarro> <nomePiloto> " << endl;
+				cout << "\tlista" << endl;
+				cout << "\tsavedgv <nome>" << endl;
+				cout << "\tloaddgv <nome>" << endl;
+				cout << "\tdeldgv <nome>" << endl;
+				cout << "\tcampeonato <A1> <A2> ... <An>" << endl;
+				cout << "\tlistacarros" << endl;
+				cout << "\tcarregabat <letraCarro> <Q>" << endl;
+				cout << "\tcarregatudo" << endl;
+				cout << "\tcorrida" << endl;
+				cout << "\tacidente <letraCarro>" << endl;
+				cout << "\tstop <nomePiloto>" << endl;
+				cout << "\tdestroi <letraCarro>" << endl;
+				cout << "\tpassatempo <n>" << endl;
+				cout << "\tpontos" << endl;
+				cout << "\tlog" << endl;
+				cout << "\tfim" << endl;
+
 				continue;
 			}
 				
@@ -116,6 +140,9 @@ bool Interface::inciar()
 				else if (comando == "log") {
 					for (auto l : log)
 						cout << l << endl;
+				}
+				else if (comando == "pontos") {
+					cout << jogo.pontos() << endl;
 				}
 				else
 					cout << "Este comando nao se encontra na lista do modo 2!" << endl;

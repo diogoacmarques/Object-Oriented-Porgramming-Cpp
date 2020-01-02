@@ -94,6 +94,6 @@ std::string Piloto::pilotoToString() const
 	ostringstream os;
 	os << "Piloto:" << nome << "(" << obtemTipo() << ")";
 	if (verificaCarro())
-		os << ", tem carro '" << idCarro;
+		os << ", tem carro '" << idCarro << "'";
 	return os.str();
 }

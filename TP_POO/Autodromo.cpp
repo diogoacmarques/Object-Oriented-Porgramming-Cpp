@@ -127,6 +127,7 @@ void Autodromo::iniciaPista()
 void Autodromo::terminarCorrida()
 {
 	pista.terminarCorrida();
+	preparado = false;
 }
 
 bool Autodromo::passaTempo(int segundos)
