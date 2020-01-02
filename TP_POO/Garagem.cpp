@@ -13,6 +13,8 @@ Garagem::Garagem()
 Garagem::~Garagem()
 {
 	cout << "Destrutor da garagem" << endl;
+	for (auto c : carros)
+		c->danificaCarro();
 }
 
 bool Garagem::recebeTodosCarros(std::vector<Carro*> tmp)
@@ -24,11 +26,11 @@ bool Garagem::recebeTodosCarros(std::vector<Carro*> tmp)
 		
 
 	if (!carros.empty()) {
-		cout << "A garagem carregou com sucesso " << carros.size() << " equipas." << endl;
+		cout << "A garagem carregou com sucesso " << carros.size() << " carros." << endl;
 		return true;
 	}	
 	else {
-		cout << "Garagem:Nao recebi equipas..." << endl;
+		cout << "Garagem:Nao recebi carros..." << endl;
 		return false;
 	}
 	
@@ -50,19 +52,17 @@ Carro * Garagem::obtemCarroDisponivel()
 			if (tmp == nullptr || carros.at(i)->obtemPontuacao() > tmp->obtemPontuacao()) {
 				tmp = carros.at(i);
 				it = carros.begin() + i;
-			}
-			
+			}			
 		}
 	}
 
 	if (tmp != nullptr) {
-		tmp->iniciaCompeticao();
 		carros.erase(it);
 		return tmp;
 	}
 	
 
-	cout << "Garagem nao tem mais equipas disponiveis" << endl;	
+	cout << "Garagem nao tem mais carros disponiveis" << endl;	
 	return nullptr;
 }
 

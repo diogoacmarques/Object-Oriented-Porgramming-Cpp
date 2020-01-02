@@ -24,6 +24,7 @@ class Carro
 	//competicao
 	bool emCompeticao;
 	int pontuacao;
+	int linhaPista;
 
 	//Piloto
 	Piloto * piloto;
@@ -61,11 +62,15 @@ public:
 
 	//Pista
 	bool verificaCompeticao() const;
-	bool iniciaCompeticao();
+	bool iniciaCompeticao(int linha);
 	bool fimCompeticao();
+	int obtemLinhaPista() const;
 
+	//garagem
 	bool entraNaGaragem();
+
 	//movimento
+	bool resetDistancia();
 	int obtemVelocidade() const;
 	bool acelera();
 	bool trava();
@@ -73,7 +78,6 @@ public:
 	int obtemDistanciaPercorrida() const;
 	bool passaSegundo();
 
-	bool resetDistancia();
 
 	//toString
 	std::string carroToString() const;

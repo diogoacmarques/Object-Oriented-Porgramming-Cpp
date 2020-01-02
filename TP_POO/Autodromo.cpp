@@ -30,6 +30,7 @@ Autodromo::~Autodromo()
 			break;
 		}
 	}
+
 }
 
 std::string Autodromo::obtemNome() const
@@ -51,7 +52,7 @@ bool Autodromo::obtemEstado() const
 
 bool Autodromo::insereCarrosNaGaragem(vector<Carro*> carros)
 {
-	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar a equipa para a garagem" << endl;
+	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar o carro para a garagem" << endl;
 	if (garagem.recebeTodosCarros(carros)) {
 		preparado = true;
 		return true;
@@ -78,7 +79,7 @@ bool Autodromo::obtemEstadoPista() const
 	return pista.obtemEstado();
 }
 
-bool Autodromo::insereEquipaPista()
+bool Autodromo::insereCarroPista()
 {
 	Carro * carroDisponivel;
 	bool levaMais = true;//pista
@@ -97,7 +98,7 @@ bool Autodromo::insereEquipaPista()
 	}
 
 
-	cout << "Autodromo[" << nome << "] inseriu " << pilotosInseridos << " equipas na sua pista" << endl;
+	cout << "Autodromo[" << nome << "] inseriu " << pilotosInseridos << " carros na sua pista" << endl;
 	return pilotosInseridos;
 }
 

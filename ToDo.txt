@@ -1,0 +1,12 @@
+Ainda por fazer:
+-Piloto Surpresa
+-Retornar carros ao dgv no destrutor do autodromo
+-Relatorio
+
+
+Ainda por Confirmar:
+-mandar dados por ponteiro e não dentro da interface
+-ler e separar na interface e mandar para o jogo só os parametros.
+-Cuidado com os couts
+-confirmar log
+-Quando se faz o comando "corrida" o cout sai sempre um carro a menos do que devia(não prioritario).

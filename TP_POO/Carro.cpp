@@ -7,7 +7,7 @@ using namespace std;
 
 char Carro::idStatic = 'a';//inicializar o 'cont'
 
-Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), piloto(nullptr),emCompeticao(false),acelarador(0), pontuacao(0)
+Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), piloto(nullptr),emCompeticao(false),acelarador(0), pontuacao(0),linhaPista(0)
 {
 	if (idStatic < 'a' || idStatic > 'z')
 		idStatic = '?';
@@ -151,6 +151,9 @@ bool Carro::removePiloto()
 
 bool Carro::decisaoPiloto(Pista * p)
 {
+	if (verificaDano())
+		return false;
+
 	piloto->tomaDecisao(this, p);
 	return passaSegundo();
 
@@ -174,11 +177,12 @@ bool Carro::verificaCompeticao() const
 	return emCompeticao;
 }
 
-bool Carro::iniciaCompeticao()
+bool Carro::iniciaCompeticao(int linha)
 {
 	if (verificaDano())
 		return false;
 
+	linhaPista = linha;
 	emCompeticao = true;
 	return true;
 }
@@ -191,14 +195,17 @@ bool Carro::fimCompeticao()
 	return true;
 }
 
+int Carro::obtemLinhaPista() const
+{
+	return linhaPista;
+}
+
 bool Carro::entraNaGaragem()
 {
-	if (verificaDano())
-		return false;
-
 	fimCompeticao();
 	mPercorrido = 0;
 	metroSegundo = 0;
+	linhaPista = 0;
 	return true;
 }
 
@@ -209,12 +216,18 @@ int Carro::obtemVelocidade() const
 
 bool Carro::acelera()
 {
+	if (verificaDano())
+		return false;
+
 	metroSegundo++;
 	return true;
 }
 
 bool Carro::trava()
 {
+	if (verificaDano())
+		return false;
+
 	if (metroSegundo > 0)
 		metroSegundo--;
 	else

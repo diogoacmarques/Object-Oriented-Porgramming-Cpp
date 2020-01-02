@@ -17,7 +17,7 @@ public:
 	Pista(int nM, int comp);
 	~Pista();
 
-	//poem equipa na pista
+	//Carro
 	bool insereCarro(Carro * c);
 	Carro * removeCarro(char idCarro);
 	std::vector<Carro*> removeTodosCarros();

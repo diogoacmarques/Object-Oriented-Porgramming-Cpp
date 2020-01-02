@@ -15,6 +15,8 @@ Campeonato::~Campeonato()
 
 std::string Campeonato::obtemPontuacao() const
 {
+	if (carrosPontuacao.size() <= 0)
+		return "Inicia a primeira corrida para verificar os pontos";
 	ostringstream os;
 	for (auto c : carrosPontuacao)
 		os << "Carro[" << c->obtemId() << "]: " << c->obtemPontuacao() << " pontos!" << endl;

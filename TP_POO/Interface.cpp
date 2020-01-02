@@ -304,7 +304,7 @@ bool Interface::apaga(std::string parametros)
 	string tipo;
 	tipo = splitLine(parametros);
 
-	if (tipo == "") {//sem parametros
+	if (tipo.empty()) {//sem parametros
 		cout << "Tipo de objeto para apgar(c,p,a):";
 		getline(cin, tipo);
 		tipo = splitLine(tipo);
@@ -313,13 +313,17 @@ bool Interface::apaga(std::string parametros)
 		parametros.erase(0, tipo.size() + 1);//remove o tipo dos parametros
 	}
 
-	if (parametros == "") {
+	if (parametros.empty()) {
 		if (tipo == "c")
 			cout << "Identificador do carro(letra):";
 		else if (tipo == "p")
 			cout << "Identificador do piloto(nome):";
 		if (tipo == "a")
 			cout << "Identificador do autodromo(nome):";
+		else {
+			cout << "Tipo " << tipo << " invalido" << endl;
+			return false;
+		}
 		getline(cin, parametros);
 	}
 
@@ -335,6 +339,10 @@ bool Interface::apaga(std::string parametros)
 	if (tipo == "a") {
 		return jogo.apagaAutodromo(parametros);
 	}
+	else {
+		cout << "Tipo " << tipo << " invalido" << endl;
+	}
+
 	return false;
 }
 

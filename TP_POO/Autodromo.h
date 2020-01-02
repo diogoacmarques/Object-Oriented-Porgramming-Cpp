@@ -28,7 +28,7 @@ public:
 
 	//pista
 	bool obtemEstadoPista() const;
-	bool insereEquipaPista();
+	bool insereCarroPista();
 	void iniciaPista();
 
 	void terminarCorrida();

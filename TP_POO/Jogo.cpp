@@ -248,6 +248,7 @@ bool Jogo::apagaAutodromo(std::string nome)
 	while (it != todosAutodromos.end()) {
 		if ((*it)->obtemNome() == nome) {
 			delete (*it);
+			todosAutodromos.erase(it);
 			return true;
 		}
 		it++;
@@ -289,16 +290,16 @@ std::string Jogo::lista() const
 		cout << carros << endl;
 	}
 	
-	if (carros.empty())
-		cout << "Ainda nao existem piltoos criados." << endl;
+	if (pilotos.empty())
+		cout << "Ainda nao existem pilotos criados." << endl;
 	else
 	{
 		cout << "Pilotos:" << endl;
 		cout << pilotos << endl;
 	}
 
-	if (carros.empty())
-		cout << "Ainda nao existem autodroms criados" << endl;
+	if (autodromos.empty())
+		cout << "Ainda nao existem autodromos criados" << endl;
 	else {
 		cout << "Autodromos:" << endl;
 		cout << autodromos << endl;
@@ -451,7 +452,6 @@ bool Jogo::insereCarrosAutodromo()
 	}
 
 	//insere os carros no autodromo onde vai decorrer a proxima corrida
-	//cout << "A inserir as equipa na garagem" << endl;
 	if (autoCompeticao->obtemEstado()) {
 		cout << "A garagem ja esta preparada, experimente (corrida)" << endl;
 		return true;
@@ -461,7 +461,7 @@ bool Jogo::insereCarrosAutodromo()
 	//getchar();
 	if (camp->obtemNumAutodromoCompeticao() > 0) {//vai buscar carros ao autodromo anterior
 		if (!autoCompeticao->insereCarrosNaGaragem(camp->obtemCarrosAutodromoAnterior())){//carro e piloto:
-			cout << "Nao existem equipas disponiveis para criar um campeonato, a eliminar (minimo 2)" << endl;
+			cout << "Nao existem carros disponiveis para criar um campeonato, a eliminar (minimo 2)" << endl;
 			delete camp;
 			camp = nullptr;
 			return false;
@@ -478,7 +478,7 @@ bool Jogo::insereCarrosAutodromo()
 		tmp = dvg.obtemVectorCarros();
 
 		if (!autoCompeticao->insereCarrosNaGaragem(tmp)) {//carro e piloto:
-			cout << "Nao existem equipas disponiveis para criar um campeonato, a eliminar (minimo 2)" << endl;
+			cout << "Nao existem carros disponiveis para criar um campeonato, a eliminar (minimo 2)" << endl;
 			delete camp;
 			camp = nullptr;
 			return false;
@@ -503,7 +503,8 @@ bool Jogo::corrida()
 	if (autoCompeticao->obtemEstadoPista()) {//se a pista esta em competicao -> proximo autodromo
 		cout << "A passar a competicao para o proximo autodromo." << endl;
 		if (camp->proximoAutodromo() == false) {
-			cout << "[Jogo]Fim do campeonato." << endl;
+			cout << "[Jogo]Fim do campeonato, pontuacao final:" << endl;
+			cout << camp->obtemPontuacao();
 			//obtem carros do autodromo
 			dvg.carregaCarros(autoCompeticao->retiraCarros());
 			delete camp;
@@ -518,7 +519,7 @@ bool Jogo::corrida()
 		return false;
 
 
-	if (!autoCompeticao->insereEquipaPista()) {
+	if (!autoCompeticao->insereCarroPista()) {
 		cout << "Nao existem pilotos/carros disponiveis para correr (minimo 2)" << endl;
 		return true;
 	}
