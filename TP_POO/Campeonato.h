@@ -21,6 +21,7 @@ public:
 	bool carregaAutodromos(std::vector<Autodromo*> a);
 	bool proximoAutodromo();
 	bool termina();
+	bool destroiCarro(char idCarro);
 
 	Autodromo * obtemAutodromoCompeticao() const;
 	int obtemNumAutodromoCompeticao() const;

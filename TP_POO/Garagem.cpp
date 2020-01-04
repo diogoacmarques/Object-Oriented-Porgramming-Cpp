@@ -64,6 +64,22 @@ Carro * Garagem::obtemCarroDisponivel()
 	return nullptr;
 }
 
+bool Garagem::destroiCarro(char idCarro)
+{
+	Carro * c;
+	std::vector<Carro*>::iterator it = carros.begin();
+	while (it != carros.end()) {
+		if ((*it)->obtemId() == idCarro) {
+			c = (*it);
+			carros.erase(it);
+			delete c;
+			return true;
+		}
+	}
+	return false;
+}
+
+
 bool Garagem::carregaTodasBaterias()
 {
 	for (int i = 0; i < carros.size(); i++) {

@@ -559,7 +559,16 @@ bool Jogo::stopPiloto(std::string nome)
 
 bool Jogo::destroi(char idCarro)
 {
-	return dvg.destroiCarro(idCarro);;
+	Carro * c = dvg.obtemCarro(idCarro);
+	if (c != nullptr) {//se o carro esta na dgv
+			delete c;
+			return true;
+	}
+	else if (camp != nullptr) {//se existe um campeonato
+		return camp->destroiCarro(idCarro);//percorre todos os autodromos(pista/garagem)
+	}
+	else//carro nao esta em lado nenhum
+		return false;
 }
 
 bool Jogo::passatempo(int segundos)

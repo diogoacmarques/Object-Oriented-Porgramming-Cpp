@@ -17,6 +17,9 @@ Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo)
 Carro::~Carro()
 {
 	cout << "Destrutor_Carro(" << marca << "/" << modelo << ")" << endl;
+	if (verificaPiloto()) {//tem piloto
+		piloto->removeCarro();
+	}
 }
 
 bool Carro::verificaDano() const

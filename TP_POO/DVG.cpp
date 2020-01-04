@@ -206,13 +206,7 @@ bool DVG::destroiCarro(char idCarro)
 	if(c == nullptr)
 		return false;
 
-	if (c->verificaPiloto()) {//tem piloto
-		Piloto * p = obtemPiloto(c->obtemNomePiloto());
-		if (p == nullptr)
-			return false;
-
-		p->removeCarro();	
-	}
+	
 
 	delete c;
 

@@ -127,6 +127,20 @@ void Autodromo::iniciaPista()
 	pista.iniciaCorrida();
 }
 
+bool Autodromo::destroiCarro(char idCarro)
+{
+	Carro * c = pista.removeCarro(idCarro);
+	if (c == nullptr) {
+		return garagem.destroiCarro(idCarro);
+	}
+	else {
+		delete c;
+		return true;
+	}
+
+	return false;
+}
+
 void Autodromo::terminarCorrida()
 {
 	pista.terminarCorrida();

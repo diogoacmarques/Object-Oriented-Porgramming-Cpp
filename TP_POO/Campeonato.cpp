@@ -64,6 +64,14 @@ bool Campeonato::termina()
 	return true;
 }
 
+bool Campeonato::destroiCarro(char idCarro)
+{
+	for (auto a : autodromosCampeonato)
+		if (a->destroiCarro(idCarro))
+			return true;
+	return false;
+}
+
 Autodromo * Campeonato::obtemAutodromoCompeticao() const
 {
 	if (autodromoEmCompeticao != -1)

@@ -25,11 +25,13 @@ public:
 	std::string listaCarrosGaragem() const;
 	std::vector <Carro*> retiraCarros();
 
-
 	//pista
 	bool obtemEstadoPista() const;
 	bool insereCarroPista();
 	void iniciaPista();
+
+	//Carro
+	bool destroiCarro(char idCarro);
 
 	void terminarCorrida();
 	bool passaTempo(int segundos);
