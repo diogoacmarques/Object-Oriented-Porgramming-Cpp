@@ -1,6 +1,6 @@
 200 10 1000 tesla s
 100 1 20 Honda
-200 1 10 Renault Zoe
+200 1 50 Renault Zoe
 50 1 250 Seat Mi
 50 1 250 Volkswagen ID3
 52 2 250 Mercedez
