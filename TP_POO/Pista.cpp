@@ -47,9 +47,9 @@ Carro * Pista::removeCarro(char idCarro)
 			(*it)->fimCompeticao();
 			tmp = *it;
 			carrosNaPista.erase(it);
+			cout << "a remover o carro: " << tmp->obtemId() << endl;
 			return tmp;
 		}
-
 		it++;
 	}
 	return nullptr;
@@ -101,11 +101,7 @@ bool Pista::passaTempo(int segundos, Garagem * g)//false = fim da corrida
 		verifcaCorrida = 0;
 		for (auto carro : carrosNaPista) {
 			if (carro->verificaCompeticao()) {
-				if (carro->verificaEmergencia() || carro->obtemBateriaAtual() == 0 || carro->verificaDano()) {//(falta bateria /acidente/sinal emergencia)
-					g->recebeCarro(removeCarro(carro->obtemId()));//mete na garagem
-					continue;
-				}
-
+				
 				verifcaCorrida++;
 				carro->decisaoPiloto(this);
 
@@ -132,6 +128,7 @@ bool Pista::passaTempo(int segundos, Garagem * g)//false = fim da corrida
 		if (verifcaCorrida>0) {
 			ordenaPosicoes();
 			desenhaPista();
+			removeCarrosInuteis(g);
 			cout << "Prima qualquer tecla...(ESCAPE para sair)" << endl;
 			CHAR key = Consola::getch();
 			if (key == Consola::ESCAPE)
@@ -155,7 +152,7 @@ int Pista::obtemTempoCorrida() const
 	return tempoCorrida;
 }
 
-int Pista::obtemCarrosNaPista() const
+int Pista::obtemNumCarrosNaPista() const
 {
 	return (int)carrosNaPista.size();
 }
@@ -167,11 +164,6 @@ int Pista::obtemPosCorrida(char idCarro)
 			return i;
 
 	return -1;
-}
-
-int Pista::obtemNumCarrosEmCompeticao() const
-{
-	return (int)carrosNaPista.size();
 }
 
 bool Pista::danificaCarro(int pos)
@@ -227,6 +219,19 @@ void Pista::ordenaPosicoes()
 	} while (checkOrdenacao);
 	//cout << " Done!" << endl;
 	return;
+}
+
+void Pista::removeCarrosInuteis(Garagem * g)
+{
+	vector<Carro*>::iterator it = carrosNaPista.begin();
+	while (it != carrosNaPista.end()) {
+		if ((*it)->verificaEmergencia() || (*it)->obtemBateriaAtual() == 0 || (*it)->verificaDano()) {
+			g->recebeCarro(removeCarro((*it)->obtemId()));
+			it = carrosNaPista.begin();//reset
+			continue;
+		}
+		it++;
+	}
 }
 
 std::string Pista::obtemPista() const
@@ -324,6 +329,8 @@ void Pista::desenhaPista() const
 		//warnings
 		if (carrosNaPista.at(i)->verificaEmergencia() || carrosNaPista.at(i)->obtemBateriaAtual() == 0 || carrosNaPista.at(i)->verificaDano()) {//(falta bateria /acidente/sinal emergencia)
 			Consola::gotoxy(0, linhaWarning++);
+			Consola::setBackgroundColor(Consola::BRANCO);
+			Consola::setTextColor(Consola::AMARELO_CLARO);
 			cout << "Carro[" << carrosNaPista.at(i)->obtemId() << "] ira ser removido da pista.";
 		}
 

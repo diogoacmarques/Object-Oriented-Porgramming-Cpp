@@ -2,14 +2,15 @@ carregaC carros.txt
 carregaP pilotos.txt
 carregaA autodromos.txt
 
-entranocarro b diogo
-entranocarro a miguel
+entranocarro a diogo
+entranocarro b miguel
 entranocarro c diogox
 entranocarro d joao
 entranocarro e diogox
 entranocarro f joaquim
 
-campeonato A1 A2 A3 A4 A5
+
+campeonato A4 A2 A3 A1 A5
 corrida
 passatempo 1
 

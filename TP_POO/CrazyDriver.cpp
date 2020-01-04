@@ -24,12 +24,12 @@ std::string CrazyDriver::obtemTipo() const
 bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 {
 	srand((int)time(NULL));
-	int carrosNaPista = p->obtemCarrosNaPista();
+	int carrosNaPista = p->obtemNumCarrosNaPista();
 	int posAtual = p->obtemPosCorrida(c->obtemId());
 	if ((rand() % 100) < 5) {//faz algo que danifica o automovel
 		c->danificaCarro();
 		//cout << c->obtemNomePiloto() << " danificou o carro " << c->obtemId() << endl;	
-		if (p->obtemPosCorrida(c->obtemId()) + 1 < p->obtemNumCarrosEmCompeticao()) {
+		if (p->obtemPosCorrida(c->obtemId()) + 1 < carrosNaPista) {
 			p->danificaCarro(posAtual + 1);
 			return true;
 		}
@@ -38,7 +38,7 @@ bool CrazyDriver::tomaDecisao(Carro * c, Pista * p)
 
 
 	if (c->obtemBateriaAtual() == 0) {//se ficar sem energia
-		cout << obtemNome() << "[crazy] ativar o sinal de emergencia por falta de bateria" << endl;
+		//cout << obtemNome() << "[crazy] ativar o sinal de emergencia por falta de bateria" << endl;
 		c->ativaSinalEmergencia();
 		return false;
 	}

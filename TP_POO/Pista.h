@@ -29,9 +29,8 @@ public:
 	bool passaTempo(int segundos, Garagem * g);
 
 	int obtemTempoCorrida() const;
-	int obtemCarrosNaPista() const;
+	int obtemNumCarrosNaPista() const;
 	int obtemPosCorrida(char idCarro);
-	int obtemNumCarrosEmCompeticao() const;
 
 	bool danificaCarro(int pos);
 
@@ -40,6 +39,7 @@ public:
 	bool obtemEstado() const;
 
 	void ordenaPosicoes();
+	void removeCarrosInuteis(Garagem * g);
 
 	//toString
 	std::string obtemPista() const;
