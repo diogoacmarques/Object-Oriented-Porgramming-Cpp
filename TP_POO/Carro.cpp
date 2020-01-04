@@ -7,7 +7,8 @@ using namespace std;
 
 char Carro::idStatic = 'a';//inicializar o 'cont'
 
-Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo), id(idStatic++), piloto(nullptr),emCompeticao(false),acelarador(0), pontuacao(0),linhaPista(0)
+Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo),
+id(idStatic++), piloto(nullptr),emCompeticao(false), pontuacao(0),linhaPista(0)
 {
 	if (idStatic < 'a' || idStatic > 'z')
 		idStatic = '?';
@@ -96,7 +97,8 @@ void Carro::danificaCarro()
 std::string Carro::infoCompeticao() const
 {
 	ostringstream os;
-	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")->" << metroSegundo << "m/s (" << piloto->obtemNome() << "/" << piloto->obtemTipo() << ")" ;
+	os << "Carro[" << id << "]:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")->" << metroSegundo << "m/s (" 
+		<< piloto->obtemNome() << "/" << piloto->obtemTipo() << ")" ;
 	if (verificaDano())
 		os << "(danificado)";
 	if (sinalEmergencia)
@@ -185,6 +187,7 @@ bool Carro::iniciaCompeticao(int linha)
 	if (verificaDano())
 		return false;
 
+	sinalEmergencia = false;
 	linhaPista = linha;
 	emCompeticao = true;
 	return true;
@@ -193,7 +196,6 @@ bool Carro::iniciaCompeticao(int linha)
 bool Carro::fimCompeticao()
 {
 	emCompeticao = false;
-	acelarador = 0;
 	sinalEmergencia = false;
 	return true;
 }
@@ -219,7 +221,7 @@ int Carro::obtemVelocidade() const
 
 bool Carro::acelera()
 {
-	if (verificaDano())
+	if (verificaDano() || sinalEmergencia)
 		return false;
 
 	metroSegundo++;
@@ -239,13 +241,6 @@ bool Carro::trava()
 	return true;
 }
 
-bool Carro::para()
-{
-	metroSegundo = 0;
-	return true;
-}
-
-
 int Carro::obtemDistanciaPercorrida() const
 {
 	return mPercorrido;
@@ -255,6 +250,12 @@ bool Carro::passaSegundo()
 {
 	if (verificaDano())
 		return false;
+
+	if (sinalEmergencia) {
+		trava();
+		trava();
+		trava();
+	}
 
 	if (metroSegundo > 0) {//se esta a andar
 		if (mAh >= metroSegundo) {//se tem energia para fazer a distancia

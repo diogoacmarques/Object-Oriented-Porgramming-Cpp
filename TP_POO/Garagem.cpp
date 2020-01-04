@@ -64,6 +64,15 @@ Carro * Garagem::obtemCarroDisponivel()
 	return nullptr;
 }
 
+Carro * Garagem::obtemCarro(char idCarro) const
+{
+	for (auto c : carros)
+		if (c->obtemId() == idCarro)
+			return c;
+	return nullptr;
+	
+}
+
 bool Garagem::destroiCarro(char idCarro)
 {
 	Carro * c;

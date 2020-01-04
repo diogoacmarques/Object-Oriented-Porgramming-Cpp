@@ -130,6 +130,7 @@ void Autodromo::iniciaPista()
 bool Autodromo::destroiCarro(char idCarro)
 {
 	Carro * c = pista.removeCarro(idCarro);
+
 	if (c == nullptr) {
 		return garagem.destroiCarro(idCarro);
 	}
@@ -150,4 +151,9 @@ void Autodromo::terminarCorrida()
 bool Autodromo::passaTempo(int segundos)
 {
 	return pista.passaTempo(segundos, &garagem);
+}
+
+bool Autodromo::stopPiloto(std::string nomePiloto)
+{
+	return pista.stopPiloto(nomePiloto);;
 }

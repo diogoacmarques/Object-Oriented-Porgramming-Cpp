@@ -13,7 +13,6 @@ class Carro
 	int mAh;
 	const int capcidadeMaxima;
 	//moviemento
-	bool acelarador;//postiivo acelarar
 	int metroSegundo = 0;
 	int mPercorrido = 0;
 	const int velcidadeMaxima;
@@ -74,7 +73,6 @@ public:
 	int obtemVelocidade() const;
 	bool acelera();
 	bool trava();
-	bool para();
 	int obtemDistanciaPercorrida() const;
 	bool passaSegundo();
 

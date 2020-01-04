@@ -12,6 +12,7 @@ public:
 	bool recebeTodosCarros(std::vector<Carro*> c);
 	bool recebeCarro(Carro * c);
 	Carro * obtemCarroDisponivel();
+	Carro * obtemCarro(char idCarro) const;
 	bool destroiCarro(char idCarro);
 	bool carregaTodasBaterias();
 	int obtemNumCarros() const;

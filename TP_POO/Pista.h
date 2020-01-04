@@ -17,29 +17,27 @@ public:
 	Pista(int nM, int comp);
 	~Pista();
 
+	//funcionalidades
+	int obtemComprimento() const;
+	int obtemNMax() const;
+	bool passaTempo(int segundos, Garagem * g);
+	int obtemTempoCorrida() const;
+	int obtemNumCarrosNaPista() const;
+	bool iniciaCorrida();
+	bool terminarCorrida();
+	bool obtemEstado() const;
+	void ordenaPosicoes();
+	void removeCarrosInuteis(Garagem * g);
+
 	//Carro
 	bool insereCarro(Carro * c);
 	Carro * removeCarro(char idCarro);
 	std::vector<Carro*> removeTodosCarros();
-	
-
-	int obtemComprimento() const;
-	int obtemNMax() const;
-
-	bool passaTempo(int segundos, Garagem * g);
-
-	int obtemTempoCorrida() const;
-	int obtemNumCarrosNaPista() const;
-	int obtemPosCorrida(char idCarro);
-
 	bool danificaCarro(int pos);
-
-	bool iniciaCorrida();
-	bool terminarCorrida();
-	bool obtemEstado() const;
-
-	void ordenaPosicoes();
-	void removeCarrosInuteis(Garagem * g);
+	int obtemPosCorrida(char idCarro);
+	
+	//Piloto
+	bool stopPiloto(std::string nomePiloto);
 
 	//toString
 	std::string obtemPista() const;

@@ -32,9 +32,10 @@ public:
 
 	//Carro
 	bool destroiCarro(char idCarro);
-
 	void terminarCorrida();
 	bool passaTempo(int segundos);
 
+	//Piloto
+	bool stopPiloto(std::string nomePiloto);
 };
 

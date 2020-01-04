@@ -542,17 +542,21 @@ bool Jogo::acidente(char idCarro)
 bool Jogo::stopPiloto(std::string nome)
 {
 	Piloto * p = dvg.obtemPiloto(nome);
-	if (p == nullptr)
+	if (p == nullptr) {
+		//cout << "nao encontrei piloto na dgv" << endl;
 		return false;
+	}
 
 	//verifica se tem carro
 	if (p->verificaCarro()) {
 		Carro * c = dvg.obtemCarro(p->obtemIdCarro());
-		if (c == nullptr)
-			return false;
-
-		return p->stop(c);
-			
+		if (c != nullptr) {//se o carro esta no dgv
+			p->stop(c);
+		}
+		else if(camp != nullptr){//se esta
+			Autodromo * a = camp->obtemAutodromoCompeticao();
+			a->stopPiloto(nome);
+		}
 	}
 	return true;
 }

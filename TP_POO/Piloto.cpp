@@ -55,8 +55,9 @@ bool Piloto::stop(Carro * c)
 	if (c == nullptr)
 		return false;
 
+	//cout << "a ativar..." << endl;
 	c->ativaSinalEmergencia();
-	cout << nome << " forcado a parar" << endl;
+	//cout << nome << " forcado a parar" << endl;
 	return true;
 }
 

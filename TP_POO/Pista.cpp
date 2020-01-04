@@ -47,7 +47,7 @@ Carro * Pista::removeCarro(char idCarro)
 			(*it)->fimCompeticao();
 			tmp = *it;
 			carrosNaPista.erase(it);
-			cout << "a remover o carro: " << tmp->obtemId() << endl;
+			//cout << "a remover o carro: " << tmp->obtemId() << endl;
 			return tmp;
 		}
 		it++;
@@ -83,6 +83,7 @@ bool Pista::passaTempo(int segundos, Garagem * g)//false = fim da corrida
 	string lixo;
 	if (carrosNaPista.size() == 0) {
 		Consola::gotoxy(0, 0);
+		Consola::clrscr();
 		cout << "nao existem carros em competicao" << endl;
 		return true;
 	}
@@ -129,11 +130,12 @@ bool Pista::passaTempo(int segundos, Garagem * g)//false = fim da corrida
 			ordenaPosicoes();
 			desenhaPista();
 			removeCarrosInuteis(g);
-			cout << "Prima qualquer tecla...(ESCAPE para sair)" << endl;
-			CHAR key = Consola::getch();
-			if (key == Consola::ESCAPE)
-				i = 101;
-
+			if (i < segundos - 1) {
+				cout << "Prima qualquer tecla...(ESCAPE para sair)" << endl;
+				CHAR key = Consola::getch();
+				if (key == Consola::ESCAPE)
+					i = 101;
+			}
 		}
 		else {
 			cout << "Ja nao existe carros a competir(final da corrida)" << endl;
@@ -164,6 +166,17 @@ int Pista::obtemPosCorrida(char idCarro)
 			return i;
 
 	return -1;
+}
+
+bool Pista::stopPiloto(std::string nomePiloto)
+{
+	for (auto c : carrosNaPista) {
+		if (c->obtemNomePiloto() == nomePiloto) {
+			c->ativaSinalEmergencia();
+			return true;
+		}	
+	}
+	return false;
 }
 
 bool Pista::danificaCarro(int pos)
@@ -225,7 +238,8 @@ void Pista::removeCarrosInuteis(Garagem * g)
 {
 	vector<Carro*>::iterator it = carrosNaPista.begin();
 	while (it != carrosNaPista.end()) {
-		if ((*it)->verificaEmergencia() || (*it)->obtemBateriaAtual() == 0 || (*it)->verificaDano()) {
+		if (((*it)->verificaEmergencia() && (*it)->obtemVelocidade() <= 0 ) 
+			|| (*it)->obtemBateriaAtual() == 0 || (*it)->verificaDano()) {
 			g->recebeCarro(removeCarro((*it)->obtemId()));
 			it = carrosNaPista.begin();//reset
 			continue;
