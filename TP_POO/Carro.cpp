@@ -259,7 +259,7 @@ bool Carro::passaSegundo()
 
 	if (metroSegundo > 0) {//se esta a andar
 		if (mAh >= metroSegundo) {//se tem energia para fazer a distancia
-			mAh -= metroSegundo;
+			mAh -= (metroSegundo * 0.1);
 			//cout << marca << " perdeu " << metroSegundo << " de energia e tem agora " << mAh << endl;
 		}
 		else {//nao tem energia

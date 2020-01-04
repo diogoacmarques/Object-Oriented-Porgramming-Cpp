@@ -10,7 +10,7 @@ class Carro
 	static char idStatic;//id (partilhado) que vai sendo alterado conforme o numero de carros
 	const char id;//id do carro	
 	//bateria
-	int mAh;
+	float mAh;
 	const int capcidadeMaxima;
 	//moviemento
 	int metroSegundo = 0;
