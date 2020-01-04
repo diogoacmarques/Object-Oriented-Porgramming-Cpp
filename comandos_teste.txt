@@ -2,8 +2,8 @@ carregaC carros.txt
 carregaP pilotos.txt
 carregaA autodromos.txt
 
-entranocarro a diogo
-entranocarro b miguel
+entranocarro b diogo
+entranocarro a miguel
 entranocarro c diogox
 entranocarro d joao
 entranocarro e diogox
