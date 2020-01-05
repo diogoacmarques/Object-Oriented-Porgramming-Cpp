@@ -7,12 +7,12 @@ using namespace std;
 
 Garagem::Garagem()
 {
-	cout << "Construtor Garagem" << endl;
+	//cout << "Construtor Garagem" << endl;
 }
 
 Garagem::~Garagem()
 {
-	cout << "Destrutor da garagem" << endl;
+//	cout << "Destrutor da garagem" << endl;
 }
 
 bool Garagem::recebeTodosCarros(std::vector<Carro*> tmp)
@@ -60,7 +60,7 @@ Carro * Garagem::obtemCarroDisponivel()
 	}
 	
 
-	cout << "Garagem nao tem mais carros disponiveis" << endl;	
+	//cout << "Garagem nao tem mais carros disponiveis" << endl;	
 	return nullptr;
 }
 

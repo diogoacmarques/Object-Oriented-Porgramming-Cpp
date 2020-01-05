@@ -29,7 +29,7 @@ bool PilotoRapido::tomaDecisao(Carro * c, Pista * p)
 	if (tempoPassado > 0 && tempoPassado%10 == 0) {
 		if (prob < 10) {
 			c->ativaSinalEmergencia();
-			cout << "piloto " << obtemNome() << " teve panico e ativou emergencia!" << endl;
+			//cout << "piloto " << obtemNome() << " teve panico e ativou emergencia!" << endl;
 			return false;
 		}
 	}

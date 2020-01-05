@@ -5,12 +5,12 @@ using namespace std;
 
 Campeonato::Campeonato(std::string n):nome(n), autodromoEmCompeticao(0)
 {
-	cout << "Construtor Campeonato '" << nome << "'" << endl;
+	//cout << "Construtor Campeonato '" << nome << "'" << endl;
 }
 
 Campeonato::~Campeonato()
 {
-	cout << "Destrutor campeonato '" << nome << "'" << endl;
+	//cout << "Destrutor campeonato '" << nome << "'" << endl;
 }
 
 std::string Campeonato::obtemPontuacao() const
@@ -41,7 +41,7 @@ bool Campeonato::proximoAutodromo()
 	Autodromo * autodromo = obtemAutodromoCompeticao();
 	autodromo->terminarCorrida();
 	if ((autodromoEmCompeticao + 1) == autodromosCampeonato.size()) {
-		Consola::clrscr();
+		//Consola::clrscr();
 		
 		cout << "ja nao existem mais autodromos para competir = final da competicao" << endl;
 		return false;

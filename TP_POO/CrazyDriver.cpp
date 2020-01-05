@@ -9,7 +9,7 @@ CrazyDriver::CrazyDriver(std::string n):Piloto(n), pos(-1)
 {
 	srand((int)time(NULL));
 	iniciaCorridaApos = (rand() % 5) + 1;
-	cout << "Construtor Piloto crazy" << endl;
+	//cout << "Construtor Piloto crazy" << endl;
 }
 
 CrazyDriver::~CrazyDriver()

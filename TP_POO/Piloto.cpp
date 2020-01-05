@@ -19,12 +19,12 @@ Piloto::Piloto(std::string n) :idCarro('-'),pontuacao(0)
 	
 	todosNomesPilotos.push_back(n);
 	nome = n;
-	cout << "\tConstrutor_Piloto:(" << "," << nome << ")\n" << endl;
+	//cout << "\tConstrutor_Piloto:(" << "," << nome << ")\n" << endl;
 }
 
 Piloto::~Piloto()
 {
-	cout << "Destrutor_Piloto:'" << nome << "'" << endl;
+	//cout << "Destrutor_Piloto:'" << nome << "'" << endl;
 	for (int i = 0; i < todosNomesPilotos.size(); i++) {
 		if (nome == todosNomesPilotos.at(i)) {
 			todosNomesPilotos.erase(todosNomesPilotos.begin() + i);
