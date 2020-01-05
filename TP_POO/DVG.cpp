@@ -18,7 +18,7 @@ DVG::DVG(const DVG & original)
 
 DVG::~DVG()
 {
-	cout << "Destrutor DVG " << nome << endl;
+	//cout << "Destrutor DVG " << nome << endl;
 	for (int i = 0; i < todosCarros.size(); i++)
 		delete todosCarros.at(i);
 	for (int i = 0; i < todosPilotos.size(); i++)

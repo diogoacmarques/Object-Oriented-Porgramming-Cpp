@@ -8,7 +8,7 @@ using namespace std;
 
 PilotoSurpresa::PilotoSurpresa(std::string n):Piloto(n)
 {
-	cout << "Construtor Piloto Supresa" << endl;
+	//cout << "Construtor Piloto Supresa" << endl;
 }
 
 PilotoSurpresa::~PilotoSurpresa()

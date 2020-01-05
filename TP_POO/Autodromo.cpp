@@ -18,12 +18,12 @@ Autodromo::Autodromo(int n_Max, int comprimento, std::string n) :pista(n_Max, co
 
 	todosNomesAutodromos.push_back(n);
 	nome = n;
-	cout << "\tConstrutor_Autodromo:" << n << "|max=" << n_Max << "(" << comprimento << " metros)\n" << endl;
+	//cout << "\tConstrutor_Autodromo:" << n << "|max=" << n_Max << "(" << comprimento << " metros)\n" << endl;
 }
 
 Autodromo::~Autodromo()
 {
-	cout << "Destrutor_autodromo:'" << nome << "'" << endl;
+	//cout << "Destrutor_autodromo:'" << nome << "'" << endl;
 	for (int i = 0; i < todosNomesAutodromos.size(); i++) {
 		if (nome == todosNomesAutodromos.at(i)) {
 			todosNomesAutodromos.erase(todosNomesAutodromos.begin() + i);
@@ -54,7 +54,7 @@ bool Autodromo::obtemEstado() const
 
 bool Autodromo::insereCarrosNaGaragem(vector<Carro*> carros)
 {
-	cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar o carro para a garagem" << endl;
+	//cout << "Autdodromo '" << obtemNome() << "' vai tentar carregar o carro para a garagem" << endl;
 	if (garagem.recebeTodosCarros(carros)) {
 		preparado = true;
 		return true;
@@ -90,7 +90,7 @@ bool Autodromo::insereCarroPista()
 	while (levaMais) {//se houver espaço na pista
 		carroDisponivel = garagem.obtemCarroDisponivel();
 		if (carroDisponivel == nullptr) {//se ja nao ha piloto
-			cout << "a garagem ja nao encontra mais pilotos disponiveis" << endl;
+			//cout << "a garagem ja nao encontra mais pilotos disponiveis" << endl;
 			break;
 		}
 		
@@ -100,7 +100,7 @@ bool Autodromo::insereCarroPista()
 	}
 
 
-	cout << "Autodromo[" << nome << "] inseriu " << pilotosInseridos << " carros na sua pista" << endl;
+	//cout << "Autodromo[" << nome << "] inseriu " << pilotosInseridos << " carros na sua pista" << endl;
 	return pilotosInseridos;
 }
 

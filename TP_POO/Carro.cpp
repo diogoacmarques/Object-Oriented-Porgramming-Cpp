@@ -12,12 +12,12 @@ id(idStatic++), piloto(nullptr),emCompeticao(false), pontuacao(0),linhaPista(0)
 {
 	if (idStatic < 'a' || idStatic > 'z')
 		idStatic = '?';
-	cout << "\tConstrutor_Carro:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")\n" << endl;
+	//cout << "\tConstrutor_Carro:" << marca << "," << modelo << "(" << mAh << "/" << capcidadeMaxima << ")\n" << endl;
 }
 
 Carro::~Carro()
 {
-	cout << "Destrutor_Carro(" << marca << "/" << modelo << ")" << endl;
+	//cout << "Destrutor_Carro(" << marca << "/" << modelo << ")" << endl;
 	if (verificaPiloto()) {//tem piloto
 		piloto->removeCarro();
 	}
@@ -53,12 +53,12 @@ int Carro::carregaBateria(int n)
 		}
 		else {
 			mAh = capcidadeMaxima;
-			cout << "O carro " << id << " foi carregado completamente " << mAh << "mAh/" << capcidadeMaxima << endl;
+			//cout << "O carro " << id << " foi carregado completamente " << mAh << "mAh/" << capcidadeMaxima << endl;
 		}	
 	}
-	else {
-		cout << "O carro esta em movimento ou o valor nao e valido" << endl;
-	}
+	//else {
+		//cout << "O carro esta em movimento ou o valor nao e valido" << endl;
+//	}
 
 	return 0;
 }
