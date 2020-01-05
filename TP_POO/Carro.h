@@ -37,7 +37,7 @@ public:
 	bool verificaDano() const;
 	bool verificaEmergencia() const;
 	int obtemBateriaMax() const;
-	int obtemBateriaAtual() const;
+	float obtemBateriaAtual() const;
 	int carregaBateria(int n);
 	bool carregamentoTotal();
 	char obtemId() const;

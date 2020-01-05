@@ -7,7 +7,7 @@ using namespace std;
 
 char Carro::idStatic = 'a';//inicializar o 'cont'
 
-Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh(capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo),
+Carro::Carro(int velMax,int capInicial, int capMax, string marca, string modelo):velcidadeMaxima(velMax),mAh((float)capInicial), capcidadeMaxima(capMax),marca(marca),modelo(modelo),
 id(idStatic++), piloto(nullptr),emCompeticao(false), pontuacao(0),linhaPista(0)
 {
 	if (idStatic < 'a' || idStatic > 'z')
@@ -52,7 +52,7 @@ int Carro::carregaBateria(int n)
 			mAh += n;
 		}
 		else {
-			mAh = capcidadeMaxima;
+			mAh = (float)capcidadeMaxima;
 			//cout << "O carro " << id << " foi carregado completamente " << mAh << "mAh/" << capcidadeMaxima << endl;
 		}	
 	}
@@ -68,7 +68,7 @@ bool Carro::carregamentoTotal()
 	if (verificaDano())
 		return false;
 
-	mAh = capcidadeMaxima;
+	mAh = (float)capcidadeMaxima;
 	return true;
 }
 
@@ -259,7 +259,7 @@ bool Carro::passaSegundo()
 
 	if (metroSegundo > 0) {//se esta a andar
 		if (mAh >= metroSegundo) {//se tem energia para fazer a distancia
-			mAh -= (metroSegundo * 0.1);
+			mAh -= (float)(metroSegundo * 0.1);
 			//cout << marca << " perdeu " << metroSegundo << " de energia e tem agora " << mAh << endl;
 		}
 		else {//nao tem energia
@@ -293,7 +293,7 @@ std::string Carro::carroToString() const
 	return os.str();
 }
 
-int Carro::obtemBateriaAtual() const
+float Carro::obtemBateriaAtual() const
 {
 	return mAh;
 }
