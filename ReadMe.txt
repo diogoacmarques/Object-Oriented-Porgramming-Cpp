@@ -1,3 +1,8 @@
+Nota Final: 90%
+
+Comando "help" para verificar os comandos possiveis
+
+//inicio do comando exemplo
 carregaC carros.txt
 carregaP pilotos.txt
 carregaA autodromos.txt
@@ -9,16 +14,10 @@ entranocarro d joao
 entranocarro e diogox
 entranocarro f joaquim
 
-
 campeonato A4 A2 A3 A1 A5
 corrida
-passatempo 1
+passatempo 0
 
-***troca de dgv****
-carregaC carros.txt
-carregaP pilotos.txt
-carregaA autodromos.txt
+//fim do comando exemplo
 
-savedgv teste
-clear
-lista
+

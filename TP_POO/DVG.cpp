@@ -44,7 +44,7 @@ DVG & DVG::operator=(const DVG & original)
 		todosPilotos.push_back(original.todosPilotos.at(i)->dupilica());
 	
 	for (int i = 0; i < original.todosCarros.size(); i++)
-		todosCarros.push_back(new Carro(*original.todosCarros.at(i)));//confirmar isto
+		todosCarros.push_back(new Carro(*original.todosCarros.at(i)));//Ponteiro de carro para piloto não alterado (corrigir)
 
 	//nome = original.nome;
 
